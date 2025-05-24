@@ -10,8 +10,6 @@
 
   "packageJsonOverride": {
     "author": "Dariusz Filipiak",
-    "private": true,
-
     "scripts": {},
   },
 }
