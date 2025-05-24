@@ -2,10 +2,16 @@
   "type": "isomorphic-lib",
   "version": "v19",
 
+  "autoReleaseConfigAllowedItems": [
+    {
+      "artifactName": "npm-lib-and-cli-tool",
+    },
+  ],
+
   "packageJsonOverride": {
     "author": "Dariusz Filipiak",
     "private": true,
 
-    "scripts": {}
-  }
+    "scripts": {},
+  },
 }
