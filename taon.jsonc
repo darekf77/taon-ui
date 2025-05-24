@@ -1,13 +1,13 @@
 {
   "type": "isomorphic-lib",
   "version": "v19",
-  "peerDependenciesNamesForNpmLib": ["taon"],
-
   "autoReleaseConfigAllowedItems": [
     {
       "artifactName": "npm-lib-and-cli-tool",
     },
   ],
+
+  "peerDependenciesNamesForNpmLib": ["taon"],
 
   "packageJsonOverride": {
     "author": "Dariusz Filipiak",
