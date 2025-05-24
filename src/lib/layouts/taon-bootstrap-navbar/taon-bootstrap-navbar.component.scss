@@ -1,0 +1,12 @@
+:host {
+  display: block;
+}
+nav {
+  // font-weight: bold;
+  font-variant-caps: all-small-caps;
+}
+.navbar-collapse.in {
+  overflow: hidden;
+  max-height: none !important;
+  height: auto !important;
+}

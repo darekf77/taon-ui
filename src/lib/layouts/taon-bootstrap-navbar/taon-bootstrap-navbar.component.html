@@ -1,0 +1,149 @@
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a
+      class="navbar-brand"
+      routerLink="/home"
+      routerLinkActive="active">
+      Home</a
+    >
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="isCollapsed = !isCollapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div
+      [ngbCollapse]="isCollapsed"
+      class="navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/about"
+            routerLinkActive="active"
+            >O szkole</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/courses"
+            routerLinkActive="active"
+            >Kursy</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/opinions"
+            routerLinkActive="active"
+            >Opinie</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/instructors"
+            routerLinkActive="active"
+            >Lektorzy</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/contact"
+            routerLinkActive="active"
+            >Kontakt</a
+          >
+        </li>
+        <ng-container *ngIf="isLoggedIn">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/test"
+              routerLinkActive="active"
+              ><b>Test plasujący</b></a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/grammar"
+              routerLinkActive="active"
+              >Gramatyka</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/vocabulary"
+              routerLinkActive="active"
+              >Słownictwo</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/reading"
+              routerLinkActive="active"
+              >Czytanie</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/movies"
+              routerLinkActive="active"
+              >Wideo</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/curiosities"
+              routerLinkActive="active"
+              >Ciekawostki</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/logout"
+              routerLinkActive="active"
+              >Wyloguj</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/profile"
+              routerLinkActive="active"
+              >Profil</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/admin"
+              routerLinkActive="active"
+              >Admin</a
+            >
+          </li>
+        </ng-container>
+        <ng-container *ngIf="!isLoggedIn">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="javascript:void(0)"
+              (click)="modalLoginRegister()">
+              <span class="glyphicon glyphicon-hand-right"></span> Rejestracja /
+              <span class="glyphicon glyphicon-user"></span> Logowanie
+            </a>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</nav>
+<ng-content />
