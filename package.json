@@ -1,6 +1,6 @@
 {
   "name": "taon-ui",
-  "version": "19.0.2",
+  "version": "19.0.3",
   "scripts": {
     "taon init": "taon init",
     "taon start": "taon start",
@@ -346,10 +346,5 @@
     "zone.js": "~0.13.0"
   },
   "main": "dist/app.electron.js",
-  "bin": {},
-  "exports": {
-    ".": {
-      "style": "./scss/index.scss"
-    }
-  }
+  "bin": {}
 }
