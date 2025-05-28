@@ -309,6 +309,7 @@
     "taon-storage": "~19.0.0",
     "taon-type-sql": "~19.0.0",
     "taon-typeorm": "~19.0.0",
+    "taon-ui": "~19.0.2",
     "task.js": "^0.1.5",
     "threads": "1.7.0",
     "tnp": "~19.0.1",
@@ -345,5 +346,10 @@
     "zone.js": "~0.13.0"
   },
   "main": "dist/app.electron.js",
-  "bin": {}
+  "bin": {},
+  "exports": {
+    ".": {
+      "style": "./scss/index.scss"
+    }
+  }
 }
