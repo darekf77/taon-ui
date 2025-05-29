@@ -8,6 +8,7 @@ import { MaterialCssVarsModule } from 'angular-material-css-vars'; // @browser
 import { providePrimeNG } from 'primeng/config'; // @browser
 import { Observable, map } from 'rxjs';
 import { Taon, BaseContext, TAON_CONTEXT } from 'taon/src';
+import { TaonAdminModeConfigurationComponent } from 'taon-ui/src'; // @browser
 import { Helpers, UtilsOs } from 'tnp-core/src';
 
 import {
@@ -18,7 +19,7 @@ import {
 //#endregion
 
 console.log('hello world');
-console.log('Your server will start on port '+ HOST_BACKEND_PORT);
+console.log('Your server will start on port ' + HOST_BACKEND_PORT);
 const host = 'http://localhost:' + HOST_BACKEND_PORT;
 const frontendHost =
   'http://localhost:' +
@@ -29,18 +30,29 @@ const frontendHost =
 @Component({
   selector: 'app-taon-ui',
   standalone: false,
-  template: `hello from taon-ui<br>
-    Angular version: {{ angularVersion }}<br>
-    <br>
-    users from backend
-    <ul>
-      <li *ngFor="let user of (users$ | async)"> {{ user | json }} </li>
-    </ul>
+  template: `
+    <taon-admin-mode-configuration>
+      hello from taon-ui<br />
+      Angular version: {{ angularVersion }}<br />
+      <br />
+      users from backend
+      <ul>
+        <li *ngFor="let user of users$ | async">{{ user | json }}</li>
+      </ul>
+    </taon-admin-mode-configuration>
   `,
-  styles: [` body { margin: 0px !important; } `],
+  styles: [
+    `
+      body {
+        margin: 0px !important;
+      }
+    `,
+  ],
 })
 export class TaonUiComponent {
-  angularVersion = VERSION.full + ` mode: ${UtilsOs.isRunningInWebSQL() ? ' (websql)' : '(normal)'}`;
+  angularVersion =
+    VERSION.full +
+    ` mode: ${UtilsOs.isRunningInWebSQL() ? ' (websql)' : '(normal)'}`;
   userApiService = inject(UserApiService);
   readonly users$: Observable<User[]> = this.userApiService.getAll();
 }
@@ -50,15 +62,14 @@ export class TaonUiComponent {
 //#region  taon-ui api service
 //#region @browser
 @Injectable({
-  providedIn:'root'
+  providedIn: 'root',
 })
 export class UserApiService {
-  userController = Taon.inject(()=> MainContext.getClass(UserController))
+  userController = Taon.inject(() => MainContext.getClass(UserController));
   getAll() {
-    return this.userController.getAll()
-      .received
-      .observable
-      .pipe(map(r => r.body.json));
+    return this.userController
+      .getAll()
+      .received.observable.pipe(map(r => r.body.json));
   }
 }
 //#endregion
@@ -72,23 +83,26 @@ export class UserApiService {
       provide: TAON_CONTEXT,
       useValue: MainContext,
     },
-    providePrimeNG({ // inited ng prime - remove if not needed
+    providePrimeNG({
+      // inited ng prime - remove if not needed
       theme: {
-        preset: Aura
-      }
-    })
+        preset: Aura,
+      },
+    }),
   ],
   exports: [TaonUiComponent],
   imports: [
     CommonModule,
-    MaterialCssVarsModule.forRoot({  // inited angular material - remove if not needed
+    TaonAdminModeConfigurationComponent,
+    MaterialCssVarsModule.forRoot({
+      // inited angular material - remove if not needed
       primary: '#4758b8',
       accent: '#fedfdd',
-   }),
+    }),
   ],
   declarations: [TaonUiComponent],
 })
-export class TaonUiModule { }
+export class TaonUiModule {}
 //#endregion
 //#endregion
 
@@ -105,7 +119,7 @@ class User extends Taon.Base.AbstractEntity {
 //#region  taon-ui controller
 @Taon.Controller({ className: 'UserController' })
 class UserController extends Taon.Base.CrudController<User> {
-  entityClassResolveFn = ()=> User;
+  entityClassResolveFn = () => User;
   //#region @websql
   /**
    * @deprecated use migrations instead
@@ -120,11 +134,11 @@ class UserController extends Taon.Base.CrudController<User> {
 //#endregion
 
 //#region  taon-ui context
-var MainContext = Taon.createContext(()=>({
+var MainContext = Taon.createContext(() => ({
   host,
   frontendHost,
   contextName: 'MainContext',
-  contexts:{ BaseContext },
+  contexts: { BaseContext },
   migrations: {
     // PUT TAON MIGRATIONS HERE
   },
@@ -142,12 +156,12 @@ var MainContext = Taon.createContext(()=>({
 //#endregion
 
 async function start() {
-
   await MainContext.initialize();
 
   if (Taon.isBrowser) {
-    const users = (await MainContext.getClassInstance(UserController).getAll().received)
-      .body?.json;
+    const users = (
+      await MainContext.getClassInstance(UserController).getAll().received
+    ).body?.json;
     console.log({
       'users from backend': users,
     });
