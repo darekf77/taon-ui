@@ -8,39 +8,26 @@ import { MaterialCssVarsModule } from 'angular-material-css-vars'; // @browser
 import { providePrimeNG } from 'primeng/config'; // @browser
 import { Observable, map } from 'rxjs';
 import { Taon, BaseContext, TAON_CONTEXT } from 'taon/src';
-import { TaonAdminModeConfigurationComponent } from 'taon-ui/src'; // @browser
 import { Helpers, UtilsOs } from 'tnp-core/src';
 
-import {
-  HOST_BACKEND_PORT,
-  CLIENT_DEV_WEBSQL_APP_PORT,
-  CLIENT_DEV_NORMAL_APP_PORT,
-} from './app.hosts';
+import { HOST_URL, FRONTEND_HOST_URL } from './app.hosts';
 //#endregion
 
 console.log('hello world');
-console.log('Your server will start on port ' + HOST_BACKEND_PORT);
-const host = 'http://localhost:' + HOST_BACKEND_PORT;
-const frontendHost =
-  'http://localhost:' +
-  (Helpers.isWebSQL ? CLIENT_DEV_WEBSQL_APP_PORT : CLIENT_DEV_NORMAL_APP_PORT);
+console.log('Your server will start on port ' + HOST_URL.split(':')[2]);
 
 //#region taon-ui component
 //#region @browser
 @Component({
   selector: 'app-taon-ui',
   standalone: false,
-  template: `
-    <taon-admin-mode-configuration>
-      hello from taon-ui<br />
-      Angular version: {{ angularVersion }}<br />
-      <br />
-      users from backend
-      <ul>
-        <li *ngFor="let user of users$ | async">{{ user | json }}</li>
-      </ul>
-    </taon-admin-mode-configuration>
-  `,
+  template: `hello from taon-ui<br />
+    Angular version: {{ angularVersion }}<br />
+    <br />
+    users from backend
+    <ul>
+      <li *ngFor="let user of users$ | async">{{ user | json }}</li>
+    </ul> `,
   styles: [
     `
       body {
@@ -93,7 +80,6 @@ export class UserApiService {
   exports: [TaonUiComponent],
   imports: [
     CommonModule,
-    TaonAdminModeConfigurationComponent,
     MaterialCssVarsModule.forRoot({
       // inited angular material - remove if not needed
       primary: '#4758b8',
@@ -135,8 +121,8 @@ class UserController extends Taon.Base.CrudController<User> {
 
 //#region  taon-ui context
 var MainContext = Taon.createContext(() => ({
-  host,
-  frontendHost,
+  host: HOST_URL,
+  frontendHost: FRONTEND_HOST_URL,
   contextName: 'MainContext',
   contexts: { BaseContext },
   migrations: {

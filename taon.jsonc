@@ -7,6 +7,7 @@
     },
   ],
 
+  "numberOfContexts": 4,
   "peerDependenciesNamesForNpmLib": ["taon"],
 
   "packageJsonOverride": {
