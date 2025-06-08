@@ -14,8 +14,8 @@
 
   "packageJsonOverride": {
     "author": "Dariusz Filipiak",
+    "description": "Description for taon-ui. Hello world!",
     "private": false,
-    "scripts": {},
-    "description": "Description for taon-ui. Hello world!"
+    "scripts": {}
   }
 }
