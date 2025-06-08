@@ -1,6 +1,8 @@
 {
   "type": "isomorphic-lib",
   "version": "v19",
+  "appId": "com.domain.example.taon-ui",
+
   "autoReleaseConfigAllowedItems": [
     {
       "artifactName": "npm-lib-and-cli-tool",
@@ -14,5 +16,6 @@
     "author": "Dariusz Filipiak",
     "private": false,
     "scripts": {},
-  },
+    "description": "Description for taon-ui. Hello world!"
+  }
 }
