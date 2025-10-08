@@ -82,7 +82,9 @@
     "**/.firedev": true,
     "**/.taon": true,
     "**/.tnp": true,
-    "projects": true
+    "projects": true,
+    "dist-*": true,
+    "**/dist-*": true
   },
   "files.exclude": {
     "**/*____ORIGINAL____.ts": true,
