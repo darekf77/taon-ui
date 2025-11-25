@@ -84,7 +84,9 @@
     "**/.tnp": true,
     "projects": true,
     "dist-*": true,
-    "**/dist-*": true
+    "**/dist-*": true,
+    "*.rest": true,
+    "**/*.rest": true
   },
   "files.exclude": {
     "_changelog": true,
