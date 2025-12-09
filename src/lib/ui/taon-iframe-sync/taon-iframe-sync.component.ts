@@ -18,63 +18,105 @@ import { Level, Log, Logger } from 'ng2-logger/src';
 import { Subject } from 'rxjs';
 import { filter, takeUntil, distinctUntilChanged } from 'rxjs/operators';
 
-const log = Log.create(
-  'TaonIframeSyncComponent',
-  Level.__NOTHING
-);
-
+// taon-iframe-sync.component.ts
 @Component({
   selector: 'taon-iframe-sync',
   template: `
+    <!-- Hidden by default, shown only when ready -->
     <iframe
       #iframe
       [src]="safeSrc"
+      [style.display]="isReady ? 'block' : 'none'"
+      [style.visibility]="isReady ? 'visible' : 'hidden'"
+      [style.opacity]="isReady ? '1' : '0'"
       frameborder="0"
-      style="width:100%; height:100%; border:none; display:block;"
+      style="width:100%; height:100%; border:none; transition: opacity 0.2s ease;"
       (load)="onIframeLoad()"
       allow="clipboard-write"></iframe>
+
+    <!-- Optional: nice loading placeholder -->
+    <div
+      *ngIf="!isReady"
+      class="iframe-loading-placeholder">
+      <div class="spinner"></div>
+      <p>Loading documentation...</p>
+    </div>
   `,
+  styles: [
+    `
+      :host {
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+      .iframe-loading-placeholder {
+        position: absolute;
+        inset: 0;
+        background: var(--md-primary-fg-color--light);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        color: var(--text-color, #666);
+        font-family: system-ui, sans-serif;
+      }
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    `,
+  ],
   standalone: true,
+  imports: [NgIf],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaonIframeSyncComponent implements AfterViewInit, OnDestroy {
   private destroy$ = new Subject<void>();
-
   private iframeWin: Window | null = null;
 
+  // This is the key: iframe stays hidden until first correct page is confirmed loaded
+  isReady = false;
   private hasInitialSync = false;
 
-  @ViewChild('iframe', { static: false })
-  iframeRef!: ElementRef<HTMLIFrameElement>;
+  @ViewChild('iframe') iframeRef!: ElementRef<HTMLIFrameElement>;
 
-  // Inputs
+  // ... same inputs as before
   #src!: string;
-
   @Input({ required: true }) set iframeSrc(v: string) {
-    this.#src = v.trim(); // ← Clean whitespace
+    this.#src = v.trim();
     this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.#src);
   }
-
   get iframeSrc() {
     return this.#src;
   }
 
   @Input() queryParamKey = 'internalIframePath';
-
   @Input() initialPath: string | null = null;
-
   @Input() targetOrigin?: string;
 
   safeSrc!: SafeResourceUrl;
 
   private router = inject(Router);
-
   private route = inject(ActivatedRoute);
-
   private sanitizer = inject(DomSanitizer);
 
   ngAfterViewInit() {
-    // Setup subscriptions (but don't sync yet — wait for iframe load)
+    this.setupSync();
+    window.addEventListener('message', this.handleIframeMessage);
+  }
+
+  private setupSync() {
     this.route.queryParamMap
       .pipe(
         distinctUntilChanged(
@@ -82,48 +124,33 @@ export class TaonIframeSyncComponent implements AfterViewInit, OnDestroy {
         ),
         takeUntil(this.destroy$),
       )
-      .subscribe(() => this.maybeSendNavigate());
+      .subscribe(() => this.sendNavigateIfReady());
 
     this.router.events
       .pipe(
         filter((e): e is NavigationEnd => e instanceof NavigationEnd),
         takeUntil(this.destroy$),
       )
-      .subscribe(() => this.maybeSendNavigate());
-
-    window.addEventListener('message', this.handleIframeMessage);
+      .subscribe(() => this.sendNavigateIfReady());
   }
 
   onIframeLoad() {
-    this.iframeWin = this.iframeRef?.nativeElement?.contentWindow || null;
+    this.iframeWin = this.iframeRef?.nativeElement?.contentWindow;
 
-    if (this.iframeWin && this.isValidUrl(this.iframeSrc)) {
-      log.d('[sync] Iframe loaded, initial sync starting...');
-      this.sendNavigate();
-    } else {
-      log.w('[sync] Iframe loaded but src invalid:', this.iframeSrc);
-    }
+    // Send the correct path — iframe will load it
+    this.sendNavigateIfReady();
+
+    // The real magic: wait for iframe to confirm it loaded the right page
+    // (we'll enhance the iframe script to send a "READY" message)
   }
 
-  private maybeSendNavigate() {
-    // Only sync if iframe is ready AND path actually changed
-    if (this.iframeWin && this.hasInitialSync) {
-      this.sendNavigate();
-    }
-  }
-
-  private sendNavigate() {
-    // Guard: iframe not ready
-    if (!this.iframeWin) {
-      log.w('[sync] Cannot send: iframe not ready');
+  private sendNavigateIfReady() {
+    if (
+      !this.iframeWin ||
+      !this.isValidUrl(this.iframeSrc) ||
+      this.hasInitialSync
+    )
       return;
-    }
-
-    // Guard: src not set or invalid
-    if (!this.iframeSrc || !this.isValidUrl(this.iframeSrc)) {
-      log.w('[sync] Cannot send: invalid src', this.iframeSrc);
-      return;
-    }
 
     const path =
       this.route.snapshot.queryParamMap.get(this.queryParamKey) ??
@@ -131,8 +158,6 @@ export class TaonIframeSyncComponent implements AfterViewInit, OnDestroy {
       '/';
 
     const origin = this.targetOrigin ?? this.getSafeOrigin(this.iframeSrc);
-
-    log.d('[sync] Parent → Iframe:', { path, origin });
 
     this.iframeWin.postMessage({ type: 'NAVIGATE', path }, origin);
     this.hasInitialSync = true;
@@ -175,11 +200,18 @@ export class TaonIframeSyncComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  // This is called when iframe confirms: "Yes, I loaded the correct page!"
   private handleIframeMessage = (event: MessageEvent) => {
     const expected = this.targetOrigin ?? this.getSafeOrigin(this.iframeSrc);
     if (event.origin !== expected) return;
 
-    if (event.data?.type === 'IFRAME_PATH_UPDATE' && this.hasInitialSync) {
+    // NEW: iframe tells us when it's truly ready
+    if (event.data?.type === 'IFRAME_READY') {
+      this.isReady = true; // NOW show the iframe!
+      return;
+    }
+
+    if (event.data?.type === 'IFRAME_PATH_UPDATE') {
       const path = event.data.path || '/';
       this.router.navigate([], {
         queryParams: { [this.queryParamKey]: path === '/' ? null : path },
@@ -188,6 +220,8 @@ export class TaonIframeSyncComponent implements AfterViewInit, OnDestroy {
       });
     }
   };
+
+  // ... rest of helpers (isValidUrl, getSafeOrigin) same as before
 
   ngOnDestroy() {
     this.destroy$.next();
