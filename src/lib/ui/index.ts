@@ -8,4 +8,5 @@ export * from './taon-session-passcode';
 export * from './taon-progress-bar';
 export * from './taon-table';
 export * from './taon-admin-mode-configuration';
+export * from './taon-iframe-sync/taon-iframe-sync.component';
 //#endregion
