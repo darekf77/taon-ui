@@ -14,152 +14,175 @@ import {
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { debounce } from 'lodash';
+import { Level, Log, Logger } from 'ng2-logger/src';
 import { Subject } from 'rxjs';
 import { filter, takeUntil, distinctUntilChanged } from 'rxjs/operators';
+
+const log = Log.create(
+  'TaonIframeSyncComponent',
+  Level.__NOTHING
+);
 
 @Component({
   selector: 'taon-iframe-sync',
   template: `
     <iframe
       #iframe
-      [src]="safeUrlIframeSrc"
+      [src]="safeSrc"
       frameborder="0"
       style="width:100%; height:100%; border:none; display:block;"
-      (load)="onIframeLoad()"></iframe>
+      (load)="onIframeLoad()"
+      allow="clipboard-write"></iframe>
   `,
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgIf],
 })
-export class TaonIframeSyncComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
+export class TaonIframeSyncComponent implements AfterViewInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
-  domSanitizer = inject(DomSanitizer);
+  private iframeWin: Window | null = null;
 
-  public safeUrlIframeSrc: SafeResourceUrl;
+  private hasInitialSync = false;
 
-  private iframeWindow!: Window | null;
+  @ViewChild('iframe', { static: false })
+  iframeRef!: ElementRef<HTMLIFrameElement>;
 
-  // ────── Inputs ──────
-  /** Base URL of the iframe content (e.g. https://docs.taon.dev) */
-  #iframeSrc!: string;
+  // Inputs
+  #src!: string;
 
-  @Input({ required: true }) set iframeSrc(iframeSrc) {
-    this.safeUrlIframeSrc =
-      this.domSanitizer.bypassSecurityTrustResourceUrl(iframeSrc);
-    this.#iframeSrc = iframeSrc;
+  @Input({ required: true }) set iframeSrc(v: string) {
+    this.#src = v.trim(); // ← Clean whitespace
+    this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.#src);
   }
 
   get iframeSrc() {
-    return this.#iframeSrc;
+    return this.#src;
   }
 
-  /** Query param name in parent URL (default: internalIframePath) */
   @Input() queryParamKey = 'internalIframePath';
 
-  /** Optional initial path if you don't want to read from URL on first load */
   @Input() initialPath: string | null = null;
 
-  initialPathIsSet = false;
-
-  /** Target origin for postMessage – security! (defaults to iframeSrc origin) */
   @Input() targetOrigin?: string;
 
-  // ────── ViewChild ──────
-  @ViewChild('iframe', { static: true })
-  iframeRef!: ElementRef<HTMLIFrameElement>;
+  safeSrc!: SafeResourceUrl;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-  ) {}
+  private router = inject(Router);
 
-  initialPathShouldBeSet = false;
+  private route = inject(ActivatedRoute);
 
-  ngOnInit() {
-    const initalPathForIframeFromQuery = this.route.snapshot.queryParamMap.get(
-      this.queryParamKey,
-    );
-
-    console.log({ initalPathForIframeFromQuery });
-    // Listen to Angular router changes (including query param updates)
-    // this.router.events
-    //   .pipe(
-    //     filter((e): e is NavigationEnd => e instanceof NavigationEnd),
-    //     takeUntil(this.destroy$),
-    //   )
-    //   .subscribe(() => this.syncParentToIframe());
-
-    // // Listen to direct query param changes (e.g. back/forward)
-    // this.route.queryParamMap
-    //   .pipe(
-    //     takeUntil(this.destroy$),
-    //     distinctUntilChanged(
-    //       (a, b) => a.get(this.queryParamKey) === b.get(this.queryParamKey),
-    //     ),
-    //   )
-    //   .subscribe(() => this.syncParentToIframe());
-
-    // Listen to messages coming FROM the iframe
-    window.addEventListener('message', this.handleMessageFromIframe);
-  }
+  private sanitizer = inject(DomSanitizer);
 
   ngAfterViewInit() {
-    this.iframeWindow = this.iframeRef.nativeElement.contentWindow;
-    // Initial sync after everything is ready
-    setTimeout(() => this.syncParentToIframe(), 100);
+    // Setup subscriptions (but don't sync yet — wait for iframe load)
+    this.route.queryParamMap
+      .pipe(
+        distinctUntilChanged(
+          (a, b) => a.get(this.queryParamKey) === b.get(this.queryParamKey),
+        ),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => this.maybeSendNavigate());
+
+    this.router.events
+      .pipe(
+        filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => this.maybeSendNavigate());
+
+    window.addEventListener('message', this.handleIframeMessage);
   }
 
   onIframeLoad() {
-    this.iframeWindow = this.iframeRef.nativeElement.contentWindow;
-    this.syncParentToIframe();
+    this.iframeWin = this.iframeRef?.nativeElement?.contentWindow || null;
+
+    if (this.iframeWin && this.isValidUrl(this.iframeSrc)) {
+      log.d('[sync] Iframe loaded, initial sync starting...');
+      this.sendNavigate();
+    } else {
+      log.w('[sync] Iframe loaded but src invalid:', this.iframeSrc);
+    }
   }
 
-  syncParentToIframe = debounce(() => {
-    if (!this.iframeWindow) return;
+  private maybeSendNavigate() {
+    // Only sync if iframe is ready AND path actually changed
+    if (this.iframeWin && this.hasInitialSync) {
+      this.sendNavigate();
+    }
+  }
 
-    if (!this.iframeSrc) {
+  private sendNavigate() {
+    // Guard: iframe not ready
+    if (!this.iframeWin) {
+      log.w('[sync] Cannot send: iframe not ready');
       return;
     }
 
-    if (!this.initialPathIsSet) {
-      this.initialPathIsSet = true;
+    // Guard: src not set or invalid
+    if (!this.iframeSrc || !this.isValidUrl(this.iframeSrc)) {
+      log.w('[sync] Cannot send: invalid src', this.iframeSrc);
+      return;
     }
 
-    let path = this.route.snapshot.queryParamMap.get(this.queryParamKey);
+    const path =
+      this.route.snapshot.queryParamMap.get(this.queryParamKey) ??
+      this.initialPath ??
+      '/';
 
-    console.log('Syncing parent to iframe, path from URL:', { path });
-    if (path === null || path === undefined) {
-      path = this.initialPath ? this.initialPath : '/';
+    const origin = this.targetOrigin ?? this.getSafeOrigin(this.iframeSrc);
+
+    log.d('[sync] Parent → Iframe:', { path, origin });
+
+    this.iframeWin.postMessage({ type: 'NAVIGATE', path }, origin);
+    this.hasInitialSync = true;
+  }
+
+  // ────── Safe URL helpers ──────
+  private isValidUrl(string: string): boolean {
+    if (!string) return false;
+    try {
+      new URL(string, window.location.origin);
+      return true;
+    } catch {
+      return false;
     }
+  }
 
-    const origin = this.targetOrigin || new URL(this.iframeSrc).origin;
+  private getSafeOrigin(src: string): string {
+    if (!src) return window.location.origin;
 
-    console.log({
-      action: 'Parent → Iframe NAVIGATE',
-      path,
-      iframeSrc: this.iframeSrc,
-    });
-
-    this.iframeWindow.postMessage({ type: 'NAVIGATE', path }, origin);
-  }, 1000);
-
-  // ────── Iframe → Parent ──────
-  private handleMessageFromIframe = (event: MessageEvent) => {
-    console.info('Received message from iframe:', event);
-    const expectedOrigin = this.targetOrigin || new URL(this.iframeSrc).origin;
-    if (event.origin !== expectedOrigin) return;
-
-    if (event.data?.type === 'IFRAME_PATH_UPDATE') {
-      if (!this.initialPathIsSet) {
-        return;
+    try {
+      // Full URL
+      if (src.startsWith('http')) {
+        return new URL(src).origin;
       }
-      const newPath = event.data.path || '/';
-      console.log(`[parent] Updating new path:`, newPath);
+
+      // Relative path
+      if (src.startsWith('/')) {
+        return window.location.origin;
+      }
+
+      // Protocol-relative
+      if (src.startsWith('//')) {
+        return new URL(src, window.location.origin).origin;
+      }
+
+      // Just return current origin for anything else
+      return window.location.origin;
+    } catch {
+      return window.location.origin;
+    }
+  }
+
+  private handleIframeMessage = (event: MessageEvent) => {
+    const expected = this.targetOrigin ?? this.getSafeOrigin(this.iframeSrc);
+    if (event.origin !== expected) return;
+
+    if (event.data?.type === 'IFRAME_PATH_UPDATE' && this.hasInitialSync) {
+      const path = event.data.path || '/';
       this.router.navigate([], {
-        queryParams: { [this.queryParamKey]: newPath === '/' ? null : newPath },
+        queryParams: { [this.queryParamKey]: path === '/' ? null : path },
         queryParamsHandling: 'merge',
         replaceUrl: true,
       });
@@ -169,6 +192,6 @@ export class TaonIframeSyncComponent
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-    window.removeEventListener('message', this.handleMessageFromIframe);
+    window.removeEventListener('message', this.handleIframeMessage);
   }
 }
