@@ -37,7 +37,9 @@ import { filter, takeUntil, distinctUntilChanged } from 'rxjs/operators';
     <!-- Optional: nice loading placeholder -->
     <div
       *ngIf="!isReady"
-      class="iframe-loading-placeholder">
+      class="iframe-loading-placeholder"
+      [style.background]="loaderBackgroundColor"
+      >
       <div class="spinner"></div>
       <p>Loading documentation...</p>
     </div>
@@ -82,33 +84,43 @@ import { filter, takeUntil, distinctUntilChanged } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaonIframeSyncComponent implements AfterViewInit, OnDestroy {
+  @Input() loaderBackgroundColor = 'white';
+
   private destroy$ = new Subject<void>();
+
   private iframeWin: Window | null = null;
 
   // This is the key: iframe stays hidden until first correct page is confirmed loaded
   isReady = false;
+
   private hasInitialSync = false;
 
   @ViewChild('iframe') iframeRef!: ElementRef<HTMLIFrameElement>;
 
   // ... same inputs as before
   #src!: string;
+
   @Input({ required: true }) set iframeSrc(v: string) {
     this.#src = v.trim();
     this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.#src);
   }
+
   get iframeSrc() {
     return this.#src;
   }
 
   @Input() queryParamKey = 'internalIframePath';
+
   @Input() initialPath: string | null = null;
+
   @Input() targetOrigin?: string;
 
   safeSrc!: SafeResourceUrl;
 
   private router = inject(Router);
+
   private route = inject(ActivatedRoute);
+
   private sanitizer = inject(DomSanitizer);
 
   ngAfterViewInit() {
