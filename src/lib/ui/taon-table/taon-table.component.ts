@@ -24,7 +24,7 @@ import {
   share,
   tap,
 } from 'rxjs';
-import { Taon } from 'taon/src';
+import { Taon, TaonBaseCrudController, TaonBaseEntity } from 'taon/src';
 import { _ } from 'tnp-core/src';
 import { json5 } from 'tnp-core/src';
 import { CLASS } from 'typescript-class-helpers/src';
@@ -64,7 +64,7 @@ export class TaonTableComponent implements OnDestroy, OnInit {
       name: `Amazing ${id} row `,
     };
   });
-  @Input() entityCrudController: Taon.Base.CrudController<any>;
+  @Input() entityCrudController: TaonBaseCrudController<any>;
   @Input() public columns: MtxGridColumn[] = defaultColumns as MtxGridColumn[];
   @Input() public pageSizeOptions: number[] = [5, 10, 20];
   @Input() public hideSearch: boolean;
@@ -81,7 +81,7 @@ export class TaonTableComponent implements OnDestroy, OnInit {
   private sub: Subscription = new Subscription();
   //#endregion
 
-  get entity(): typeof Taon.Base.Entity {
+  get entity(): typeof TaonBaseEntity {
     return this.entityCrudController?.entityClassResolveFn();
   }
 
