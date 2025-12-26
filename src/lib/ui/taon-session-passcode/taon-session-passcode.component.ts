@@ -1,3 +1,4 @@
+//#region imports
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectorRef,
@@ -9,18 +10,21 @@ import {
   OnInit,
   Self,
   inject,
+  AfterViewInit,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { PasswordModule } from 'primeng/password';
-import { Stor } from 'taon-storage/src';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { PasswordModule } from 'primeng/password';
 import { interval, take, tap } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Stor } from 'taon-storage/src';
+import { StorPropertyInLocalStorage } from 'taon-storage/src';
+//#endregion
 
 export interface TaonSessionPasscodeModel {
   passcode: string;
@@ -39,23 +43,29 @@ export type TaonSessionPasscodeForm = {
   standalone: true,
   imports: [PasswordModule, CommonModule, ReactiveFormsModule, FormsModule],
 })
-export class TaonSessionPasscodeComponent implements OnInit {
+export class TaonSessionPasscodeComponent implements OnInit, AfterViewInit {
   destroyRef = inject(DestroyRef);
+
   // @HostBinding('style.width.px') public width: number;
   // @HostBinding('style.height.px') public height: number;
   @Input() public passcode: string;
+
   @Input() public message: string;
+
   public safeMessage: SafeHtml;
 
-  @(Stor.property.in.localstorage
-    .for(TaonSessionPasscodeComponent)
-    .withDefaultValue(''))
+  @(StorPropertyInLocalStorage.for(
+    TaonSessionPasscodeComponent,
+  ).withDefaultValue(''))
   private lastPasscode: string;
+
   @HostBinding('style.display') public display = 'none';
+
   public form: FormGroup<TaonSessionPasscodeForm> =
     new FormGroup<TaonSessionPasscodeForm>({
       passcode: new FormControl(),
     });
+
   constructor(
     @Self() private element: ElementRef<HTMLElement>,
     private domSanitizer: DomSanitizer,

@@ -1,11 +1,13 @@
-//#region @browser
-import { _ } from 'tnp-core/src';
+//#region imports
 import { Injectable } from '@angular/core';
 import { HotToastService } from '@ngneat/hot-toast';
+import { _ } from 'tnp-core/src';
+
 import {
   TaonNotificationOptions,
   TaonNotificationType,
 } from './taon-notifications.models';
+//#endregion
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +17,7 @@ export class TaonNotificationsService {
 
   private options(
     type: TaonNotificationType,
-    options: TaonNotificationOptions | string
+    options: TaonNotificationOptions | string,
   ): TaonNotificationOptions {
     if (_.isString(options)) {
       options = {
@@ -46,4 +48,3 @@ export class TaonNotificationsService {
     return this.toast.info(opt.title);
   }
 }
-//#endregion

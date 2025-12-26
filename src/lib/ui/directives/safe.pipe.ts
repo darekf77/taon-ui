@@ -1,3 +1,4 @@
+//#region imports
 import { Pipe, PipeTransform } from '@angular/core';
 import {
   DomSanitizer,
@@ -7,6 +8,7 @@ import {
   SafeUrl,
   SafeResourceUrl,
 } from '@angular/platform-browser';
+//#endregion
 
 @Pipe({
   name: 'safe',
@@ -17,7 +19,7 @@ export class SafePipe implements PipeTransform {
 
   public transform(
     value: any,
-    type: string
+    type: string,
   ): SafeHtml | SafeStyle | SafeScript | SafeUrl | SafeResourceUrl {
     switch (type) {
       case 'html':

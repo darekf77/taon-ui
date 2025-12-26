@@ -1,4 +1,4 @@
-//#region @browser
+//#region imports
 import {
   Component,
   EventEmitter,
@@ -8,6 +8,7 @@ import {
   Output,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
+//#endregion
 
 @Component({
   selector: 'taon-github-fork-me-corner',
@@ -18,4 +19,3 @@ import { Subscription } from 'rxjs';
 export class TaonGithubForkMeCornerComponent {
   @Input() url: string = 'https://github.com';
 }
-//#endregion

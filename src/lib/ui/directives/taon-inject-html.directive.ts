@@ -1,4 +1,6 @@
+//#region imports
 import { Directive, ElementRef, Input } from '@angular/core';
+//#endregion
 
 @Directive({
   selector: '[taonInjectHTML]',

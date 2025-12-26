@@ -1,15 +1,17 @@
 {
   "type": "isomorphic-lib",
   "version": "v21",
+  "dependenciesNamesForNpmLib": [],
   "appId": "com.domain.example.taon-ui",
 
   "autoReleaseConfigAllowedItems": [
     {
       "artifactName": "npm-lib-and-cli-tool",
-      "taskName": "npm"
+      "taskName": "npm",
     },
   ],
 
+  "isomorphicDependenciesForNpmLib": [],
   "numberOfContexts": 4,
   "peerDependenciesNamesForNpmLib": ["taon"],
 
@@ -17,6 +19,6 @@
     "author": "Dariusz Filipiak",
     "description": "Description for taon-ui. Hello world!",
     "private": false,
-    "scripts": {}
-  }
+    "scripts": {},
+  },
 }

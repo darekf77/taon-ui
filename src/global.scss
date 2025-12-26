@@ -11,7 +11,7 @@
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url("#{ vars.$basename }assets/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2")
+  src: url('#{ vars.$basename }assets/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2')
     format('woff2');
 }
 
@@ -36,8 +36,8 @@
   display: block !important;
 }
 
-
-body, html {
+body,
+html {
   margin: 0px !important; // TODO QUICK FIX for weird chrome padding
   overflow: hidden; // for ngx-scrollbar to work
 }

@@ -1,7 +1,9 @@
-//#region @browser
-import { NgModule } from '@angular/core';
+//#region imports
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+
 import { TaonGithubForkMeRibbonComponent } from './taon-github-fork-me-ribbon.component';
+//#endregion
 
 @NgModule({
   imports: [CommonModule],
@@ -9,4 +11,3 @@ import { TaonGithubForkMeRibbonComponent } from './taon-github-fork-me-ribbon.co
   exports: [TaonGithubForkMeRibbonComponent],
 })
 export class TaonGithubForkMeRibbonModule {}
-//#endregion

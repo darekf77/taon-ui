@@ -1,8 +1,10 @@
-//#region @browser
+//#region imports
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { Resource } from 'ng2-rest/src';
+import { Subscription } from 'rxjs';
+
 import { TaonNotificationsService } from './taon-notifications.service';
+//#endregion
 
 @Component({
   selector: 'taon-notifications',
@@ -18,7 +20,7 @@ export class TaonNotificationsComponent implements OnInit {
   init(
     subscribtionsArray: Subscription[],
     template: TemplateRef<any>,
-    callback: (dataToTempalte) => any
+    callback: (dataToTempalte) => any,
   ) {
     subscribtionsArray.push(
       Resource.listenErrors.subscribe(err => {
@@ -27,8 +29,7 @@ export class TaonNotificationsComponent implements OnInit {
         //   callback(err);
         //   this.modal.open(template);
         // }) as any);
-      }) as any
+      }) as any,
     );
   }
 }
-//#endregion

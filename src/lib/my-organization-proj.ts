@@ -1,3 +1,1 @@
-export function myOrgProj() {
-
-}
+export function myOrgProj() {}

@@ -1,3 +1,4 @@
+//#region imports
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -10,6 +11,7 @@ import { MtxGridModule } from '@ng-matero/extensions/grid';
 import { StaticColumnsModule } from 'static-columns/src';
 
 import { TaonTableComponent } from './taon-table.component';
+//#endregion
 
 @NgModule({
   imports: [

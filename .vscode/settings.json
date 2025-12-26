@@ -1,9 +1,7 @@
 {
   "json.schemas": [
     {
-      "fileMatch": [
-        "/taon.jsonc"
-      ],
+      "fileMatch": ["/taon.jsonc"],
       "url": "./taon-config-standalone.schema.json"
     }
   ],
@@ -40,10 +38,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": false
   },
-  "editor.rulers": [
-    80,
-    120
-  ],
+  "editor.rulers": [80, 120],
   "eslint.migration.2_x": "off",
   "eslint.enable": true,
   "prettier.enable": true,
@@ -52,9 +47,7 @@
   "prettier.prettierPath": "./node_modules/prettier",
   "prettier.endOfLine": "auto",
   "search.useIgnoreFiles": false,
-  "search.include": [
-    "**/src/**"
-  ],
+  "search.include": ["**/src/**"],
   "search.exclude": {
     "bin": true,
     "local_release": true,

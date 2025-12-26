@@ -1,3 +1,4 @@
+//#region imports
 import {
   Directive,
   Input,
@@ -6,9 +7,10 @@ import {
   HostBinding,
   HostListener,
 } from '@angular/core';
-
-import { _ } from 'tnp-core/src';
 import { Log, Level } from 'ng2-logger/src';
+import { _ } from 'tnp-core/src';
+//#endregion
+
 const log = Log.create(`[taon-helpers] long-press`, Level.__NOTHING);
 
 @Directive({
@@ -19,13 +21,19 @@ export class TaonLongPress {
   @Input() pressDuration: number = 1000;
 
   @Output() onLongPress: EventEmitter<any> = new EventEmitter();
+
   @Output() onLongPressing: EventEmitter<any> = new EventEmitter();
+
   @Output() onLongPressEnd: EventEmitter<any> = new EventEmitter();
 
   private pressing: boolean;
+
   private longPressing: boolean;
+
   private timeout: any;
+
   private mouseX: number = 0;
+
   private mouseY: number = 0;
 
   @HostBinding('class.press')
@@ -39,6 +47,7 @@ export class TaonLongPress {
   }
 
   allowTrigger = false;
+
   triggerEnd = _.debounce(() => {
     this.endPress();
   }, 500);

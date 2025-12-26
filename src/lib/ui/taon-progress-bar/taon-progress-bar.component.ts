@@ -1,4 +1,4 @@
-//#region @browser
+//#region imports
 import {
   Component,
   EventEmitter,
@@ -7,17 +7,20 @@ import {
   OnInit,
   Output,
   ViewChild,
+  OnDestroy,
+  AfterViewInit,
 } from '@angular/core';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { _ } from 'tnp-core/src';
-
 import axios from 'axios';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { Taon } from 'taon/src';
+import { _ } from 'tnp-core/src';
+//#endregion
+
 // import {
 //   NgProgressConfig,
 //   NgProgressModule,
 //   NgProgressRef,
 // } from 'ngx-progressbar';
-import { Taon } from 'taon/src';
 // import { Models } from 'tnp-models';
 // import type { TaonAdmin } from '../taon-admin-mode-configuration';
 
@@ -30,10 +33,15 @@ declare const ENV: any;
   styleUrls: ['./taon-progress-bar.component.scss'],
   standalone: false,
 })
-export class TaonProgressBarComponent implements OnInit {
+export class TaonProgressBarComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   @ViewChild('labProgress') labProgress: any; // NgProgressRef;
+
   @Input() isDesktop: boolean;
+
   admin: any;
+
   handlers: Subscription[] = [];
   // options: NgProgressConfig = _.merge(
   //   {
@@ -69,7 +77,6 @@ export class TaonProgressBarComponent implements OnInit {
 
   loadProgressBar(config, instance = axios) {
     // let requestsCounter = 0;
-
     // const setupStartProgress = () => {
     //   instance.interceptors.request.use(config => {
     //     requestsCounter++;
@@ -77,11 +84,9 @@ export class TaonProgressBarComponent implements OnInit {
     //     return config;
     //   });
     // };
-
     // const setupUpdateProgress = () => {
     //   const update = e => {
     //     // NProgress.inc(calculatePercentage(e.loaded, e.total))
-
     //     const percentage = calculatePercentage(e.loaded, e.total) * 100;
     //     // console.log(`loaded: ${e.loaded}, total: ${e.total} , pecent: ${percentage}`)
     //     this.labProgress.inc(percentage);
@@ -89,7 +94,6 @@ export class TaonProgressBarComponent implements OnInit {
     //   instance.defaults.onDownloadProgress = update;
     //   instance.defaults.onUploadProgress = update;
     // };
-
     // const setupStopProgress = () => {
     //   const responseFunc = response => {
     //     if (--requestsCounter === 0) {
@@ -98,7 +102,6 @@ export class TaonProgressBarComponent implements OnInit {
     //     }
     //     return response;
     //   };
-
     //   const errorFunc = error => {
     //     if (--requestsCounter === 0) {
     //       this.labProgress.complete();
@@ -106,14 +109,11 @@ export class TaonProgressBarComponent implements OnInit {
     //     }
     //     return Promise.reject(error);
     //   };
-
     //   instance.interceptors.response.use(responseFunc, errorFunc);
     // };
-
     // setupStartProgress();
     // setupUpdateProgress();
     // setupStopProgress();
-
     // //#region @websqlOnly
     // const SYMBOL = Taon.symbols;
     // let updateFun: Observable<number> = window[SYMBOL.WEBSQL_REST_PROGRESS_FUN];
@@ -121,19 +121,16 @@ export class TaonProgressBarComponent implements OnInit {
     //   window[SYMBOL.WEBSQL_REST_PROGRESS_FUN] = new Subject();
     // }
     // updateFun = window[SYMBOL.WEBSQL_REST_PROGRESS_FUN];
-
     // let startFun: Subject<void> = window[SYMBOL.WEBSQL_REST_PROGRESS_FUN_START];
     // if (!window[SYMBOL.WEBSQL_REST_PROGRESS_FUN_START]) {
     //   window[SYMBOL.WEBSQL_REST_PROGRESS_FUN_START] = new Subject();
     // }
     // startFun = window[SYMBOL.WEBSQL_REST_PROGRESS_FUN_START];
-
     // let doneFun: Subject<void> = window[SYMBOL.WEBSQL_REST_PROGRESS_FUN_DONE];
     // if (!window[SYMBOL.WEBSQL_REST_PROGRESS_FUN_DONE]) {
     //   window[SYMBOL.WEBSQL_REST_PROGRESS_FUN_DONE] = new Subject();
     // }
     // doneFun = window[SYMBOL.WEBSQL_REST_PROGRESS_FUN_DONE];
-
     // this.handlers.push(
     //   updateFun.subscribe(loaded => {
     //     // console.log(`update: ${loaded}`)
@@ -150,7 +147,6 @@ export class TaonProgressBarComponent implements OnInit {
     //     this.labProgress.start();
     //   }),
     // );
-
     // this.handlers.push(
     //   doneFun.subscribe(() => {
     //     // if ((--requestsCounter) === 0) {
@@ -160,9 +156,6 @@ export class TaonProgressBarComponent implements OnInit {
     //     // }
     //   }),
     // );
-
-
     //#endregion
   }
 }
-//#endregion

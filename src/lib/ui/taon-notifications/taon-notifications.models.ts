@@ -1,8 +1,10 @@
-//#region @browser
+//#region imports
+
 import { HotToastService } from '@ngneat/hot-toast';
 
 export class TaonNotificationOptions {
   title: string;
+
   subtitle?: string;
 }
 

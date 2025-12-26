@@ -1,3 +1,4 @@
+//#region imports
 // iframe-sync.component.ts
 import { NgIf } from '@angular/common';
 import {
@@ -17,6 +18,7 @@ import { debounce } from 'lodash';
 import { Level, Log, Logger } from 'ng2-logger/src';
 import { Subject } from 'rxjs';
 import { filter, takeUntil, distinctUntilChanged } from 'rxjs/operators';
+//#endregion
 
 // taon-iframe-sync.component.ts
 @Component({
@@ -38,8 +40,7 @@ import { filter, takeUntil, distinctUntilChanged } from 'rxjs/operators';
     <div
       *ngIf="!isReady"
       class="iframe-loading-placeholder"
-      [style.background]="loaderBackgroundColor"
-      >
+      [style.background]="loaderBackgroundColor">
       <div class="spinner"></div>
       <p>Loading documentation...</p>
     </div>

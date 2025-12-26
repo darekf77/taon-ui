@@ -1,11 +1,14 @@
-//#region @browser
-import { NgModule } from '@angular/core';
+//#region imports
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { TaonNotificationsComponent } from './taon-notifications.component';
 
 // import { HotToastModule } from '@ngneat/hot-toast';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { TaonNotificationsService } from './taon-notifications.service';
+//#endregion
 
 @NgModule({
   imports: [
@@ -20,4 +23,3 @@ import { TaonNotificationsService } from './taon-notifications.service';
   providers: [TaonNotificationsService],
 })
 export class TaonNotificationsModule {}
-//#endregion

@@ -28,13 +28,13 @@ import { StaticColumnsModule } from 'static-columns/src';
 import { BreakpointsService } from 'static-columns/src';
 import { TaonAdminService } from 'taon/src';
 import { Stor } from 'taon-storage/src';
+import { StorPropertyInLocalStorage } from 'taon-storage/src';
 import { Helpers, _ } from 'tnp-core/src';
 
 import { TaonFullMaterialModule } from '../taon-full-material.module';
 import { TaonNotificationsModule } from '../taon-notifications';
 import { TaonProgressBarModule } from '../taon-progress-bar';
 import { TaonSessionPasscodeComponent } from '../taon-session-passcode';
-
 
 //#endregion
 
@@ -63,62 +63,78 @@ export class TaonAdminModeConfigurationComponent
 {
   //#region fields & getters
   $destroy = new Subject();
+
   public readonly cdr = inject(ChangeDetectorRef);
+
   public readonly taonAdminService: TaonAdminService =
     TaonAdminService.Instance;
+
   public readonly isDesktop: boolean;
+
   public isWebSQLMode: boolean = Helpers.isWebSQL;
+
   public hideTaonToolsInProduction: boolean =
     ENV.hideTaonToolsInProduction && ENV.angularProd;
+
   public isIframe: boolean = window.location !== window.parent.location;
+
   public height: number = 100;
+
   public openedOnce = false;
+
   public reloading: boolean = false;
+
   public showPasscode: boolean =
     _.isString(ENV.passcode) || _.isObject(ENV.passcode);
+
   public passcode: string = _.isString(ENV.passcode)
     ? ENV.passcode
     : _.isObject(ENV.passcode)
       ? ENV.passcode.code
       : '';
+
   public message: string = _.isObject(ENV.passcode)
     ? ENV.passcode.message
     : void 0;
 
   // @ts-ignore
-  @(Stor.property.in.localstorage
-    .for(TaonAdminModeConfigurationComponent)
-    .withDefaultValue(0))
+  @(StorPropertyInLocalStorage.for(
+    TaonAdminModeConfigurationComponent,
+  ).withDefaultValue(0))
   dragPositionX: number;
 
   // @ts-ignore
-  @(Stor.property.in.localstorage
-    .for(TaonAdminModeConfigurationComponent)
-    .withDefaultValue(0))
+  @(StorPropertyInLocalStorage.for(
+    TaonAdminModeConfigurationComponent,
+  ).withDefaultValue(0))
   dragPositionY: number;
 
   dragPositionZero = { x: 0, y: 0 } as Point;
+
   dragPosition: Point;
 
   // @ts-ignore
-  @(Stor.property.in.localstorage
-    .for(TaonAdminModeConfigurationComponent)
-    .withDefaultValue(0))
+  @(StorPropertyInLocalStorage.for(
+    TaonAdminModeConfigurationComponent,
+  ).withDefaultValue(0))
   selectedIndex: number;
 
   @ViewChild('tabGroup') tabGroup;
 
   // @ts-ignore
-  @(Stor.property.in.localstorage
-    .for(TaonAdminModeConfigurationComponent)
-    .withDefaultValue(false))
+  @(StorPropertyInLocalStorage.for(
+    TaonAdminModeConfigurationComponent,
+  ).withDefaultValue(false))
   wasOpenDraggablePopup: boolean;
 
   @Output() taonAdminModeConfigurationDataChanged = new EventEmitter();
+
   @Input() taonAdminModeConfigurationData: any = {};
+
   public get opened() {
     return !this.isIframe && this.taonAdminService.adminPanelIsOpen;
   }
+
   public set opened(v) {
     if (v && !this.openedOnce) {
       this.openedOnce = true;

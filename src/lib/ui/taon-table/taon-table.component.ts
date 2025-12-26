@@ -54,30 +54,44 @@ const defaultColumns = [
 export class TaonTableComponent implements OnDestroy, OnInit {
   //#region fields
   @Input() public pageNumber: number = 1;
+
   @Input() public pageSize: number = 5;
+
   @Input() public allowedColumns: string[] = [];
 
   @Input() public expansionTemplate: TemplateRef<any>;
+
   @Input() public rows = _.times(20, id => {
     return {
       id,
       name: `Amazing ${id} row `,
     };
   });
+
   @Input() entityCrudController: TaonBaseCrudController<any>;
+
   @Input() public columns: MtxGridColumn[] = defaultColumns as MtxGridColumn[];
+
   @Input() public pageSizeOptions: number[] = [5, 10, 20];
+
   @Input() public hideSearch: boolean;
+
   @Output() public expansionChange = new EventEmitter();
 
   @Output() public addingItem = new EventEmitter<void>();
+
   @ViewChild('search', { static: true }) search?: ElementRef<HTMLElement>;
+
   private searchInputChange$: Observable<string>;
 
   public expandable: boolean = false;
+
   public showPaginator = true;
+
   public isLoading = false;
+
   public totalElements: number = 100;
+
   private sub: Subscription = new Subscription();
   //#endregion
 
