@@ -5,39 +5,49 @@
       "url": "./taon-config-standalone.schema.json"
     }
   ],
+
   "window.title": "npm/taon-dev/taon-ui  [ ${activeEditorShort} ]",
+
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": false
   },
+
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": false
   },
+
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": false
   },
+
   "[json5]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": false
   },
+
   "[scss]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": false
   },
+
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": false
   },
+
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": false
   },
+
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": false
   },
+
   "editor.rulers": [80, 120],
   "eslint.migration.2_x": "off",
   "eslint.enable": true,
@@ -48,6 +58,7 @@
   "prettier.endOfLine": "auto",
   "search.useIgnoreFiles": false,
   "search.include": ["**/src/**"],
+
   "search.exclude": {
     "bin": true,
     "local_release": true,
@@ -81,6 +92,7 @@
     "*.rest": true,
     "**/*.rest": true
   },
+
   "files.exclude": {
     "_changelog": true,
     ".sass-cache": true,
@@ -133,20 +145,27 @@
     "tslint.*": true,
     "*.schema.json": true
   },
+
   "workbench.colorCustomizations": {
     "activityBar.background": "#c5679e",
     "statusBar.background": "#70c926",
     "statusBar.debuggingBackground": "#15d8ff"
   },
+
   "files.watcherExclude": {
     "local_release/**": true
   },
+
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": false
   },
+
   "[dockercompose]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": false
-  }
+  },
+
+  "typescript.suggest.autoImports": false,
+  "javascript.suggest.autoImports": false
 }
