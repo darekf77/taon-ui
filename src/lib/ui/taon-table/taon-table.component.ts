@@ -24,6 +24,7 @@ import {
   share,
   tap,
 } from 'rxjs';
+import { Symbols as TaonSymbols } from 'taon/src';
 import { Taon, TaonBaseCrudController, TaonBaseEntity } from 'taon/src';
 import { _ } from 'tnp-core/src';
 import { json5 } from 'tnp-core/src';
@@ -224,9 +225,7 @@ export class TaonTableComponent implements OnDestroy, OnInit {
       // console.log('PAGINTION DATA', {
       //   data,
       // });
-      const totalElements = Number(
-        data.headers.get(Taon.symbols.old.X_TOTAL_COUNT),
-      );
+      const totalElements = Number(data.headers.get(TaonSymbols.old.X_TOTAL_COUNT));
       const rows = data.body.json;
       // console.log('PAGINTION DATA', {
       //   rows,
