@@ -71,7 +71,7 @@ export class TaonAdminModeConfigurationComponent
 
   public readonly isDesktop: boolean;
 
-  public isWebSQLMode: boolean = Helpers.isWebSQL;
+  public isWebSQLMode: boolean = Helpers.getIsWebSQL();
 
   public hideTaonToolsInProduction: boolean =
     ENV.hideTaonToolsInProduction && ENV.angularProd;
