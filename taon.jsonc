@@ -14,11 +14,12 @@
   "isomorphicDependenciesForNpmLib": [],
   "numberOfContexts": 4,
   "peerDependenciesNamesForNpmLib": ["taon"],
+  "shouldGenerateAutogenIndexFile": true,
 
   "packageJsonOverride": {
     "author": "Dariusz Filipiak",
     "description": "Description for taon-ui. Hello world!",
     "private": false,
     "scripts": {},
-  },
+  }
 }
