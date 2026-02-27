@@ -38,7 +38,7 @@
   [expansionTemplate]="expansionTemplate"
   (expansionChange)="expansionRow($event)"
   [length]="totalElements"
-  [loading]="isLoading"
+
   [pageOnFront]="false"
   [pageIndex]="pageNumber - 1"
   [pageSize]="pageSize"
@@ -46,3 +46,5 @@
   [showPaginator]="showPaginator"
   (page)="getNextPage($event)">
 </mtx-grid>
+
+<!-- [loading]="isLoading" -->

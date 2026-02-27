@@ -9,11 +9,13 @@ import {
   ViewChild,
   ElementRef,
   OnDestroy,
+  ChangeDetectorRef,
+  inject,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MtxGridColumn } from '@ng-matero/extensions/grid';
 import { Log, Level } from 'ng2-logger/src';
-import { decodeMapping } from 'ng2-rest/src';
+import { decodeMapping, getDefaultValue } from 'ng2-rest/src';
 import {
   Observable,
   Subscription,
@@ -33,7 +35,12 @@ import { CLASS } from 'typescript-class-helpers/src';
 //#endregion
 
 //#region constants
-const log = Log.create('Table wrapper', Level.WARN, Level.ERROR);
+const log = Log.create(
+  'Table wrapper',
+  // levels
+  Level.WARN,
+  Level.ERROR,
+);
 const defaultColumns = [
   {
     header: 'ID',
@@ -54,6 +61,8 @@ const defaultColumns = [
   standalone: false,
 })
 export class TaonTableComponent implements OnDestroy, OnInit {
+  cdr = inject(ChangeDetectorRef);
+
   //#region fields
   @Input() public pageNumber: number = 1;
 
@@ -134,8 +143,8 @@ export class TaonTableComponent implements OnDestroy, OnInit {
     // })
 
     if (entityClass && columnsConfigSameAsDefault) {
-      const props = Object.keys(decodeMapping(entityClass as Function));
-      log.i('this.crud.entity', props);
+      const props = Object.keys(getDefaultValue(entityClass as Function));
+      log.i('this.crud.entity props', props);
 
       try {
         let columns = props
@@ -246,6 +255,7 @@ export class TaonTableComponent implements OnDestroy, OnInit {
       });
     }
     this.isLoading = false;
+    this.cdr.markForCheck();
   }
   //#endregion
 
