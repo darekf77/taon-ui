@@ -13,6 +13,7 @@ import {
 import { PageEvent } from '@angular/material/paginator';
 import { MtxGridColumn } from '@ng-matero/extensions/grid';
 import { Log, Level } from 'ng2-logger/src';
+import { decodeMapping } from 'ng2-rest/src';
 import {
   Observable,
   Subscription,
@@ -32,7 +33,7 @@ import { CLASS } from 'typescript-class-helpers/src';
 //#endregion
 
 //#region constants
-const log = Log.create('Table wrapper', Level.__NOTHING);
+const log = Log.create('Table wrapper', Level.WARN, Level.ERROR);
 const defaultColumns = [
   {
     header: 'ID',
@@ -133,13 +134,10 @@ export class TaonTableComponent implements OnDestroy, OnInit {
     // })
 
     if (entityClass && columnsConfigSameAsDefault) {
-      log.i(
-        'this.crud.entity',
-        CLASS.describeProperites(entityClass as Function),
-      );
+      const props = Object.keys(decodeMapping(entityClass as Function));
+      log.i('this.crud.entity', props);
 
       try {
-        const props = CLASS.describeProperites(entityClass as Function);
         let columns = props
           .filter(prop =>
             this.allowedColumns.length > 0
@@ -225,7 +223,9 @@ export class TaonTableComponent implements OnDestroy, OnInit {
       // console.log('PAGINTION DATA', {
       //   data,
       // });
-      const totalElements = Number(data.headers.get(TaonSymbols.old.X_TOTAL_COUNT));
+      const totalElements = Number(
+        data.headers.get(TaonSymbols.old.X_TOTAL_COUNT),
+      );
       const rows = data.body.json;
       // console.log('PAGINTION DATA', {
       //   rows,

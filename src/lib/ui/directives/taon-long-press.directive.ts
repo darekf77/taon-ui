@@ -11,7 +11,7 @@ import { Log, Level } from 'ng2-logger/src';
 import { _ } from 'tnp-core/src';
 //#endregion
 
-const log = Log.create(`[taon-helpers] long-press`, Level.__NOTHING);
+const log = Log.create(`[taon-helpers] long-press`, Level.WARN, Level.ERROR);
 
 @Directive({
   selector: '[taonLongPress]',

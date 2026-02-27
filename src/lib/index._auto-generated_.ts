@@ -29,3 +29,5 @@ export * from './ui/taon-progress-bar/taon-progress-bar.module'; // @browser
 export * from './ui/taon-session-passcode/taon-session-passcode.component'; // @browser
 export * from './ui/taon-table/taon-table.component'; // @browser
 export * from './ui/taon-table/taon-table.module'; // @browser
+export * from './ui/taon-theme/taon-theme.component'; // @browser
+export * from './ui/taon-theme/taon-theme.service'; // @browser

@@ -15,7 +15,7 @@ import {
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { debounce } from 'lodash';
-import { Level, Log, Logger } from 'ng2-logger/src';
+import { Level, Log } from 'ng2-logger/src';
 import { Subject } from 'rxjs';
 import { filter, takeUntil, distinctUntilChanged } from 'rxjs/operators';
 //#endregion
