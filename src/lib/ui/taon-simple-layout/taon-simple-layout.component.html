@@ -1,4 +1,5 @@
-<header class="shadow-1 inline-flex w-full justify-content-between flex-wrap">
+<header
+  class="shadow-1 inline-flex w-full justify-content-between align-items-center flex-wrap">
   @if (navItems()?.length > 0) {
     <nav
       class="flex-grow-1"
@@ -29,6 +30,7 @@
   }
   <ng-content select="[header]"></ng-content>
   <taon-theme class="right-0" />
+  <ng-content select="[buttons]"></ng-content>
 </header>
 
 <mat-tab-nav-panel
@@ -39,18 +41,33 @@
   </div>
 
   <div class="fallback-message">
-    Please add your component inside <br />
+    Please add your component inside
+    <br />
+    <pre>
     <code class="surface-100 block">
-      &lt;taon-simple-layout&gt; <br />
-      &lt;header header&gt; <br />
-      logo with header!<br />
-      &lt;img class="border-round"
-      src="src/assets/path-to-my-logo.png"
-      height="50px" /&gt; <br />
+      &lt;taon-simple-layout class=&quot;p-4&quot;&gt;
+        &lt;header
+          header
+          class=&quot;flex-item&quot;&gt;
+          &lt;img
+            class=&quot;border-round&quot;
+            src=&quot;src/assets/images/pluszka-logo.png&quot;
+            height=&quot;50px&quot; /&gt;
+        &lt;/header&gt;
+        &lt;br /&gt;
+        &lt;h3 class=&quot;text-blue-200&quot;&gt;Welcome to hamster store.&lt;/h3&gt;
+        &lt;h3 class=&quot;text-blue-300&quot;&gt;Buy cheap hamster videos for free!&lt;/h3&gt;
+        &lt;h3 class=&quot;text-blue-300&quot;&gt;Subscribe more hamsters video daily!&lt;/h3&gt;
 
-      &lt;/header&gt;<br />
-       component body <br />
-       &lt;/taon-simple-layout&gt;<br />
+        &lt;ng-container buttons&gt;
+          &lt;button
+            mat-button
+            class=&quot;flex align-items-center&quot;&gt;
+            Hello niga!
+          &lt;/button&gt;
+        &lt;/ng-container&gt;
+      &lt;/taon-simple-layout&gt;
     </code>
+    </pre>
   </div>
 </mat-tab-nav-panel>
