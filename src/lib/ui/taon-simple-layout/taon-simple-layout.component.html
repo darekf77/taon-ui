@@ -1,0 +1,56 @@
+<header class="shadow-1 inline-flex w-full justify-content-between flex-wrap">
+  @if (navItems()?.length > 0) {
+    <nav
+      class="flex-grow-1"
+      mat-tab-nav-bar
+      [tabPanel]="tabPanel">
+      @for (item of navItems(); track item.path) {
+        <a
+          mat-tab-link
+          href="javascript:void(0)"
+          [style.text-decoration]="
+            (activePath === item.path && !forceShowBaseRootApp) ||
+            ('/' === item.path && forceShowBaseRootApp)
+              ? 'underline'
+              : 'none'
+          "
+          (click)="navigateTo(item)">
+          @if (item.path === '/') {
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example home icon"
+              fontIcon="home"></mat-icon>
+          } @else {
+            {{ item.label }}
+          }
+        </a>
+      }
+    </nav>
+  }
+  <ng-content select="[header]"></ng-content>
+  <taon-theme class="right-0" />
+</header>
+
+<mat-tab-nav-panel
+  #tabPanel
+  class="pt-2">
+  <div class="projected-wrapper">
+    <ng-content></ng-content>
+  </div>
+
+  <div class="fallback-message">
+    Please add your component inside <br />
+    <code class="surface-100 block">
+      &lt;taon-simple-layout&gt; <br />
+      &lt;header header&gt; <br />
+      logo with header!<br />
+      &lt;img class="border-round"
+      src="src/assets/path-to-my-logo.png"
+      height="50px" /&gt; <br />
+
+      &lt;/header&gt;<br />
+       component body <br />
+       &lt;/taon-simple-layout&gt;<br />
+    </code>
+  </div>
+</mat-tab-nav-panel>

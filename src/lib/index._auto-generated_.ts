@@ -27,6 +27,9 @@ export * from './ui/taon-notifications/taon-notifications.service'; // @browser
 export * from './ui/taon-progress-bar/taon-progress-bar.component'; // @browser
 export * from './ui/taon-progress-bar/taon-progress-bar.module'; // @browser
 export * from './ui/taon-session-passcode/taon-session-passcode.component'; // @browser
+export * from './ui/taon-simple-layout/taon-simple-layout.component'; // @browser
+export * from './ui/taon-simple-layout/taon-simple-layout.model'; 
+export * from './ui/taon-simple-layout/taon-simple-layout.routes'; // @browser
 export * from './ui/taon-table/taon-table.component'; // @browser
 export * from './ui/taon-table/taon-table.module'; // @browser
 export * from './ui/taon-theme/taon-theme.component'; // @browser

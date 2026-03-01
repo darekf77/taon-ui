@@ -1,0 +1,28 @@
+:host {
+  display: block;
+  header {
+    z-index: 999;
+    nav {
+      max-width: 400px;
+    }
+  }
+}
+
+/* If the wrapper has content, hide the fallback */
+.projected-wrapper:not(:empty) + .fallback-message {
+  display: none;
+}
+
+/* If the wrapper is empty, hide the wrapper itself */
+.projected-wrapper:empty {
+  display: none;
+}
+
+// :host::ng-deep {
+//   .mdc-tab__text-label,
+//   .mdc-label,
+//   h3,
+//   p {
+//     color: var(--text-color) !important;
+//   }
+// }
