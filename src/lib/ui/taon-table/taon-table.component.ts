@@ -15,7 +15,7 @@ import {
 import { PageEvent } from '@angular/material/paginator';
 import { MtxGridColumn } from '@ng-matero/extensions/grid';
 import { Log, Level } from 'ng2-logger/src';
-import { decodeMapping, getDefaultValue } from 'ng2-rest/src';
+import { getDefaultMappingSingleObjOrClass, getDefaultModel } from 'ng2-rest/src';
 import {
   Observable,
   Subscription,
@@ -143,7 +143,7 @@ export class TaonTableComponent implements OnDestroy, OnInit {
     // })
 
     if (entityClass && columnsConfigSameAsDefault) {
-      const props = Object.keys(getDefaultValue(entityClass as Function));
+      const props = Object.keys(getDefaultModel(entityClass as Function));
       log.i('this.crud.entity props', props);
 
       try {
