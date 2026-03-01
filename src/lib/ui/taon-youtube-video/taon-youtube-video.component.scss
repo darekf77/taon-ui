@@ -1,0 +1,99 @@
+.yt-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--surface-border);
+
+  // fallback aspect ratio if no height provided
+  &:not([style*='height']) {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+.yt-media {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+}
+
+iframe.yt-media {
+  border: none;
+}
+
+.yt-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5; // 🔥 critical
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.yt-overlay-video {
+  position: absolute;
+  inset: 0;
+  z-index: 5; // 🔥 critical
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(200, 200, 200, 0.5);
+  // pointer-events: all; // blocks iframe clicks
+}
+
+.yt-lock {
+  background: rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+
+  mat-icon {
+    height: 60px;
+    width: 60px;
+    font-size: 56px;
+    color: white;
+  }
+}
+
+.yt-private {
+  background: transparent;
+  pointer-events: all; // blocks iframe clicks
+}
+
+.yt-title {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.yt-play-button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.yt-play-button mat-icon {
+  font-size: 48px;
+  color: white;
+  width: 48px;
+  height: 48px;
+}
+
+.yt-play-button:hover {
+  transform: scale(1.1);
+}
+
+.yt-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+
+  button {
+    background: rgba(0, 0, 0, 0.08);
+  }
+}
