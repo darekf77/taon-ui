@@ -1,0 +1,33 @@
+<div class="flex align-items-center gap-2">
+  <ng-container *ngIf="(session.isLoggedIn$ | async) === false; else loggedIn">
+    <button
+      mat-button
+      (click)="openLogin()">
+      Login
+    </button>
+  </ng-container>
+
+  <ng-template #loggedIn>
+    <button
+      mat-button
+      color="primary"
+      class="auth-btn"
+      (click)="goDashboard()">
+      <mat-icon>dashboard</mat-icon>
+      Dashboard
+    </button>
+    <!-- <button
+      pButton
+      type="button"
+      label="Dashboard"
+      icon="pi pi-th-large"
+      (click)="goDashboard()"></button> -->
+
+    <button
+      mat-button
+      class="ml-2"
+      (click)="logout()">
+      Logout
+    </button>
+  </ng-template>
+</div>

@@ -1,0 +1,69 @@
+<div
+  class="yt-container"
+  [ngClass]="state"
+  [ngStyle]="containerStyle">
+  <!-- PREVIEW IMAGE -->
+  <img
+    *ngIf="state === 'preview-picture' || state === 'preview-picture-locked'"
+    class="yt-media"
+    [src]="previewImage()"
+    [alt]="displayTitle"
+    (click)="onPreviewClick()" />
+
+  <!-- VIDEO -->
+  <iframe
+    #ytFrame
+    *ngIf="state === 'video-preview-open' || state === 'video-preview-private'"
+    class="yt-media"
+    [src]="embedUrl()"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+
+  <!-- PRIVATE OVERLAY -->
+  <div
+    (contextmenu)="onRightClick($event)"
+    (dblclick)="clicked($event)"
+    *ngIf="
+      state === 'video-preview-private' && allowedToBeDisplayedVideoOveraly()
+    "
+    (click)="clicked($event)"
+    class="yt-overlay-video">
+    <h1>BLOCKING CONTEXTMANU LEF CLIK</h1>
+  </div>
+
+  <!-- LOCK OVERLAY -->
+  <div
+    *ngIf="state === 'preview-picture-locked'"
+    class="yt-overlay yt-lock"
+    (click)="onLockClick($event)">
+    <mat-icon>lock</mat-icon>
+  </div>
+</div>
+
+<!-- CONTROLS BELOW VIDEO -->
+<div
+  *ngIf="state === 'video-preview-private'"
+  class="yt-controls">
+  <button
+    mat-icon-button
+    (click)="play()">
+    <mat-icon>play_arrow</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    (click)="pause()">
+    <mat-icon>pause</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    (click)="restart()">
+    <mat-icon>replay</mat-icon>
+  </button>
+</div>
+
+<div class="yt-title">
+  {{ displayTitle }}
+</div>

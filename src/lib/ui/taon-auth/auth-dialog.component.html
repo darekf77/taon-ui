@@ -1,0 +1,31 @@
+<div class="auth-dialog p-4">
+  <h4 class="mb-3">Login or register</h4>
+
+  <div
+    class="w-full"
+    #emailLoginBtn>
+    <button
+      mat-raised-button
+      color="primary"
+      class="auth-btn w-full border-noround"
+      disabled>
+      <mat-icon>mail</mat-icon>
+      Login by email (disabled)
+    </button>
+    <br />
+    <br />
+    <div
+      #googleBtn
+      class="google-container"></div>
+  </div>
+
+  <mat-divider class="my-3"></mat-divider>
+
+  <div class="flex justify-content-end">
+    <button
+      mat-stroked-button
+      mat-dialog-close>
+      Cancel
+    </button>
+  </div>
+</div>

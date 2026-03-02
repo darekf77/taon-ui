@@ -15,6 +15,11 @@ export * from './ui/directives/taon-long-press.directive'; // @browser
 export * from './ui/directives/view-mode'; 
 export * from './ui/taon-admin-mode-configuration/taon-admin-mode-configuration.component'; // @browser
 export * from './ui/taon-admin-mode-configuration/taon-admin.models'; 
+export * from './ui/taon-auth/auth-button.component'; // @browser
+export * from './ui/taon-auth/auth-dialog.component'; // @browser
+export * from './ui/taon-auth/auth.guard'; // @browser
+export * from './ui/taon-auth/google-auth.service'; // @browser
+export * from './ui/taon-auth/session.service'; // @browser
 export * from './ui/taon-github-fork-me-corner/taon-github-fork-me-corner.component'; // @browser
 export * from './ui/taon-github-fork-me-corner/taon-github-fork-me-corner.module'; // @browser
 export * from './ui/taon-github-fork-me-ribbon/taon-github-fork-me-ribbon.component'; // @browser
@@ -34,3 +39,4 @@ export * from './ui/taon-table/taon-table.component'; // @browser
 export * from './ui/taon-table/taon-table.module'; // @browser
 export * from './ui/taon-theme/taon-theme.component'; // @browser
 export * from './ui/taon-theme/taon-theme.service'; // @browser
+export * from './ui/taon-youtube-video/taon-youtube-video.component'; // @browser
