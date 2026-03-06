@@ -1,8 +1,14 @@
 //#region imports
 import { AsyncPipe, JsonPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -29,6 +35,7 @@ import { TaonSimpleLayoutNavItem } from './taon-simple-layout.model';
     MatListModule,
     MatTabsModule,
     RouterModule,
+    MatDialogModule,
     JsonPipe,
     TaonThemeComponent,
   ],
@@ -36,9 +43,22 @@ import { TaonSimpleLayoutNavItem } from './taon-simple-layout.model';
 export class TaonSimpleLayoutComponent {
   protected router = inject(Router);
 
+  protected dialog = inject(MatDialog);
+
   navItems = input<TaonSimpleLayoutNavItem[]>();
 
   navigateTo(item: { path: string; label: string }): void {
     this.router.navigateByUrl(item.path);
+  }
+
+  openDialog(
+    enterAnimationDuration: string | number,
+    exitAnimationDuration: string | number,
+  ): void {
+    this.dialog.open(TaonThemeComponent, {
+      width: '400px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 }

@@ -1,36 +1,47 @@
 <header
-  class="shadow-1 inline-flex w-full justify-content-between align-items-center flex-wrap">
-  @if (navItems()?.length > 0) {
-    <nav
-      class="flex-grow-1"
-      mat-tab-nav-bar
-      [tabPanel]="tabPanel">
-      @for (item of navItems(); track item.path) {
-        <a
-          mat-tab-link
-          href="javascript:void(0)"
-          [style.text-decoration]="
-            (activePath === item.path && !forceShowBaseRootApp) ||
-            ('/' === item.path && forceShowBaseRootApp)
-              ? 'underline'
-              : 'none'
-          "
-          (click)="navigateTo(item)">
-          @if (item.path === '/') {
-            <mat-icon
-              aria-hidden="false"
-              aria-label="Example home icon"
-              fontIcon="home"></mat-icon>
-          } @else {
-            {{ item.label }}
-          }
-        </a>
-      }
-    </nav>
-  }
-  <ng-content select="[header]"></ng-content>
-  <taon-theme class="right-0" />
-  <ng-content select="[buttons]"></ng-content>
+  class="shadow-1 inline-flex w-full justify-content-end align-items-center flex-row">
+  <div class="flex-grow-1 align-items-center justify-content-center flex-row">
+    @if (navItems()?.length > 0) {
+      <nav
+        mat-tab-nav-bar
+        [tabPanel]="tabPanel">
+        @for (item of navItems(); track item.path) {
+          <a
+            mat-tab-link
+            href="javascript:void(0)"
+            [style.text-decoration]="
+              (activePath === item.path && !forceShowBaseRootApp) ||
+              ('/' === item.path && forceShowBaseRootApp)
+                ? 'underline'
+                : 'none'
+            "
+            (click)="navigateTo(item)">
+            @if (item.path === '/') {
+              <mat-icon
+                aria-hidden="false"
+                aria-label="Example home icon"
+                fontIcon="home"></mat-icon>
+            } @else {
+              {{ item.label }}
+            }
+          </a>
+        }
+      </nav>
+    }
+    <ng-content select="[header]"></ng-content>
+  </div>
+
+  <div class="flex-grow-0 flex align-items-center justify-content-center flex-row">
+    <!-- <taon-theme class="right-0" /> -->
+    <button
+      class="flex"
+      (click)="openDialog(200, 200)"
+      mat-icon-button>
+      <mat-icon>settings</mat-icon>
+    </button>
+
+    <ng-content select="[buttons]"></ng-content>
+  </div>
 </header>
 
 <mat-tab-nav-panel
