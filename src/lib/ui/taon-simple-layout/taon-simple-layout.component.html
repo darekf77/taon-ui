@@ -31,16 +31,16 @@
     <ng-content select="[header]"></ng-content>
   </div>
 
-  <div class="flex-grow-0 flex align-items-center justify-content-center flex-row">
+  <div
+    class="flex-grow-0 flex align-items-center justify-content-center flex-row">
     <!-- <taon-theme class="right-0" /> -->
+    <ng-content select="[buttons]"></ng-content>
     <button
-      class="flex"
+      class="flex mr-2"
       (click)="openDialog(200, 200)"
       mat-icon-button>
       <mat-icon>settings</mat-icon>
     </button>
-
-    <ng-content select="[buttons]"></ng-content>
   </div>
 </header>
 

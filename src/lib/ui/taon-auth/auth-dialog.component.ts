@@ -1,18 +1,34 @@
 import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   Input,
   ViewChild,
   inject,
+  ChangeDetectorRef,
 } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { ThemePalette } from '@angular/material/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MtxLoaderModule, MtxLoaderType } from '@ng-matero/extensions/loader';
 import { PrimeIcons } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { _ } from 'tnp-core/src';
 
 import { GoogleAuthService } from './google-auth.service';
 import { SessionService } from './session.service';
@@ -26,12 +42,26 @@ import { SessionService } from './session.service';
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MtxLoaderModule,
     ButtonModule,
+    InputTextModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './auth-dialog.component.html',
   styleUrl: './auth-dialog.component.scss',
 })
 export class AuthDialogComponent implements AfterViewInit {
+  cdr = inject(ChangeDetectorRef);
+
+  form = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+  });
+
   @Input({ required: true }) googleClientId!: string;
 
   @ViewChild('emailLoginBtn', { static: true })
@@ -40,11 +70,38 @@ export class AuthDialogComponent implements AfterViewInit {
   @ViewChild('googleBtn', { static: true })
   googleBtn!: ElementRef<HTMLDivElement>;
 
+  diableLoginByEmail = !(
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1'
+  );
+
   private readonly dialogRef = inject(MatDialogRef<AuthDialogComponent>);
 
   private readonly googleAuth = inject(GoogleAuthService);
 
   private readonly session = inject(SessionService);
+
+  googleButtonLoaded = false;
+
+  loginByEmail(): void {
+    this.form.markAllAsTouched();
+    this.form.updateValueAndValidity();
+    if (this.form.invalid) {
+      return;
+    }
+
+    const displayName = _.startCase(
+      (this.form.value.email || '').split('@')[0],
+    );
+
+    this.session.loginWithGoogle({
+      email: this.form.value.email,
+      emailVerified: true,
+      displayName,
+      // pictureUrl: payload.picture,
+    });
+    this.dialogRef.close();
+  }
 
   ngAfterViewInit(): void {
     if (!this.googleClientId) {
@@ -57,7 +114,7 @@ export class AuthDialogComponent implements AfterViewInit {
         const el: HTMLElement = this.emailLoginBtn.nativeElement;
         const width = Math.floor(el.getBoundingClientRect().width);
         // el.style.width = `${width}px`;
-        console.log({ width });
+        // console.log({ width });
         this.googleAuth
           .renderButton(
             this.googleBtn.nativeElement,
@@ -67,6 +124,8 @@ export class AuthDialogComponent implements AfterViewInit {
           .subscribe(payload => {
             const email = payload.email;
             const verified = !!payload.email_verified;
+            this.googleButtonLoaded = true;
+            this.cdr.markForCheck();
 
             if (email && verified) {
               this.session.loginWithGoogle({

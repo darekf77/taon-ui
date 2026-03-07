@@ -15,6 +15,8 @@ const STORAGE_KEY = 'auth_session_v1';
 export class SessionService {
   private readonly state$ = new BehaviorSubject<SessionState>(this.load());
 
+  data$ = this.state$.asObservable();
+
   readonly isLoggedIn$ = this.state$.pipe(
     map(s => !!s.isLoggedIn),
     distinctUntilChanged(),

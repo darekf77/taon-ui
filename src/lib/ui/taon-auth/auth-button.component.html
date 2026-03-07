@@ -16,18 +16,12 @@
       <mat-icon>dashboard</mat-icon>
       Dashboard
     </button>
-    <!-- <button
-      pButton
-      type="button"
-      label="Dashboard"
-      icon="pi pi-th-large"
-      (click)="goDashboard()"></button> -->
 
     <button
       mat-button
       class="ml-2"
       (click)="logout()">
-      Logout
+      Logout ({{ (session.data$ | async)?.displayName }})
     </button>
   </ng-template>
 </div>

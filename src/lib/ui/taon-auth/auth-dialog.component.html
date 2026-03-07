@@ -4,26 +4,60 @@
   <div
     class="w-full"
     #emailLoginBtn>
-    <button
-      mat-raised-button
-      color="primary"
-      class="auth-btn w-full border-noround"
-      disabled>
-      <mat-icon>mail</mat-icon>
-      Login by email (disabled)
-    </button>
-    <br />
-    <br />
+    <form
+      [formGroup]="form"
+      (ngSubmit)="loginByEmail()"
+      class="w-full">
+      <mat-form-field
+        appearance="outline"
+        class="w-full email-field">
+        <mat-label *ngIf="!diableLoginByEmail">Email</mat-label>
+
+        <input
+          matInput
+          formControlName="email"
+          class="pl-1"
+          type="email"
+          [placeholder]="
+            diableLoginByEmail ? 'Login by email (disabled)' : ''
+          " />
+
+        <button
+          mat-icon-button
+          [disabled]="diableLoginByEmail"
+          matSuffix
+          color="primary">
+          <mat-icon>mail</mat-icon>
+        </button>
+        <mat-error *ngIf="form.get('email')?.hasError('email')">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <div class="divider">
+      <span>or</span>
+    </div>
+    <!-- Placeholder for goole button -->
     <div
       #googleBtn
-      class="google-container"></div>
+      class="google-container">
+      <span
+        *ngIf="!googleButtonLoaded"
+        class="text-300 p-2"
+        >loading google button..</span
+      >
+      <mat-progress-bar
+        *ngIf="!googleButtonLoaded"
+        mode="indeterminate"
+        class="auth-progress" />
+    </div>
   </div>
-
-  <mat-divider class="my-3"></mat-divider>
+  <br />
+  <!-- <mat-divider class="my-3"></mat-divider> -->
 
   <div class="flex justify-content-end">
     <button
-      mat-stroked-button
+      mat-button
       mat-dialog-close>
       Cancel
     </button>
