@@ -25,16 +25,19 @@ export * from './ui/taon-github-fork-me-corner/taon-github-fork-me-corner.module
 export * from './ui/taon-github-fork-me-ribbon/taon-github-fork-me-ribbon.component'; // @browser
 export * from './ui/taon-github-fork-me-ribbon/taon-github-fork-me-ribbon.module'; // @browser
 export * from './ui/taon-iframe-sync/taon-iframe-sync.component'; // @browser
+export * from './ui/taon-kv-authorization/taon-kv-authorization.component'; // @browser
 export * from './ui/taon-notifications/taon-notifications.component'; // @browser
 export * from './ui/taon-notifications/taon-notifications.models'; 
 export * from './ui/taon-notifications/taon-notifications.module'; // @browser
 export * from './ui/taon-notifications/taon-notifications.service'; // @browser
 export * from './ui/taon-progress-bar/taon-progress-bar.component'; // @browser
 export * from './ui/taon-progress-bar/taon-progress-bar.module'; // @browser
+export * from './ui/taon-rumble/taon-rumble.component'; // @browser
 export * from './ui/taon-session-passcode/taon-session-passcode.component'; // @browser
 export * from './ui/taon-simple-layout/taon-simple-layout.component'; // @browser
 export * from './ui/taon-simple-layout/taon-simple-layout.model'; 
 export * from './ui/taon-simple-layout/taon-simple-layout.routes'; // @browser
+export * from './ui/taon-stripe-buy-button/taon-stripe-buy-button.component'; // @browser
 export * from './ui/taon-table/taon-table.component'; // @browser
 export * from './ui/taon-table/taon-table.module'; // @browser
 export * from './ui/taon-theme/taon-theme.component'; // @browser

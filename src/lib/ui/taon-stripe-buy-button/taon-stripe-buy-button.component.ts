@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { _ } from 'tnp-core/src';
 
 @Component({
   selector: 'taon-stripe-buy-button',
-  imports: [CommonModule],
+  imports: [CommonModule, MatButtonModule],
   templateUrl: './taon-stripe-buy-button.component.html',
 })
 export class TaonStripeBuyButtonComponent {

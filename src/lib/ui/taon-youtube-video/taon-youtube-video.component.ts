@@ -88,7 +88,7 @@ export class TaonYoutubeVideoComponent implements OnChanges, AfterViewInit {
   allowedToBeDisplayedVideoOveraly = signal(true);
 
   onRightClick(event) {
-    console.log(event);
+    // console.log(event);
     event.preventDefault();
     event.stopPropagation();
   }
@@ -97,10 +97,10 @@ export class TaonYoutubeVideoComponent implements OnChanges, AfterViewInit {
     event.stopPropagation();
     this.allowedToBeDisplayedVideoOveraly.set(false);
     this.cdr.detectChanges();
-    setTimeout(() => {
-      this.allowedToBeDisplayedVideoOveraly.set(true);
-      this.cdr.detectChanges();
-    }, 200);
+    // setTimeout(() => {
+    //   this.allowedToBeDisplayedVideoOveraly.set(true);
+    //   this.cdr.detectChanges();
+    // }, 200);
   }
 
   restart() {
@@ -134,15 +134,15 @@ export class TaonYoutubeVideoComponent implements OnChanges, AfterViewInit {
 
   private handleStateChange(state: number) {
     // @ts-ignore
-    const YT = window.YT;
+    // const YT = window.YT;
 
-    // @ts-ignore
-    console.log({ state, plauerstate: YT.PlayerState });
+    // // @ts-ignore
+    // console.log({ state, plauerstate: YT.PlayerState });
 
-    this.currentVideoState = Object.keys(this.PS).find(
-      c => this.PS[c] === state,
-    ) as any;
-    console.log('currentVideoState', this.currentVideoState);
+    // this.currentVideoState = Object.keys(this.PS).find(
+    //   c => this.PS[c] === state,
+    // ) as any;
+    // console.log('currentVideoState', this.currentVideoState);
   }
 
   private videoIdSignal = signal<string>('');
@@ -170,11 +170,11 @@ export class TaonYoutubeVideoComponent implements OnChanges, AfterViewInit {
   embedUrl = computed<SafeResourceUrl>(() =>
     this.sanitizer.bypassSecurityTrustResourceUrl(
       `https://www.youtube.com/embed/${this.videoIdSignal()}?enablejsapi=1` +
-        (this.state === 'video-preview-private' ? `&controls=0` : '') +
+        // (this.state === 'video-preview-private' ? `&controls=0` : '') +
         (this.state === 'video-preview-private' ? `&modestbranding=1` : '') +
         (this.state === 'video-preview-private' ? `&rel=0` : '') +
         // (this.state === 'video-preview-private' ? `&fs=0` : '') +
-        (this.state === 'video-preview-private' ? `&rel=0` : '') +
+        // (this.state === 'video-preview-private' ? `&rel=0` : '') +
         `&disablekb=1` +
         `&playsinline=1` +
         `&origin=${window.location.origin}`,
@@ -186,7 +186,7 @@ export class TaonYoutubeVideoComponent implements OnChanges, AfterViewInit {
   }
 
   get displayTitle() {
-    return this.title || 'YouTube video';
+    return this.title;
   }
 
   onLockClick(event: MouseEvent) {
