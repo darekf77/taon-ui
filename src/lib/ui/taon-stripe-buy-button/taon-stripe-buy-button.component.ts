@@ -15,6 +15,8 @@ export class TaonStripeBuyButtonComponent {
    */
   @Input({ required: true }) priceId!: string;
 
+  @Input({ required: true }) productId!: string;
+
   /**
    * Cloudflare worker url that creates checkout session
    * example: https://super-73d1b.darekf77.workers.dev
@@ -41,8 +43,12 @@ export class TaonStripeBuyButtonComponent {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.successUrl = _.isString(this.successUrl) ? this.successUrl : `${location.href.split('?')[0]}?success=true`;
-    this.cancelUrl = _.isString(this.cancelUrl) ? this.cancelUrl : `${location.href.split('?')[0]}?cancel=true`;
+    this.successUrl = _.isString(this.successUrl)
+      ? this.successUrl
+      : `${location.href.split('?')[0]}?success=true&productId=${this.productId}`;
+    this.cancelUrl = _.isString(this.cancelUrl)
+      ? this.cancelUrl
+      : `${location.href.split('?')[0]}?cancel=true`;
     // console.log({successUrl:this.successUrl})
     // console.log({cancelUrl:this.cancelUrl})
   }
@@ -65,7 +71,7 @@ export class TaonStripeBuyButtonComponent {
           priceId: this.priceId,
           email: this.email,
           success_url: this.successUrl,
-					cancel_url:this.cancelUrl,
+          cancel_url: this.cancelUrl,
         }),
       });
 
