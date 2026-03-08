@@ -1,0 +1,46 @@
+<div class="taon-rumble">
+  <!-- PREVIEW MODE -->
+  <div
+    *ngIf="isPreview()"
+    class="preview"
+    (click)="onPreviewClick()">
+    <img
+      class="preview-img"
+      [src]="picturePreviewUrl"
+      [alt]="title" />
+
+    <div class="title">
+      {{ title }}
+    </div>
+
+    <!-- PLAY BUTTON -->
+    <div class="play-button">▶</div>
+
+    <!-- LOCK -->
+    <div
+      *ngIf="isLocked()"
+      class="lock"
+      (click)="onPadlockClick($event)">
+      🔒
+    </div>
+  </div>
+
+  <!-- VIDEO OPEN -->
+  <div
+    *ngIf="isVideoOpen()"
+    class="video">
+    <iframe
+      class="rumble-frame"
+      [src]="embedUrl()"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- PRIVATE VIDEO -->
+  <div
+    *ngIf="isPrivate()"
+    class="private">
+    <div class="private-box">🔒 Private video</div>
+  </div>
+</div>
