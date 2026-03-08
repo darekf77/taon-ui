@@ -71,8 +71,7 @@ export class AuthDialogComponent implements AfterViewInit {
   googleBtn!: ElementRef<HTMLDivElement>;
 
   diableLoginByEmail = !(
-    window.location.hostname === 'localhost' ||
-    window.location.hostname === '127.0.0.1'
+    window.location.hostname === 'localhost'
   );
 
   private readonly dialogRef = inject(MatDialogRef<AuthDialogComponent>);
@@ -101,6 +100,14 @@ export class AuthDialogComponent implements AfterViewInit {
       // pictureUrl: payload.picture,
     });
     this.dialogRef.close();
+  }
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    if(this.diableLoginByEmail) {
+      this.form.controls.email.disable();
+    }
   }
 
   ngAfterViewInit(): void {
