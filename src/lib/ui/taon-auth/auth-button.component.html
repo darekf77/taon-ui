@@ -9,6 +9,7 @@
 
   <ng-template #loggedIn>
     <button
+      *ngIf="displayDashboardButton"
       mat-button
       color="primary"
       class="auth-btn"
