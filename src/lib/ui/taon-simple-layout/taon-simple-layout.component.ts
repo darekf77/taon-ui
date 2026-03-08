@@ -16,6 +16,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 
 import { TaonThemeComponent } from '../taon-theme/taon-theme.component';
+import { TaonThemeService } from '../taon-theme/taon-theme.service';
 
 import { TaonSimpleLayoutNavItem } from './taon-simple-layout.model';
 //#endregion
@@ -44,6 +45,8 @@ export class TaonSimpleLayoutComponent {
   protected router = inject(Router);
 
   protected dialog = inject(MatDialog);
+
+  protected theme = inject(TaonThemeService);
 
   navItems = input<TaonSimpleLayoutNavItem[]>();
 
