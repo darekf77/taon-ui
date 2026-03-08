@@ -58,8 +58,13 @@ import { SessionService } from './session.service';
 export class AuthDialogComponent implements AfterViewInit {
   cdr = inject(ChangeDetectorRef);
 
+  emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
   form = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern(this.emailRegex), // Use pattern instead of .email
+    ]),
   });
 
   @Input({ required: true }) googleClientId!: string;
@@ -70,9 +75,7 @@ export class AuthDialogComponent implements AfterViewInit {
   @ViewChild('googleBtn', { static: true })
   googleBtn!: ElementRef<HTMLDivElement>;
 
-  diableLoginByEmail = !(
-    window.location.hostname === 'localhost'
-  );
+  diableLoginByEmail = !(window.location.hostname === 'localhost');
 
   private readonly dialogRef = inject(MatDialogRef<AuthDialogComponent>);
 
@@ -105,7 +108,7 @@ export class AuthDialogComponent implements AfterViewInit {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    if(this.diableLoginByEmail) {
+    if (this.diableLoginByEmail) {
       this.form.controls.email.disable();
     }
   }
