@@ -1,0 +1,10 @@
+<button
+  type="button"
+  (click)="buy()"
+  [disabled]="loading">
+  <span *ngIf="!loading">
+    {{ label }}
+  </span>
+
+  <span *ngIf="loading"> Redirecting to Stripe... </span>
+</button>
