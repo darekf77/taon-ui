@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, distinctUntilChanged, map, shareReplay } from 'rxjs';
+
+import { MicrosoftAuthService } from './microsoft-auth.service';
 
 export interface SessionState {
   isLoggedIn: boolean;
@@ -13,6 +15,8 @@ const STORAGE_KEY = 'auth_session_v1';
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
+  microsoftLogin = inject(MicrosoftAuthService);
+
   private readonly state$ = new BehaviorSubject<SessionState>(this.load());
 
   data$ = this.state$.asObservable();

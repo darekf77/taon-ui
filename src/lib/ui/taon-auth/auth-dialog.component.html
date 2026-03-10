@@ -34,10 +34,12 @@
         </mat-error>
       </mat-form-field>
     </form>
+
     <div class="divider">
       <span>or</span>
     </div>
-    <!-- Placeholder for goole button -->
+
+    <!-- GOOGLE BUTTON -->
     <div
       #googleBtn
       class="google-container">
@@ -51,9 +53,24 @@
         mode="indeterminate"
         class="auth-progress" />
     </div>
+
+    <!-- MICROSOFT BUTTON -->
+    <div
+      *ngIf="microsoftClientId"
+      #microsoftBtn
+      class="microsoft-container">
+      <button
+        mat-stroked-button
+        color="primary"
+        class="w-full microsoft-btn"
+        (click)="loginWithMicrosoft()">
+        <mat-icon class="mr-2">login</mat-icon>
+        Continue with Microsoft
+      </button>
+    </div>
   </div>
+
   <br />
-  <!-- <mat-divider class="my-3"></mat-divider> -->
 
   <div class="flex justify-content-end">
     <button

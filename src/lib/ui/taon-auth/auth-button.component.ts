@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import {_} from 'tnp-core/src';
+import { _ } from 'tnp-core/src';
 
 import { AuthDialogComponent } from './auth-dialog.component';
 import { SessionService } from './session.service';
@@ -20,7 +20,9 @@ import { SessionService } from './session.service';
 export class AuthButtonComponent implements OnInit {
   @Input({ required: true }) linkToDashboard!: string;
 
-  @Input({ required: true }) googleClientId!: string;
+  @Input() googleClientId?: string;
+
+  @Input() microsoftClientId?: string;
 
   @Input() displayDashboardButton: boolean;
 
@@ -31,10 +33,12 @@ export class AuthButtonComponent implements OnInit {
   private readonly router = inject(Router);
 
   openLogin() {
-    this.dialog.open(AuthDialogComponent, {
+    const instance = this.dialog.open(AuthDialogComponent, {
       width: '410px',
       data: null,
-    }).componentInstance.googleClientId = this.googleClientId;
+    }).componentInstance;
+    instance.googleClientId = this.googleClientId;
+    instance.microsoftClientId = this.microsoftClientId;
   }
 
   goDashboard() {
@@ -48,6 +52,12 @@ export class AuthButtonComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (!this.microsoftClientId) {
+      console.warn('[taon-auth-button] Microsoft client id missing [microsoftClientId]');
+    }
+    if (!this.googleClientId) {
+      console.warn('[taon-auth-button] Google client id missing [googleClientId]');
+    }
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     // console.log('this.displayDashboardButton', this.displayDashboardButton);

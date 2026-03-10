@@ -19,6 +19,7 @@ export * from './ui/taon-auth/auth-button.component'; // @browser
 export * from './ui/taon-auth/auth-dialog.component'; // @browser
 export * from './ui/taon-auth/auth.guard'; // @browser
 export * from './ui/taon-auth/google-auth.service'; // @browser
+export * from './ui/taon-auth/microsoft-auth.service'; // @browser
 export * from './ui/taon-auth/session.service'; // @browser
 export * from './ui/taon-github-fork-me-corner/taon-github-fork-me-corner.component'; // @browser
 export * from './ui/taon-github-fork-me-corner/taon-github-fork-me-corner.module'; // @browser

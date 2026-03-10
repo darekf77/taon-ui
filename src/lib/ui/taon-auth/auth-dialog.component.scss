@@ -8,6 +8,17 @@
   border-color: #9ca3af !important;
 }
 
+.microsoft-container {
+  width: 100%;
+}
+
+.microsoft-btn {
+  height: 40px;
+  border-radius: 4px !important; // square-ish
+  border-color: #9ca3af !important;
+  background-color: white;
+}
+
 :host::ng-deep {
   .email-field {
     .mdc-notched-outline__trailing,

@@ -8,6 +8,7 @@ import {
   ViewChild,
   inject,
   ChangeDetectorRef,
+  OnInit,
 } from '@angular/core';
 import {
   FormControl,
@@ -31,6 +32,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { _ } from 'tnp-core/src';
 
 import { GoogleAuthService } from './google-auth.service';
+import { MicrosoftAuthService } from './microsoft-auth.service';
 import { SessionService } from './session.service';
 
 @Component({
@@ -55,7 +57,7 @@ import { SessionService } from './session.service';
   templateUrl: './auth-dialog.component.html',
   styleUrl: './auth-dialog.component.scss',
 })
-export class AuthDialogComponent implements AfterViewInit {
+export class AuthDialogComponent implements AfterViewInit, OnInit {
   cdr = inject(ChangeDetectorRef);
 
   emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -63,11 +65,13 @@ export class AuthDialogComponent implements AfterViewInit {
   form = new FormGroup({
     email: new FormControl('', [
       Validators.required,
-      Validators.pattern(this.emailRegex), // Use pattern instead of .email
+      Validators.pattern(this.emailRegex),
     ]),
   });
 
-  @Input({ required: true }) googleClientId!: string;
+  @Input() googleClientId?: string;
+
+  @Input() microsoftClientId?: string;
 
   @ViewChild('emailLoginBtn', { static: true })
   emailLoginBtn!: ElementRef<HTMLDivElement>;
@@ -81,9 +85,30 @@ export class AuthDialogComponent implements AfterViewInit {
 
   private readonly googleAuth = inject(GoogleAuthService);
 
+  private readonly microsoftAuth = inject(MicrosoftAuthService);
+
   private readonly session = inject(SessionService);
 
   googleButtonLoaded = false;
+
+  loginWithMicrosoft(): void {
+    if (!this.microsoftClientId) {
+      console.warn('Microsoft client id missing [microsoftClientId]');
+      return;
+    }
+    this.microsoftAuth.login(this.microsoftClientId).subscribe(profile => {
+      if (!profile?.email) return;
+
+      this.session.loginWithGoogle({
+        email: profile.email,
+        emailVerified: true,
+        displayName: profile.name,
+        pictureUrl: profile.picture,
+      });
+
+      this.dialogRef.close();
+    });
+  }
 
   loginByEmail(): void {
     this.form.markAllAsTouched();
@@ -100,14 +125,11 @@ export class AuthDialogComponent implements AfterViewInit {
       email: this.form.value.email,
       emailVerified: true,
       displayName,
-      // pictureUrl: payload.picture,
     });
     this.dialogRef.close();
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     if (this.diableLoginByEmail) {
       this.form.controls.email.disable();
     }
@@ -115,7 +137,7 @@ export class AuthDialogComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     if (!this.googleClientId) {
-      console.warn('Google client id missing');
+      console.warn('Google client id missing [googleClientId]');
       return;
     }
 
@@ -123,8 +145,7 @@ export class AuthDialogComponent implements AfterViewInit {
       setTimeout(() => {
         const el: HTMLElement = this.emailLoginBtn.nativeElement;
         const width = Math.floor(el.getBoundingClientRect().width);
-        // el.style.width = `${width}px`;
-        // console.log({ width });
+
         this.googleAuth
           .renderButton(
             this.googleBtn.nativeElement,
