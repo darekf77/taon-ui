@@ -29,8 +29,19 @@
           color="primary">
           <mat-icon>mail</mat-icon>
         </button>
-        <mat-error *ngIf="form.get('email')?.hasError('email')">
+        <mat-error
+          *ngIf="
+            form.get('email')?.hasError('pattern') && form.get('email')?.touched
+          ">
           Please enter a valid email address
+        </mat-error>
+
+        <mat-error
+          *ngIf="
+            form.get('email')?.hasError('required') &&
+            form.get('email')?.touched
+          ">
+          Email is <strong>required</strong>
         </mat-error>
       </mat-form-field>
     </form>

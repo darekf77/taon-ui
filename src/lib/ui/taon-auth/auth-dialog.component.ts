@@ -21,6 +21,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ThemePalette } from '@angular/material/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -45,6 +46,7 @@ import { SessionService } from './session.service';
     MatIconModule,
     MatDividerModule,
     MatInputModule,
+    MatFormFieldModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MtxLoaderModule,
@@ -60,7 +62,7 @@ import { SessionService } from './session.service';
 export class AuthDialogComponent implements AfterViewInit, OnInit {
   cdr = inject(ChangeDetectorRef);
 
-  emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  emailRegex = /^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
 
   form = new FormGroup({
     email: new FormControl('', [
