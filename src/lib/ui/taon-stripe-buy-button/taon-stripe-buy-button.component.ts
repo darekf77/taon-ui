@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { _ } from 'tnp-core/src';
+import { _, TaonStripeCloudflareWorker } from 'tnp-core/src';
 
 @Component({
   selector: 'taon-stripe-buy-button',
@@ -62,18 +62,21 @@ export class TaonStripeBuyButtonComponent {
     this.loading = true;
 
     try {
-      const resp = await fetch(`${this.workerUrl}/create-checkout-session`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const resp = await fetch(
+        `${this.workerUrl}${TaonStripeCloudflareWorker.HOOK_CREATE_STRIPE_SESSION}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            priceId: this.priceId,
+            email: this.email,
+            success_url: this.successUrl,
+            cancel_url: this.cancelUrl,
+          }),
         },
-        body: JSON.stringify({
-          priceId: this.priceId,
-          email: this.email,
-          success_url: this.successUrl,
-          cancel_url: this.cancelUrl,
-        }),
-      });
+      );
 
       const data = await resp.json();
 
