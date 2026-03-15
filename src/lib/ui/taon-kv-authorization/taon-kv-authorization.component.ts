@@ -9,6 +9,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   inject,
+  SimpleChanges,
 } from '@angular/core';
 import { TaonStripeCloudflareWorker } from 'tnp-core/src';
 
@@ -17,17 +18,24 @@ export interface TaonKvAuthorizationProduct {
   /**
    * ex. YT playlist id
    */
-  parentId?:string;
+  parentId?: string;
   /**
-   * ex. YT id
+   * ex. YT id (NOT SAVED INTO AUTHORIZATION DB)
    */
   productId: string;
   /**
    * string with price => real price store in stripe products
    */
   price: string;
+  /**
+   * example: price_1T8VJBL324234234s36zuh
+   */
   stripePriceId?: string; // stripe price
-  stripeProductId?: string; // prod_U6ifA2S3HNSoQr
+  /**
+   * example: prod_U6if12A2S133HNSoQ2r
+   * SAVED INTO AUTORIZATION DB
+   */
+  stripeProductId?: string;
   authorized?: boolean;
   children?: TaonKvAuthorizationProduct[];
 }
@@ -58,12 +66,22 @@ export class TaonKvAuthorizationComponent implements OnInit {
   protected authorizationCheckingInProgress = false;
 
   ngOnInit(): void {
-    this.products = this.products ? this.products: [];
+    this.products = this.products ? this.products : [];
+    this.checkIfProducstsAuthorized();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
     this.checkIfProducstsAuthorized();
   }
 
   public async checkIfProducstsAuthorized(): Promise<void> {
-    if (this.authorizationCheckingInProgress) {
+    if (
+      this.authorizationCheckingInProgress ||
+      !this.products ||
+      this.products.length === 0
+    ) {
       return;
     }
     this.authorizationCheckingInProgress = true;
