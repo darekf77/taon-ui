@@ -14,6 +14,13 @@ import { TaonStripeCloudflareWorker } from 'tnp-core/src';
 
 export interface TaonKvAuthorizationProduct {
   productTitle: string;
+  /**
+   * ex. YT playlist id
+   */
+  parentId?:string;
+  /**
+   * ex. YT id
+   */
   productId: string;
   /**
    * string with price => real price store in stripe products
@@ -22,6 +29,7 @@ export interface TaonKvAuthorizationProduct {
   stripePriceId?: string; // stripe price
   stripeProductId?: string; // prod_U6ifA2S3HNSoQr
   authorized?: boolean;
+  children?: TaonKvAuthorizationProduct[];
 }
 
 @Component({
@@ -50,6 +58,7 @@ export class TaonKvAuthorizationComponent implements OnInit {
   protected authorizationCheckingInProgress = false;
 
   ngOnInit(): void {
+    this.products = this.products ? this.products: [];
     this.checkIfProducstsAuthorized();
   }
 
