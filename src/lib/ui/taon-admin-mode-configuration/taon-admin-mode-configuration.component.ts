@@ -36,7 +36,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { StaticColumnsModule } from 'static-columns/src';
-import { TaonAdminPanelMode, TaonAdminService } from 'taon/src';
+import { TaonAdminPanelMode, TaonAdminService, TaonAdminTab } from 'taon/src';
 import { TaonStor } from 'taon-storage/src';
 import { Helpers, _ } from 'tnp-core/src';
 
@@ -86,12 +86,11 @@ export class TaonAdminModeConfigurationComponent
 
   public isWebSQLMode: boolean = Helpers.getIsWebSQL();
 
-  public height: number = 100;
-
-  // TODO
-  public scrollableEnabled = false;
+  public height: number = 0;
 
   public reloading = signal(false);
+
+  @Input() scrollableEnabled = false;
 
   @Input() showPasscode: boolean;
 
@@ -186,4 +185,17 @@ export class TaonAdminModeConfigurationComponent
   }
 
   //#endregion
+
+  isLink(tab: TaonAdminTab): boolean {
+    return typeof tab?.templateOrIframeLink === 'string';
+  }
+
+  getIfrmeLink(tab: TaonAdminTab): string | undefined {
+    if (typeof tab.templateOrIframeLink === 'string') {
+      if (tab.templateOrIframeLink?.startsWith('http')) {
+        return tab.templateOrIframeLink;
+      }
+      return `${window.location.origin}${window.location.pathname}${tab.templateOrIframeLink}`;
+    }
+  }
 }

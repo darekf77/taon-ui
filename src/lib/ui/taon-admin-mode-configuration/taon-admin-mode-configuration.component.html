@@ -50,7 +50,7 @@
     }">
     <img
       class="p-2 flex"
-      style="width: 285px"
+      style="height: 45px"
       src="/src/assets/shared/logo-header-admin-mode.png" />
 
     <div class="flex flex-row">
@@ -124,12 +124,12 @@
         taonAdminService.adminPanelMode() === TaonAdminPanelMode.POPUP,
     }">
     <div class="w-full">
+      <!-- (wheel)="scrollTabs($event)" -->
       <mat-tab-group
         dynamicHeight
-        (wheel)="scrollTabs($event)"
         [selectedIndex]="selectedIndex()"
         (selectedIndexChange)="selectedIndex.set($event)">
-        <mat-tab label="DB/Cache">
+        <mat-tab label="Settings">
           <section>
             <mat-card>
               <mat-card-header>
@@ -152,6 +152,33 @@
           <br />
           <taon-db-admin />
         </mat-tab>
+
+        @for (
+          additonalTab of taonAdminService.additionalTabs();
+          track additonalTab.name
+        ) {
+          <mat-tab [label]="additonalTab.name">
+            <section>
+              @if (isLink(additonalTab.templateOrIframeLink)) {
+                <iframe
+                  class="block w-full"
+                  [src]="additonalTab.templateOrIframeLink"
+                  frameborder="0"
+                  allowfullscreen>
+                </iframe>
+              } @else {
+                <div class="block w-full">
+                  <ng-container
+                    *ngTemplateOutlet="
+                      additonalTab.templateOrIframeLink
+                    "></ng-container>
+                </div>
+              }
+            </section>
+            <br />
+            <taon-db-admin />
+          </mat-tab>
+        }
       </mat-tab-group>
     </div>
   </div>
@@ -191,7 +218,7 @@
 
 <!-- #region content in side mode -->
 <!-- <mat-drawer-container (backdropClick)="opened = false" -->
-  <!-- [style.height.px]="height" -->
+<!-- [style.height.px]="height" -->
 <mat-drawer-container
   *ngIf="
     taonAdminService.adminPanelMode() === TaonAdminPanelMode.SIDE &&
@@ -200,7 +227,6 @@
     !reloading()
   "
   class="example-container h-screen"
-
   style="background-color: transparent"
   [hasBackdrop]="false">
   <mat-drawer
