@@ -3,7 +3,7 @@
   *ngIf="showPasscode"
   [passcode]="passcode"
   [message]="message" />
-<!-- <taon-progress-bar [isDesktop]="isDesktop"></taon-progress-bar> -->
+<!-- <taon-progress-bar [taonAdminService.isDesktop()]="taonAdminService.isDesktop()"></taon-progress-bar> -->
 <!-- <taon-notifications></taon-notifications> -->
 <button
   mat-fab
@@ -11,22 +11,22 @@
   color="accent"
   aria-label="Taon Admin Mode"
   *ngIf="
-    !taonAdminService.draggablePopupMode &&
-    isDesktop &&
-    !isIframe &&
-    !hideTaonToolsInProduction
+    taonAdminService.adminPanelMode() === TaonAdminPanelMode.ICON &&
+    taonAdminService.isDesktop() &&
+    !taonAdminService.isIframe
   "
-  (click)="toogle()">
+  (click)="taonAdminService.adminPanelMode.set(TaonAdminPanelMode.POPUP)">
   <mat-icon>build</mat-icon>
 </button>
 <!-- #endregion -->
 
 <!-- #region small hidden button -->
 <!-- <button class="admin-show-button"
-        *ngIf="!taonAdminService.draggablePopupMode && isDesktop"
+        *ngIf="!taonAdminService.draggablePopupMode && taonAdminService.isDesktop()"
         (click)="toogle()"> Admin </button> -->
 <!-- #endregion -->
 
+<!-- #region content or content with scrollbar-->
 <ng-template #contentNoScroll>
   <ng-content> </ng-content>
 </ng-template>
@@ -36,102 +36,99 @@
     <ng-container [ngTemplateOutlet]="contentNoScroll"></ng-container>
   </ng-scrollbar>
 </ng-template>
+<!-- #endregion-->
 
 <!-- #region admin tabs -->
 <ng-template #adminTabs>
   <!-- #region admin tabs / header -->
-  <div class="taon-header-admin-wrapper">
-    <columns-container
-      class="taon-header-admin"
-      [ngClass]="{ 'draggable-column': taonAdminService.draggablePopupMode }">
-      <column
-        width="200"
-        class="logo-header">
-        <img
-          *ngIf="openedOnce"
-          src="/src/assets/shared/logo-header-admin-mode.png" />
-      </column>
 
-      <column grow>
-        <!-- <span>Super Admin Mode</span> -->
-      </column>
+  <div
+    class="bg-white taon-header-admin overflow-hidden w-full flex flex-row align-items-center align-content-center justify-content-between"
+    [ngClass]="{
+      'block w-full':
+        taonAdminService.adminPanelMode() === TaonAdminPanelMode.POPUP,
+    }">
+    <img
+      class="p-2 flex"
+      style="width: 285px"
+      src="/src/assets/shared/logo-header-admin-mode.png" />
 
-      <column
-        width="40"
+    <div class="flex flex-row">
+      <button
+        style="width: 40px"
+        mat-icon-button
+        (click)="taonAdminService.adminPanelMode.set(TaonAdminPanelMode.NONE)"
+        class="">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <button
+        style="width: 40px"
+        mat-icon-button
+        (click)="taonAdminService.adminPanelMode.set(TaonAdminPanelMode.ICON)"
+        class="">
+        <mat-icon>minimize</mat-icon>
+      </button>
+
+      <button
         *ngIf="
-          !taonAdminService.draggablePopupModeFullScreen &&
-          !taonAdminService.draggablePopupMode
-        ">
-        <button
-          mat-icon-button
-          *ngIf="taonAdminService.draggablePopupMode"
-          (click)="
-            taonAdminService.draggablePopupMode = false;
-            opened = false;
-            wasOpenDraggablePopup = true
-          "
-          class="admin-close-button">
-          <mat-icon>close </mat-icon>
-        </button>
+          taonAdminService.adminPanelMode() !== TaonAdminPanelMode.FULL_SCREEN
+        "
+        mat-icon-button
+        (click)="
+          taonAdminService.adminPanelMode.set(TaonAdminPanelMode.FULL_SCREEN)
+        "
+        class="">
+        <mat-icon>fullscreen</mat-icon>
+      </button>
 
-        <button
-          mat-icon-button
-          *ngIf="!taonAdminService.draggablePopupMode"
-          (click)="toogle()"
-          class="admin-close-button">
-          <mat-icon>close</mat-icon>
-        </button>
-      </column>
+      <button
+        style="width: 40px"
+        *ngIf="
+          taonAdminService.adminPanelMode() === TaonAdminPanelMode.FULL_SCREEN
+        "
+        mat-icon-button
+        (click)="taonAdminService.adminPanelMode.set(TaonAdminPanelMode.POPUP)"
+        class="">
+        <mat-icon>close_fullscreen</mat-icon>
+      </button>
 
-      <column width="40">
-        <button
-          mat-icon-button
-          *ngIf="!taonAdminService.draggablePopupModeFullScreen"
-          class="admin-close-button"
-          (click)="toogleFullScreen()">
-          <mat-icon>fullscreen</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          *ngIf="taonAdminService.draggablePopupModeFullScreen"
-          class="admin-close-button"
-          (click)="toogleFullScreen()">
-          <mat-icon>close_fullscreen</mat-icon>
-        </button>
-      </column>
+      <button
+        style="width: 40px"
+        *ngIf="taonAdminService.adminPanelMode() !== TaonAdminPanelMode.SIDE"
+        mat-icon-button
+        (click)="taonAdminService.adminPanelMode.set(TaonAdminPanelMode.SIDE)"
+        class="">
+        <mat-icon style="transform: rotate(180deg)">login</mat-icon>
+      </button>
 
-      <column
-        width="40"
-        *ngIf="!taonAdminService.draggablePopupModeFullScreen">
-        <button
-          mat-icon-button
-          *ngIf="!taonAdminService.draggablePopupMode"
-          (click)="taonAdminService.draggablePopupMode = true"
-          class="admin-close-button">
-          <mat-icon>launch</mat-icon>
-        </button>
-
-        <button
-          mat-icon-button
-          *ngIf="taonAdminService.draggablePopupMode"
-          (click)="taonAdminService.draggablePopupMode = false; resetDrag()"
-          class="admin-close-button">
-          <mat-icon style="transform: rotate(180deg)">login</mat-icon>
-        </button>
-      </column>
-    </columns-container>
+      <button
+        style="width: 40px"
+        *ngIf="
+          taonAdminService.adminPanelMode() !== TaonAdminPanelMode.POPUP &&
+          taonAdminService.adminPanelMode() !== TaonAdminPanelMode.FULL_SCREEN
+        "
+        mat-icon-button
+        (click)="taonAdminService.adminPanelMode.set(TaonAdminPanelMode.POPUP)"
+        class="">
+        <mat-icon>launch</mat-icon>
+      </button>
+    </div>
   </div>
   <!-- #endregion -->
 
-  <columns-container
-    [ngClass]="{ 'draggable-column': taonAdminService.draggablePopupMode }">
-    <column grow>
+  <div
+    class="w-full flex flex-row align-items-center"
+    [ngClass]="{
+      'block w-full':
+        taonAdminService.adminPanelMode() === TaonAdminPanelMode.POPUP,
+    }">
+    <div class="w-full">
       <mat-tab-group
         dynamicHeight
         (wheel)="scrollTabs($event)"
-        #tabGroup
-        [selectedIndex]="selectedIndex"
-        (selectedIndexChange)="selectedIndex = $event">
+        [selectedIndex]="selectedIndex()"
+        (selectedIndexChange)="selectedIndex.set($event)">
         <mat-tab label="DB/Cache">
           <section>
             <mat-card>
@@ -141,13 +138,13 @@
               <mat-card-content>
                 <mat-checkbox
                   [disabled]="!isWebSQLMode"
-                  [ngModel]="taonAdminService.keepWebsqlDbDataAfterReload"
+                  [ngModel]="taonAdminService.keepWebsqlDbDataAfterReload()"
                   (change)="
-                    taonAdminService.setKeepWebsqlDbDataAfterReload(
+                    taonAdminService.keepWebsqlDbDataAfterReload.set(
                       $event.checked
                     )
                   ">
-                  Don't remove data when reloading
+                  Don't remove data when re-loading
                 </mat-checkbox>
               </mat-card-content>
             </mat-card>
@@ -156,8 +153,8 @@
           <taon-db-admin />
         </mat-tab>
       </mat-tab-group>
-    </column>
-  </columns-container>
+    </div>
+  </div>
 </ng-template>
 <!-- #endregion -->
 
@@ -165,9 +162,9 @@
 <div
   class="draggable-popup-mode-window"
   *ngIf="
-    taonAdminService.draggablePopupMode &&
-    !taonAdminService.draggablePopupModeFullScreen &&
-    !isIframe
+    taonAdminService.adminPanelMode() === TaonAdminPanelMode.POPUP &&
+    !taonAdminService.isIframe &&
+    !reloading()
   "
   cdkDrag
   [cdkDragFreeDragPosition]="dragPosition"
@@ -182,10 +179,9 @@
 <div
   class="draggable-popup-mode-window-full"
   *ngIf="
-    taonAdminService.draggablePopupMode &&
-    taonAdminService.draggablePopupModeFullScreen &&
-    !isIframe &&
-    !reloading
+    taonAdminService.adminPanelMode() === TaonAdminPanelMode.FULL_SCREEN &&
+    !taonAdminService.isIframe &&
+    !reloading()
   "
   cdkDrag
   [cdkDragFreeDragPosition]="dragPositionZero">
@@ -193,46 +189,52 @@
 </div>
 <!-- #endregion -->
 
-<!-- #region content when not in draggable (or fullscreen draggable) popup -->
-<div
-  [style.height.px]="height"
-  *ngIf="
-    (isIframe ||
-      !isDesktop ||
-      taonAdminService.draggablePopupMode ||
-      taonAdminService.draggablePopupModeFullScreen) &&
-    !reloading
-  "
-  style="width: 100%; display: block"
-  class="content">
-  <ng-container
-    [ngTemplateOutlet]="
-      taonAdminService.scrollableEnabled ? content : contentNoScroll
-    "></ng-container>
-</div>
-<!-- #endregion -->
-
-<!-- #region draggable popup window -->
+<!-- #region content in side mode -->
+<!-- <mat-drawer-container (backdropClick)="opened = false" -->
+  <!-- [style.height.px]="height" -->
 <mat-drawer-container
-  *ngIf="!taonAdminService.draggablePopupMode && isDesktop && !isIframe"
-  class="example-container"
-  [style.height.px]="height"
+  *ngIf="
+    taonAdminService.adminPanelMode() === TaonAdminPanelMode.SIDE &&
+    taonAdminService.isDesktop() &&
+    !taonAdminService.isIframe &&
+    !reloading()
+  "
+  class="example-container h-screen"
+
   style="background-color: transparent"
-  (backdropClick)="opened = false"
   [hasBackdrop]="false">
   <mat-drawer
     #drawer
-    style="width: 580px"
-    [opened]="opened"
+    style="width: 450px"
+    [opened]="true"
     [mode]="'side'">
     <ng-container [ngTemplateOutlet]="adminTabs"></ng-container>
   </mat-drawer>
   <mat-drawer-content style="overflow: hidden">
     <ng-container
-      *ngIf="!taonAdminService.draggablePopupMode && !reloading"
       [ngTemplateOutlet]="
-        taonAdminService.scrollableEnabled ? content : contentNoScroll
+        scrollableEnabled ? content : contentNoScroll
       "></ng-container>
   </mat-drawer-content>
 </mat-drawer-container>
+<!-- #endregion -->
+
+<!-- #region content in any other mode than side side mode -->
+<div
+  [style.height.px]="height"
+  *ngIf="
+    !(
+      taonAdminService.adminPanelMode() === TaonAdminPanelMode.SIDE &&
+      taonAdminService.isDesktop() &&
+      !taonAdminService.isIframe &&
+      !reloading()
+    )
+  "
+  style="width: 100%; display: block"
+  class="content">
+  <ng-container
+    [ngTemplateOutlet]="
+      scrollableEnabled ? content : contentNoScroll
+    "></ng-container>
+</div>
 <!-- #endregion -->

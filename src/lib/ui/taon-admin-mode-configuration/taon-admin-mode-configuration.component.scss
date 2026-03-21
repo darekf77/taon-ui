@@ -9,10 +9,10 @@
 $background-admin: rgba(220, 220, 220);
 $draggablezindex: 105;
 
-.draggable-column {
-  display: block !important;
-  width: 100% !important;
-}
+// .draggable-column {
+//   display: block !important;
+//   width: 100% !important;
+// }
 
 .admin-show-button {
   position: fixed;
@@ -40,33 +40,6 @@ $draggablezindex: 105;
 mat-drawer {
   margin: 0px;
   background-color: $background-admin !important;
-}
-
-.taon-header-admin-wrapper {
-  overflow: hidden;
-  width: 100%;
-  display: block;
-}
-
-.taon-header-admin {
-  background: white;
-  // -webkit-box-shadow: 0 6px 14px -4px black;
-  // -moz-box-shadow   : 0 6px 14px -4px black;
-  box-shadow: 0 -9px 6px 6px black;
-  height: 47px;
-
-  .logo-header {
-    img {
-      height: 18px;
-      padding: 8px;
-      position: relative;
-      float: left;
-      top: 7px;
-      box-sizing: content-box;
-      transform: scale(1.5);
-      left: 49px;
-    }
-  }
 }
 
 .draggable-popup-mode-window {
@@ -108,10 +81,6 @@ mat-drawer {
   position: fixed;
   z-index: $draggablezindex;
   background-color: $background-admin !important;
-}
-
-.admin-close-button {
-  float: right;
 }
 
 .fab-button {

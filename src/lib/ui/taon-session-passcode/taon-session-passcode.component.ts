@@ -22,8 +22,7 @@ import {
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { PasswordModule } from 'primeng/password';
 import { interval, take, tap } from 'rxjs';
-import { Stor } from 'taon-storage/src';
-import { StorPropertyInLocalStorage } from 'taon-storage/src';
+import { TaonStor } from 'taon-storage/src';
 //#endregion
 
 export interface TaonSessionPasscodeModel {
@@ -54,10 +53,13 @@ export class TaonSessionPasscodeComponent implements OnInit, AfterViewInit {
 
   public safeMessage: SafeHtml;
 
-  @(StorPropertyInLocalStorage.for(
+  private lastPasscode = TaonStor.inLocalstorage(
+    {
+      defaultValue: '',
+      keyOrPath: 'lastPasscode',
+    },
     TaonSessionPasscodeComponent,
-  ).withDefaultValue(''))
-  private lastPasscode: string;
+  );
 
   @HostBinding('style.display') public display = 'none';
 
@@ -117,7 +119,7 @@ export class TaonSessionPasscodeComponent implements OnInit, AfterViewInit {
   }
 
   private isPasscodeOK(passcode: string) {
-    this.lastPasscode = passcode.toString();
+    this.lastPasscode.set(passcode.toString());
     return this.passcode.toString() === passcode;
   }
 

@@ -4,8 +4,10 @@ import {
   CdkDragEnd,
   CdkDragMove,
   CdkDragRelease,
+  DragDropModule,
   Point,
 } from '@angular/cdk/drag-drop';
+import {} from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectorRef,
@@ -20,31 +22,35 @@ import {
   inject,
   AfterViewInit,
   OnDestroy,
+  effect,
+  signal,
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTabsModule } from '@angular/material/tabs';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { StaticColumnsModule } from 'static-columns/src';
-import { BreakpointsService } from 'static-columns/src';
-import { TaonAdminService } from 'taon/src';
-import { Stor } from 'taon-storage/src';
-import { StorPropertyInLocalStorage } from 'taon-storage/src';
+import { TaonAdminPanelMode, TaonAdminService } from 'taon/src';
+import { TaonStor } from 'taon-storage/src';
 import { Helpers, _ } from 'tnp-core/src';
 
-import { TaonFullMaterialModule } from '../taon-full-material.module';
 import { TaonNotificationsModule } from '../taon-notifications';
 import { TaonProgressBarModule } from '../taon-progress-bar';
 import { TaonSessionPasscodeComponent } from '../taon-session-passcode';
 
 //#endregion
 
-declare const ENV: any;
 @Component({
   //#region component options
   selector: 'taon-admin-mode-configuration',
   templateUrl: './taon-admin-mode-configuration.component.html',
   styleUrls: ['./taon-admin-mode-configuration.component.scss'],
-  standalone: true,
   imports: [
     CommonModule,
     StaticColumnsModule,
@@ -52,7 +58,15 @@ declare const ENV: any;
     NgScrollbarModule,
     TaonProgressBarModule,
     TaonNotificationsModule,
-    TaonFullMaterialModule, // TODO import only partial things
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatTabsModule,
+    ReactiveFormsModule,
+    DragDropModule,
     // TaonDbAdminComponent,
     TaonSessionPasscodeComponent,
   ],
@@ -62,195 +76,113 @@ export class TaonAdminModeConfigurationComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
   //#region fields & getters
+  TaonAdminPanelMode = TaonAdminPanelMode;
+
   $destroy = new Subject();
 
   public readonly cdr = inject(ChangeDetectorRef);
 
-  public readonly taonAdminService: TaonAdminService =
-    TaonAdminService.Instance;
-
-  public readonly isDesktop: boolean;
+  public readonly taonAdminService: TaonAdminService = inject(TaonAdminService);
 
   public isWebSQLMode: boolean = Helpers.getIsWebSQL();
 
-  public hideTaonToolsInProduction: boolean =
-    ENV.hideTaonToolsInProduction && ENV.angularProd;
-
-  public isIframe: boolean = window.location !== window.parent.location;
-
   public height: number = 100;
 
-  public openedOnce = false;
+  // TODO
+  public scrollableEnabled = false;
 
-  public reloading: boolean = false;
+  public reloading = signal(false);
 
-  public showPasscode: boolean =
-    _.isString(ENV.passcode) || _.isObject(ENV.passcode);
+  @Input() showPasscode: boolean;
 
-  public passcode: string = _.isString(ENV.passcode)
-    ? ENV.passcode
-    : _.isObject(ENV.passcode)
-      ? ENV.passcode.code
-      : '';
+  @Input() passcode: string;
 
-  public message: string = _.isObject(ENV.passcode)
-    ? ENV.passcode.message
-    : void 0;
+  @Input() message: string;
 
-  // @ts-ignore
-  @(StorPropertyInLocalStorage.for(
+  public dragPositionX = TaonStor.inLocalstorage(
+    {
+      defaultValue: 0,
+      keyOrPath: 'dragPositionX',
+    },
     TaonAdminModeConfigurationComponent,
-  ).withDefaultValue(0))
-  dragPositionX: number;
+  );
 
-  // @ts-ignore
-  @(StorPropertyInLocalStorage.for(
+  public dragPositionY = TaonStor.inLocalstorage(
+    {
+      defaultValue: 0,
+      keyOrPath: 'dragPositionY',
+    },
     TaonAdminModeConfigurationComponent,
-  ).withDefaultValue(0))
-  dragPositionY: number;
+  );
 
   dragPositionZero = { x: 0, y: 0 } as Point;
 
   dragPosition: Point;
 
-  // @ts-ignore
-  @(StorPropertyInLocalStorage.for(
+  public selectedIndex = TaonStor.inLocalstorage(
+    {
+      defaultValue: 0,
+      keyOrPath: 'selectedIndex',
+    },
     TaonAdminModeConfigurationComponent,
-  ).withDefaultValue(0))
-  selectedIndex: number;
+  );
 
-  @ViewChild('tabGroup') tabGroup;
-
-  // @ts-ignore
-  @(StorPropertyInLocalStorage.for(
-    TaonAdminModeConfigurationComponent,
-  ).withDefaultValue(false))
-  wasOpenDraggablePopup: boolean;
-
-  @Output() taonAdminModeConfigurationDataChanged = new EventEmitter();
-
-  @Input() taonAdminModeConfigurationData: any = {};
-
-  public get opened() {
-    return !this.isIframe && this.taonAdminService.adminPanelIsOpen;
-  }
-
-  public set opened(v) {
-    if (v && !this.openedOnce) {
-      this.openedOnce = true;
-    }
-    if (this.wasOpenDraggablePopup) {
-      this.wasOpenDraggablePopup = false;
-      this.taonAdminService.draggablePopupMode = true;
-    }
-    this.taonAdminService.adminPanelIsOpen = v;
-  }
   //#endregion
 
-  //#region constructor
-  constructor(private breakpointsService: BreakpointsService) {
-    this.breakpointsService
-      .listenTo()
-      .pipe(takeUntil(this.$destroy))
-      .subscribe(breakpoint => {
-        // @ts-ignore
-        this.isDesktop = breakpoint === 'desktop';
-      });
-  }
-  //#endregion
-
-  //#region hooks
+  //#region on init
   async ngOnInit() {
-    await Stor.awaitPendingOperatios();
-    // console.log('PENDING OPERATION AWAITED ', this.selectedIndex)
-    // console.log('draggablePopupModeFullScreen ', this.taonAdminService.draggablePopupModeFullScreen)
-
-    this.dragPosition = { x: this.dragPositionX, y: this.dragPositionY };
-    this.openedOnce = this.opened;
-    // console.log('ONINIT',{
-    //   'this.openedOnce': this.openedOnce,
-    //   'this.dragPosition': this.dragPosition,
-    //   this: this
-    // })
+    await TaonStor.awaitAll();
+    this.dragPosition = { x: this.dragPositionX(), y: this.dragPositionY() };
   }
+  //#endregion
 
+  //#region after view init
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     setTimeout(() => {
-      this.height = window.innerHeight;
+      this.onResize();
 
       // TODO QUICK_FIX for draggble popup proper first index load on tabs
-      if (this.taonAdminService.draggablePopupMode) {
+      if (this.taonAdminService.adminPanelMode() !== TaonAdminPanelMode.ICON) {
         this.reloadTabs();
       }
-
-      // const tablist = (this.tabGroup?._tabHeader?._elementRef?.nativeElement as HTMLElement).querySelector('.mat-tab-list') as HTMLElement;
-      // if (tablist) {
-      //   tablist.style.transform = 'translateX(0px)'; // TODO QUICK_FIX
-      // }
     });
   }
+  //#endregion
 
+  //#region on destroy
   ngOnDestroy(): void {
     this.$destroy.next(void 0);
     this.$destroy.complete();
   }
+  //#endregion
 
+  //#region on resize
   @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
+  onResize(event?: Event) {
     this.height = window.innerHeight;
   }
-
   //#endregion
 
   //#region methods
-  async reloadTabs(): Promise<void> {
-    return new Promise<void>(resolve => {
-      this.reloading = true;
-      setTimeout(() => {
-        this.reloading = false;
-        console.log('reloading done');
-        resolve();
-      });
+  reloadTabs(): void {
+    this.reloading.set(true);
+    setTimeout(() => {
+      this.reloading.set(false);
+      console.log('reloading done');
     });
   }
 
-  async toogle() {
-    // await stor.setItem(IS_OPEN_ADMIN, !this.opened);
-    this.opened = !this.opened;
-  }
-
-  async toogleFullScreen() {
-    this.taonAdminService.draggablePopupMode = true;
-    this.taonAdminService.draggablePopupModeFullScreen =
-      !this.taonAdminService.draggablePopupModeFullScreen;
-    this.resetDrag();
-  }
-
   resetDrag() {
-    this.dragPositionX = 0;
-    this.dragPositionY = 0;
-    this.dragPosition = { x: this.dragPositionX, y: this.dragPositionY };
+    this.dragPositionX.set(0);
+    this.dragPositionY.set(0);
+    this.dragPosition = { x: this.dragPositionX(), y: this.dragPositionY() };
   }
 
   moved(c: CdkDragEnd) {
-    this.dragPositionX += c.distance.x;
-    this.dragPositionY += c.distance.y;
-  }
-
-  scrollTabs(event) {
-    return;
-    // event?.stopPropagation();
-    // event?.stopImmediatePropagation(); // TODO not working
-    // const children = this.tabGroup._tabHeader._elementRef.nativeElement.children;
-    // const back = children[0];
-    // const forward = children[2];
-    // if (event.deltaY > 0) {
-    //   forward.click();
-    // } else {
-    //   back.click();
-    // }
+    this.dragPositionX.set(this.dragPositionX() + c.distance.x);
+    this.dragPositionY.set(this.dragPositionY() + c.distance.y);
   }
 
   //#endregion
