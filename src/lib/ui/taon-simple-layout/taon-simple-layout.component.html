@@ -35,12 +35,14 @@
     class="flex-grow-0 flex align-items-center justify-content-center flex-row">
     <!-- <taon-theme class="right-0" /> -->
     <ng-content select="[buttons]"></ng-content>
-    <button
-      class="flex mr-2"
-      (click)="openDialog(200, 200)"
-      mat-icon-button>
-      <mat-icon>settings</mat-icon>
-    </button>
+    @if (!hideThemeSettings) {
+      <button
+        class="flex mr-2"
+        (click)="openDialog(200, 200)"
+        mat-icon-button>
+        <mat-icon>settings</mat-icon>
+      </button>
+    }
   </div>
 </header>
 

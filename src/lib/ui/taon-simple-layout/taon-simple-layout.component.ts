@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  Input,
   input,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -47,6 +48,8 @@ export class TaonSimpleLayoutComponent {
   protected dialog = inject(MatDialog);
 
   protected theme = inject(TaonThemeService);
+
+  @Input() hideThemeSettings: boolean;
 
   navItems = input<TaonSimpleLayoutNavItem[]>();
 
