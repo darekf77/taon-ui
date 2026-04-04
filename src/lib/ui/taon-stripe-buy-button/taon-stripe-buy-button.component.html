@@ -6,6 +6,12 @@
   <span *ngIf="!loading">
     {{ label }}
   </span>
+  <span
+    class="line-through absolute bg-red-500 p-1 border-round white-space-nowrap"
+    style="margin-top: -25px"
+    *ngIf="promotionPreviousPrice">
+    {{ promotionPreviousPrice }}
+  </span>
 
   <span *ngIf="loading"> Redirecting to Stripe... </span>
 </button>

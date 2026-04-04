@@ -17,6 +17,8 @@ export class TaonStripeBuyButtonComponent {
 
   @Input({ required: true }) productId!: string;
 
+  @Input() promotionPreviousPrice!: string;
+
   /**
    * Cloudflare worker url that creates checkout session
    * example: https://super-73d1b.darekf77.workers.dev

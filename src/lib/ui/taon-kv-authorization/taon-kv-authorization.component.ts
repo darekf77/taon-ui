@@ -15,6 +15,7 @@ import { TaonStripeCloudflareWorker } from 'tnp-core/src';
 
 export interface TaonKvAuthorizationProduct {
   productTitle: string;
+  parentProductTitle?: string;
   /**
    * ex. YT playlist id
    */
@@ -36,6 +37,11 @@ export interface TaonKvAuthorizationProduct {
    * SAVED INTO AUTORIZATION DB
    */
   stripeProductId?: string;
+  /**
+   * Value of previous price
+   * to display promotion
+   */
+  promotionPreviousPrice?: string;
   authorized?: boolean;
   children?: TaonKvAuthorizationProduct[];
 }
