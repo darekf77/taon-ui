@@ -27,6 +27,7 @@ export * from './ui/taon-github-fork-me-ribbon/taon-github-fork-me-ribbon.compon
 export * from './ui/taon-github-fork-me-ribbon/taon-github-fork-me-ribbon.module'; // @browser
 export * from './ui/taon-iframe-sync/taon-iframe-sync.component'; // @browser
 export * from './ui/taon-kv-authorization/taon-kv-authorization.component'; // @browser
+export * from './ui/taon-kv-authorization/taon-kv-authorization.models'; 
 export * from './ui/taon-not-found/taon-not-found.component'; // @browser
 export * from './ui/taon-notifications/taon-notifications.component'; // @browser
 export * from './ui/taon-notifications/taon-notifications.models'; 
