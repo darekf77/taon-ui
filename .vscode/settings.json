@@ -6,7 +6,7 @@
     }
   ],
 
-  "window.title": "npm/taon-dev/taon-ui  [ ${activeEditorShort} ]",
+  "window.title": "taon-dev/taon-ui () [ ${activeEditorShort}]",
 
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
