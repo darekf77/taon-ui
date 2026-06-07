@@ -45,9 +45,10 @@ export type TaonSessionPasscodeForm = {
 export class TaonSessionPasscodeComponent implements OnInit, AfterViewInit {
   destroyRef = inject(DestroyRef);
 
-  // @HostBinding('style.width.px') public width: number;
-  // @HostBinding('style.height.px') public height: number;
-  @Input() public passcode: string;
+  @Input({
+    required: true,
+  })
+  public passcode: string;
 
   @Input() public message: string;
 
@@ -74,26 +75,17 @@ export class TaonSessionPasscodeComponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef,
   ) {}
 
-  ngOnInit() {
-    if (!this.passcode) {
-      this.passcode = '123456';
-    }
+  async ngOnInit() {
     if (!this.message) {
       this.message = `
       This website is only for testing purpose. Please type passcode bellow to see content.
 
       `;
     }
-    // console.log({
-    //   'lastPasscode': this.lastPasscode,
-    //   'current passcode': this.passcode,
-    //   'current message': this.message,
-    // })
-    // this.width = window.innerWidth;
-    // this.height = window.innerHeight;
     this.safeMessage = this.domSanitizer.bypassSecurityTrustHtml(this.message);
+    await this.lastPasscode.ready();
 
-    if (this.lastPasscode?.toString() === this.passcode?.toString()) {
+    if (this.lastPasscode()?.toString() === this.passcode?.toString()) {
       this.hide();
     } else {
       this.show();
@@ -147,7 +139,7 @@ export class TaonSessionPasscodeComponent implements OnInit, AfterViewInit {
       return;
     }
     const key = event.keyCode || event.charCode;
-    if (key === 8 || key === 46 || this.lastPasscode?.length > 5) {
+    if (key === 8 || key === 46 || this.lastPasscode()?.length > 5) {
       this.clear();
     }
   }
