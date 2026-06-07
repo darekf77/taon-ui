@@ -51,6 +51,8 @@ export class TaonSimpleLayoutComponent {
 
   @Input() hideThemeSettings: boolean;
 
+  @Input() hideHeader: boolean;
+
   navItems = input<TaonSimpleLayoutNavItem[]>();
 
   navigateTo(item: { path: string; label: string }): void {

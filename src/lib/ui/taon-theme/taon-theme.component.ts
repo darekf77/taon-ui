@@ -1,7 +1,9 @@
+//#region imports
 import { Component, inject } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { TaonThemeMode, TaonThemeService } from './taon-theme.service';
+//#endregion
 
 @Component({
   selector: 'taon-theme',
