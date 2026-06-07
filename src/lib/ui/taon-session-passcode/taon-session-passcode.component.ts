@@ -91,12 +91,14 @@ export class TaonSessionPasscodeComponent implements OnInit, AfterViewInit {
       this.show();
       this.focus();
     }
+    this.cdr.markForCheck();
 
     interval(1000)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         tap(() => {
           this.focus();
+          this.cdr.markForCheck();
         }),
       )
       .subscribe();
