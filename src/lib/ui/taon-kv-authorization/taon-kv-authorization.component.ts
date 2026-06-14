@@ -12,7 +12,7 @@ import {
   SimpleChanges,
   OnChanges,
 } from '@angular/core';
-import { TaonStripeCloudflareWorker } from 'tnp-core/src';
+import { TaonStripeCloudflareWorker } from '@taon-dev/api-workers/src';
 
 import { TaonKvAuthorizationProduct } from './taon-kv-authorization.models';
 
