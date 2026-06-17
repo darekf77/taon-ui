@@ -5,6 +5,7 @@
 // in taon.jsonc of your project. 
 export * from './build-info._auto-generated_'; 
 export * from './my-organization-proj'; 
+export * from './start-cli'; 
 export * from './taon.models'; 
 export * from './ui/taon-full-material.module'; // @browser
 export * from './ui/taon.models'; 

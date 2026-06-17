@@ -17,6 +17,8 @@ export class TaonThemeService {
 
   private mediaQuery: MediaQueryList | null = null;
 
+  public pernamentMode = false;
+
   mode = signal<TaonThemeMode>(TaonThemeMode.AUTO);
 
   isDark = signal<boolean>(false);
@@ -27,13 +29,18 @@ export class TaonThemeService {
     this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     // Load saved mode
-    const saved = localStorage.getItem(this.TAON_THEME_KEY) as TaonThemeMode | null;
+    const saved = localStorage.getItem(
+      this.TAON_THEME_KEY,
+    ) as TaonThemeMode | null;
     if (saved) {
       this.mode.set(saved);
     }
 
     // React to system changes
     this.mediaQuery.addEventListener('change', e => {
+      if (this.pernamentMode) {
+        return;
+      }
       if (this.mode() === TaonThemeMode.AUTO) {
         this.apply(e.matches);
       }
@@ -61,7 +68,9 @@ export class TaonThemeService {
     root.classList.toggle('light-taon-theme', !dark);
   }
 
-  setMode(mode: TaonThemeMode): void {
+  setMode(mode: TaonThemeMode, options?: { pernamentMode?: boolean }): void {
+    options = options || {};
+    this.pernamentMode = options.pernamentMode ?? false;
     this.mode.set(mode);
   }
 

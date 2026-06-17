@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { _, TaonStripeCloudflareWorker } from 'tnp-core/src';
+import { TaonStripeCloudflareWorker } from '@taon-dev/api-workers/src';
+import { _ } from 'tnp-core/src';
 
 @Component({
   selector: 'taon-stripe-buy-button',
   imports: [CommonModule, MatButtonModule],
   templateUrl: './taon-stripe-buy-button.component.html',
 })
-export class TaonStripeBuyButtonComponent {
+export class TaonStripeBuyButtonComponent implements OnInit {
   /**
    * Stripe price id (NOT product id)
    * example: price_1Qabc123456

@@ -1,3 +1,3 @@
 //#region @backend
-export { run } from './index';
+export { startCli } from './index';
 //#endregion

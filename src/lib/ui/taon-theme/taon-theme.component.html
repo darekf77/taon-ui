@@ -7,11 +7,15 @@
   </button>
 </div>
 <div class="p-4">
-  <h2>Theme settings</h2>
+  <h2>
+    Theme settings
+    {{ taonTheme.pernamentMode ? "( Settings can't ba changed )" : '' }}
+  </h2>
 
   <mat-slide-toggle
     class="p-2"
     [checked]="taonTheme.isAuto()"
+    [disabled]="taonTheme.pernamentMode"
     (change)="taonTheme.toogleAuto($event.checked)">
     Sync colors with system
   </mat-slide-toggle>
@@ -19,7 +23,7 @@
   <mat-slide-toggle
     class="p-2"
     [checked]="taonTheme.isDark()"
-    [disabled]="taonTheme.isAuto()"
+    [disabled]="taonTheme.isAuto() || taonTheme.pernamentMode"
     (change)="taonTheme.setDark($event.checked)">
     Dark mode
   </mat-slide-toggle>
