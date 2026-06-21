@@ -27,6 +27,12 @@ export interface TaonKvAuthorizationProduct {
    * to display promotion
    */
   promotionPreviousPrice?: string;
+
+  /**
+   * Image for product group tab
+   */
+  linkToImage?: string;
+
   authorized?: boolean;
   children?: TaonKvAuthorizationProduct[];
 }
