@@ -10,6 +10,8 @@ export * from './taon.models';
 export * from './ui/taon-full-material.module'; // @browser
 export * from './ui/taon.models'; 
 export * from './layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component'; // @browser
+export * from './ui/anonymize-text/anonymize-text.directive'; // @browser
+export * from './ui/anonymize-text/anonymize-text.models'; 
 export * from './ui/directives/safe.pipe'; // @browser
 export * from './ui/directives/taon-inject-html.directive'; // @browser
 export * from './ui/directives/taon-long-press.directive'; // @browser

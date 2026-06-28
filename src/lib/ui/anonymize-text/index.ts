@@ -1,0 +1,1 @@
+export * from './anonymize-text.component'; // @browser
