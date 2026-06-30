@@ -64,6 +64,8 @@ import { Utils, UtilsOs } from 'tnp-core/src';
 import { HOST_CONFIG } from './app.hosts';
 import { ENV_ANGULAR_NODE_APP_BUILD_PWA_DISABLE_SERVICE_WORKER } from './lib/env/env.angular-node-app';
 // @placeholder-for-imports
+import { TranslationAppActiveContext } from './app/translation-app/translation-app.active.context'; // @app-ts-generated
+
 //#endregion
 
 const firstHostConfig = (Object.values(HOST_CONFIG) || [])[0];
@@ -200,42 +202,9 @@ export class TaonUiApp implements OnInit {
 
   angularVersion = VERSION.full;
 
-  userApiService = inject(UserApiService);
-
   router = inject(Router);
 
   private refresh = new BehaviorSubject<void>(undefined);
-
-  readonly users = toSignal(
-    this.refresh.pipe(
-      switchMap(() =>
-        this.userApiService.userController
-          .getAll()
-          .request()
-          .observable.pipe(map(r => r.body.json)),
-      ),
-    ),
-    { initialValue: [] },
-  );
-
-  readonly hello$ = this.userApiService.userController
-    .helloWorld()
-    .request()
-    .observable.pipe(map(r => r.body.text));
-
-  async deleteUser(userToDelete: User): Promise<void> {
-    await this.userApiService.userController
-      .deleteById(userToDelete.id)
-      .request();
-    this.refresh.next();
-  }
-
-  async addUser(): Promise<void> {
-    const newUser = new User();
-    newUser.name = `user-${Math.floor(Math.random() * 1000)}`;
-    await this.userApiService.userController.save(newUser).request();
-    this.refresh.next();
-  }
 
   forceShowBaseRootApp = false;
 
@@ -249,26 +218,6 @@ export class TaonUiApp implements OnInit {
     }
     this.forceShowBaseRootApp = false;
     this.router.navigateByUrl(item.path);
-  }
-}
-//#endregion
-
-//#endregion
-
-//#region  taon-ui api service
-
-//#region @browser
-@Injectable({
-  providedIn: 'root',
-})
-export class UserApiService extends TaonBaseAngularService {
-  userController = this.injectController(UserController);
-
-  getAll(): Observable<User[]> {
-    return this.userController
-      .getAll()
-      .request()
-      .observable.pipe(map(r => r.body.json));
   }
 }
 //#endregion
@@ -296,6 +245,20 @@ export const TaonUiClientRoutes: Routes = [
   },
   // PUT ALL ROUTES HERE
   // @placeholder-for-routes
+  // @app-ts-generated
+  {
+    path: 'translation-app',
+    providers: [
+      {
+        provide: TAON_CONTEXT,
+        useFactory: () => TranslationAppActiveContext,
+      },
+    ],
+    loadChildren: () =>
+      import('./app/translation-app/translation-app.routes').then(
+        m => m.TranslationAppRoutes,
+      ),
+  },
 ];
 //#endregion
 //#endregion
@@ -305,10 +268,6 @@ export const TaonUiClientRoutes: Routes = [
 export const TaonUiAppConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
-    {
-      provide: TAON_CONTEXT,
-      useFactory: () => TaonUiContext,
-    },
     providePrimeNG({
       theme: {
         preset: Aura,
@@ -342,120 +301,10 @@ export const TaonUiConfig = mergeApplicationConfig(
 //#endregion
 //#endregion
 
-//#region  taon-ui entity
-@TaonEntity({ className: 'User' })
-class User extends TaonBaseAbstractEntity {
-  //#region @websql
-  @StringColumn()
-  //#endregion
-  name?: string;
-
-  getHello(): string {
-    return `hello ${this.name}`;
-  }
-}
-//#endregion
-
-//#region  taon-ui controller
-@TaonController({ className: 'UserController' })
-class UserController extends TaonBaseCrudController<User> {
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  entityClassResolveFn = () => User;
-
-  @GET()
-  helloWorld(): Taon.Response<string> {
-    //#region @websqlFunc
-    return async (req, res) => 'hello world';
-    //#endregion
-  }
-
-  @GET()
-  getOsPlatform(): Taon.Response<string> {
-    //#region @websqlFunc
-    return async (req, res) => {
-      //#region @backend
-      return os.platform(); // for normal nodejs backend return real value
-      //#endregion
-
-      return 'no-platform-inside-browser-and-websql-mode';
-    };
-    //#endregion
-  }
-}
-//#endregion
-
-//#region  taon-ui migration
-
-//#region @websql
-@TaonMigration({
-  className: 'UserMigration',
-})
-class UserMigration extends TaonBaseMigration {
-  userController = this.injectRepo(User);
-
-  async up(): Promise<any> {
-    const superAdmin = new User();
-    superAdmin.name = 'super-admin';
-    await this.userController.save(superAdmin);
-  }
-}
-//#endregion
-
-//#endregion
-
-//#region  taon-ui context
-var TaonUiContext = Taon.createContext(() => ({
-  ...HOST_CONFIG['TaonUiContext'],
-  contexts: { TaonBaseContext },
-
-  //#region @websql
-  /**
-   * In production use specyfic for this context name
-   * generated migration object from  ./migrations/index.ts.
-   */
-  migrations: {
-    UserMigration,
-  },
-  //#endregion
-
-  controllers: {
-    UserController,
-  },
-  entities: {
-    User,
-  },
-  database: true,
-  // disabledRealtime: true,
-}));
-//#endregion
-
 //#region  taon-ui start function
 export const TaonUiStartFunction = async (
   startParams?: Taon.StartParams,
 ): Promise<void> => {
-  await TaonUiContext.initialize();
-
-  //#region initialize auto generated active contexts
-  const autoGeneratedActiveContextsForApp: TaonContext[] = [
-    // @placeholder-for-contexts-init
-  ];
-
-  const priorityContexts = [
-    // put here manual priority for contexts if needed
-  ];
-
-  const activeContextsForApp: TaonContext[] = [
-    ...priorityContexts,
-    ...autoGeneratedActiveContextsForApp.filter(
-      c => !priorityContexts.includes(c),
-    ),
-  ];
-
-  for (const activeContext of activeContextsForApp) {
-    await activeContext.initialize();
-  }
-  //#endregion
-
   //#region @backend
   if (
     startParams?.onlyMigrationRun ||

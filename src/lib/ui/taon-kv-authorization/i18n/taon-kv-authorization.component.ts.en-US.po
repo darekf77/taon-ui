@@ -1,0 +1,23 @@
+msgid ""
+msgstr ""
+"Language: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/lib/ui/taon-kv-authorization/taon-kv-authorization.component.ts:33
+msgid "Loading authorization info..."
+msgstr ""
+
+#: src/lib/ui/taon-kv-authorization/taon-kv-authorization.component.ts:35
+msgctxt "taon-ui"
+msgid "Loading authorization info..."
+msgstr ""
+
+#: src/lib/ui/taon-kv-authorization/taon-kv-authorization.component.ts:41
+msgid "Loading authorization [[hello]] info..."
+msgstr ""
+
+#: src/lib/ui/taon-kv-authorization/taon-kv-authorization.component.ts:51
+msgctxt "amazingcontext"
+msgid "Loading authorization [[a]] info... [[c]]"
+msgstr ""
