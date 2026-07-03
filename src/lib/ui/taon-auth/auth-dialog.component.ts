@@ -108,6 +108,10 @@ export class AuthDialogComponent
 
   googleButtonLoaded = false;
 
+  close(): void {
+    this.dialogRef.close();
+  }
+
   loginWithMicrosoft(): void {
     if (!this.microsoftClientId) {
       console.warn('Microsoft client id missing [microsoftClientId]');

@@ -4,30 +4,38 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/lib/ui/taon-auth/auth-dialog.component.html:2
+#: src/lib/ui/taon-auth/auth-dialog.component.html:10
 msgid "Login or Register"
 msgstr ""
 
-#: src/lib/ui/taon-auth/auth-dialog.component.html:36
+#: src/lib/ui/taon-auth/auth-dialog.component.html:44
 msgid "Please enter a valid email address"
 msgstr ""
 
-#: src/lib/ui/taon-auth/auth-dialog.component.html:49
+#: src/lib/ui/taon-auth/auth-dialog.component.html:57
 msgid "Email is"
 msgstr ""
 
-#: src/lib/ui/taon-auth/auth-dialog.component.html:49
+#: src/lib/ui/taon-auth/auth-dialog.component.html:57
 msgid "required"
 msgstr ""
 
-#: src/lib/ui/taon-auth/auth-dialog.component.html:84
+#: src/lib/ui/taon-auth/auth-dialog.component.html:63
+msgid "or"
+msgstr ""
+
+#: src/lib/ui/taon-auth/auth-dialog.component.html:70
+msgid "loading google button.."
+msgstr ""
+
+#: src/lib/ui/taon-auth/auth-dialog.component.html:93
 msgid "Continue with Microsoft"
 msgstr ""
 
-#: src/lib/ui/taon-auth/auth-dialog.component.html:95
+#: src/lib/ui/taon-auth/auth-dialog.component.html:104
 msgid "Cancel"
 msgstr ""
 
-#: src/lib/ui/taon-auth/auth-dialog.component.html:26
+#: src/lib/ui/taon-auth/auth-dialog.component.html:34
 msgid "Login by email (disabled)"
 msgstr ""

@@ -1,4 +1,12 @@
-<div class="auth-dialog p-4">
+<div class="absolute top-2 right-2">
+  <button
+    mat-icon-button
+    aria-label="Close dialog"
+    (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div class="auth-dialog p-5">
   <h4
     class="mb-3"
     translate>
@@ -6,7 +14,7 @@
   </h4>
 
   <div
-    class="w-full"
+    class="w-full pt-3"
     #emailLoginBtn>
     <form
       [formGroup]="form"
@@ -52,7 +60,7 @@
     </form>
 
     <div class="divider">
-      <span>or</span>
+      <span translate>or</span>
     </div>
 
     <!-- GOOGLE BUTTON -->
@@ -62,6 +70,7 @@
       <span
         *ngIf="!googleButtonLoaded"
         class="text-300 p-2"
+        translate
         >loading google button..</span
       >
       <mat-progress-bar
