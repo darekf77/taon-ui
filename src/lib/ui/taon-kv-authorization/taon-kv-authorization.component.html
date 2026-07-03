@@ -1,11 +1,16 @@
 <div class="taon-kv-authorization">
-  <div *ngIf="loading()">Loading authorization info...</div>
+  <div *ngIf="loading()">{{ infoMsg() }}</div>
 
   <div *ngIf="!loading()">
-    <div *ngIf="authorizedCount() === 0">You did not purchase any products</div>
+    <div
+      *ngIf="authorizedCount() === 0"
+      translate>
+      You did not purchase any products
+    </div>
 
     <div *ngIf="authorizedCount() > 0">
-      You purchased {{ authorizedCount() }} products
+      <span translate>You purchased </span> {{ authorizedCount() }}
+      <span translate>products</span>
     </div>
   </div>
 </div>

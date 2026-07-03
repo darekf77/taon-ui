@@ -2,14 +2,27 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { TaonStripeCloudflareWorker } from '@taon-dev/api-workers/src';
+import {
+  Translation,
+  Translatable,
+  TranslateDirective,
+  TranslatePipe,
+} from '@taon-dev/i18n/src';
+import { Taon } from 'taon/src';
+import { TaonLangSelectorComponent } from 'taon-ui/src';
 import { _ } from 'tnp-core/src';
+
+const t = Translation.for(Taon.__FILE_RELATIVE_PATH, Taon.LANG_IMPORT_MAP,{
+  // debug: true
+});
 
 @Component({
   selector: 'taon-stripe-buy-button',
   imports: [CommonModule, MatButtonModule],
   templateUrl: './taon-stripe-buy-button.component.html',
 })
-export class TaonStripeBuyButtonComponent implements OnInit {
+export class TaonStripeBuyButtonComponent implements OnInit, Translatable {
+  t = t.for(this);
   /**
    * Stripe price id (NOT product id)
    * example: price_1Qabc123456
@@ -37,9 +50,9 @@ export class TaonStripeBuyButtonComponent implements OnInit {
   @Input() cancelUrl: string;
 
   /**
-   * optional label
+   * optional label for buy button
    */
-  @Input() label = 'Buy now';
+  label = this.t.signal.gettext('Buy now');
 
   loading = false;
 

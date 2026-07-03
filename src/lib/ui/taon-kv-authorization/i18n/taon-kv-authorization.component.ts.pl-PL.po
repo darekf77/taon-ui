@@ -1,0 +1,9 @@
+msgid ""
+msgstr ""
+"Language: pl-PL\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/lib/ui/taon-kv-authorization/taon-kv-authorization.component.ts:36
+msgid "Loading authorization info..."
+msgstr "Ładowanie informacji autoryzujących"

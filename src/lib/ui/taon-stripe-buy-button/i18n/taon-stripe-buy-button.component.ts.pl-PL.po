@@ -1,0 +1,9 @@
+msgid ""
+msgstr ""
+"Language: pl-PL\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/lib/ui/taon-stripe-buy-button/taon-stripe-buy-button.component.ts:55
+msgid "Buy now"
+msgstr "Kup teraz"

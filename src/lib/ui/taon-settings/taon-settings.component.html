@@ -7,8 +7,14 @@
   </button>
 </div>
 <div class="p-4">
+  <h3 class="bold" translate>Language Settings</h3>
+  <taon-lang-selector />
+
+  <br />
+  <hr />
+  <br />
   <h3 class="bold">
-     {{ t.gettext('Theme settings') }}
+    {{ t.gettext('Theme settings') }}
     {{ taonTheme.pernamentMode ? t.gettext("Settings can't ba changed") : '' }}
   </h3>
 

@@ -1,0 +1,14 @@
+msgid ""
+msgstr ""
+"Language: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/app/translation-app/translation-app.container.html:4
+#: src/app/translation-app/translation-app.container.html:7
+msgid "translation-app works!"
+msgstr ""
+
+#: src/app/translation-app/translation-app.container.html:18
+msgid "getetxt rerender!"
+msgstr ""

@@ -1,0 +1,1 @@
+export * from './taon-lang-selector.component'; // @browser

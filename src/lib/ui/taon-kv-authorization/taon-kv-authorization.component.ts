@@ -1,3 +1,4 @@
+//#region import
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -13,16 +14,29 @@ import {
   OnChanges,
 } from '@angular/core';
 import { TaonStripeCloudflareWorker } from '@taon-dev/api-workers/src';
+import { Translation, TranslateDirective } from '@taon-dev/i18n/src';
+import { Taon } from 'taon/src';
 
 import { TaonKvAuthorizationProduct } from './taon-kv-authorization.models';
+//#endregion
+
+const t = Translation.for(Taon.__FILE_RELATIVE_PATH, Taon.LANG_IMPORT_MAP, {
+  // debug: true,
+});
 
 @Component({
   selector: 'taon-kv-authorization',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateDirective],
   templateUrl: './taon-kv-authorization.component.html',
 })
 export class TaonKvAuthorizationComponent implements OnInit, OnChanges {
+  t = t.for(this);
+
+  infoMsg = t.signal.gettext('Loading authorization info...');
+
+  // asd = t.signal.gettext('You purchased');
+
   cdr = inject(ChangeDetectorRef);
 
   @Input({ required: true }) email!: string;

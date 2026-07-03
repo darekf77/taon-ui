@@ -11,10 +11,13 @@
     },
   ],
 
+  "generateTranslationsFor": ["en-US", "pl-PL"],
   "isomorphicDependenciesForNpmLib": [],
   "numberOfContexts": 4,
   "peerDependenciesNamesForNpmLib": ["taon"],
+  "shouldGenerateAutogenAppRoutesFile": true,
   "shouldGenerateAutogenIndexFile": true,
+  "shouldGenerateTranslationFiles": true,
 
   "packageJsonOverride": {
     "author": "Dariusz Filipiak",

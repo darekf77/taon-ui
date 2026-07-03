@@ -1,0 +1,33 @@
+msgid ""
+msgstr ""
+"Language: pl-PL\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/lib/ui/taon-auth/auth-dialog.component.html:2
+msgid "Login or Register"
+msgstr "Zaloguj lub Zarejestruj się"
+
+#: src/lib/ui/taon-auth/auth-dialog.component.html:36
+msgid "Please enter a valid email address"
+msgstr "Proszę wprowadź poprawny adres email"
+
+#: src/lib/ui/taon-auth/auth-dialog.component.html:49
+msgid "Email is"
+msgstr "Adres email jest"
+
+#: src/lib/ui/taon-auth/auth-dialog.component.html:49
+msgid "required"
+msgstr "wymagany"
+
+#: src/lib/ui/taon-auth/auth-dialog.component.html:84
+msgid "Continue with Microsoft"
+msgstr "Zaloguj się prze konto Microsoft"
+
+#: src/lib/ui/taon-auth/auth-dialog.component.html:95
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: src/lib/ui/taon-auth/auth-dialog.component.html:26
+msgid "Login by email (disabled)"
+msgstr "Logowanie mailem (wyłączone)"

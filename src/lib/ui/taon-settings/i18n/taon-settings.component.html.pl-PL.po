@@ -1,0 +1,26 @@
+msgid ""
+msgstr ""
+"Language: pl-PL\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/lib/ui/taon-settings/taon-settings.component.html:10
+msgid "Language Settings"
+msgstr "Ustawienia języka"
+
+#: src/lib/ui/taon-settings/taon-settings.component.html:17
+msgid "Theme settings"
+msgstr "Ustawienia motywu"
+
+#: src/lib/ui/taon-settings/taon-settings.component.html:17
+#: src/lib/ui/taon-settings/taon-settings.component.html:18
+msgid "Settings can't ba changed"
+msgstr "Ustawienia nie mogą być zmienione"
+
+#: src/lib/ui/taon-settings/taon-settings.component.html:26
+msgid "Sync colors with system"
+msgstr "Synchronizuj motyw koloru z systemem"
+
+#: src/lib/ui/taon-settings/taon-settings.component.html:34
+msgid "Dark mode"
+msgstr "Tryb ciemny"

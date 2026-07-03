@@ -4,7 +4,7 @@
   (click)="buy()"
   [disabled]="loading">
   <span *ngIf="!loading">
-    {{ label }}
+    {{ label() }}
   </span>
   <span
     class="line-through absolute bg-red-500 p-1 border-round white-space-nowrap"

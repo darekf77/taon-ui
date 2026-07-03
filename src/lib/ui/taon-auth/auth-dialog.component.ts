@@ -27,14 +27,24 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MtxLoaderModule, MtxLoaderType } from '@ng-matero/extensions/loader';
+import {
+  Translation,
+  Translatable,
+  TranslateDirective,
+} from '@taon-dev/i18n/src';
 import { PrimeIcons } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { Taon } from 'taon/src';
 import { _ } from 'tnp-core/src';
 
 import { GoogleAuthService } from './google-auth.service';
 import { MicrosoftAuthService } from './microsoft-auth.service';
 import { SessionService } from './session.service';
+
+//#endregion
+
+const t = Translation.for(Taon.__FILE_RELATIVE_PATH, Taon.LANG_IMPORT_MAP);
 
 @Component({
   selector: 'app-auth-dialog',
@@ -54,12 +64,17 @@ import { SessionService } from './session.service';
     InputTextModule,
     ReactiveFormsModule,
     FormsModule,
+    TranslateDirective,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './auth-dialog.component.html',
   styleUrl: './auth-dialog.component.scss',
 })
-export class AuthDialogComponent implements AfterViewInit, OnInit {
+export class AuthDialogComponent
+  implements AfterViewInit, OnInit, Translatable
+{
+  t = t.for(this);
+
   cdr = inject(ChangeDetectorRef);
 
   emailRegex = /^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;

@@ -1,5 +1,9 @@
 <div class="auth-dialog p-4">
-  <h4 class="mb-3">Login or register</h4>
+  <h4
+    class="mb-3"
+    translate>
+    Login or Register
+  </h4>
 
   <div
     class="w-full"
@@ -19,7 +23,7 @@
           class="pl-1"
           type="email"
           [placeholder]="
-            diableLoginByEmail ? 'Login by email (disabled)' : ''
+            diableLoginByEmail ? t.gettext('Login by email (disabled)') : ''
           " />
 
         <button
@@ -32,7 +36,8 @@
         <mat-error
           *ngIf="
             form.get('email')?.hasError('pattern') && form.get('email')?.touched
-          ">
+          "
+          translate>
           Please enter a valid email address
         </mat-error>
 
@@ -41,7 +46,7 @@
             form.get('email')?.hasError('required') &&
             form.get('email')?.touched
           ">
-          Email is <strong>required</strong>
+          {{ t.gettext('Email is') }} <strong translate>required</strong>
         </mat-error>
       </mat-form-field>
     </form>
@@ -76,7 +81,7 @@
         class="w-full microsoft-btn"
         (click)="loginWithMicrosoft()">
         <mat-icon class="mr-2">login</mat-icon>
-        Continue with Microsoft
+        {{ t.gettext('Continue with Microsoft') }}
       </button>
     </div>
   </div>
@@ -87,7 +92,7 @@
     <button
       mat-button
       mat-dialog-close>
-      Cancel
+      {{ t.gettext('Cancel') }}
     </button>
   </div>
 </div>
