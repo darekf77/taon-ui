@@ -1,17 +1,27 @@
 <label class="taon-lang-selector">
-  <span class="taon-lang-selector__label">{{
-    t.gettext('Select Language')
-  }}</span>
+  <span class="taon-lang-selector__label">
+    {{
+      t.gettext('Select Language') +
+        ' ' +
+        ((isDisabled$ | async) ? t.gettext('(disabled)') : '')
+    }}
+  </span>
 
-  <select
-    class="taon-lang-selector__select"
-    [value]="currentGlobalLanguage$ | async"
-    [disabled]="isLoading$ | async"
-    (change)="changeLanguage($event)">
-    @for (lang of availableLangs$ | async; track lang.code) {
-      <option [value]="lang.code">
-        {{ lang.label }}
-      </option>
-    }
-  </select>
+  @if (currentGlobalLanguage$ | async; as currentLang) {
+    <!-- currentLang = {{ currentLang | json }} -->
+
+    <select
+      class="taon-lang-selector__select"
+      [value]="currentLang"
+      [disabled]="isDisabled$ | async"
+      (change)="changeLanguage($event)">
+      @for (lang of availableLangs$ | async; track lang.code) {
+        <option
+          [value]="lang.code"
+          [selected]="lang.code === currentLang">
+          {{ lang.label }}
+        </option>
+      }
+    </select>
+  }
 </label>

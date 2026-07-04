@@ -7,3 +7,7 @@ msgstr ""
 #: src/lib/ui/taon-kv-authorization/taon-kv-authorization.component.ts:36
 msgid "Loading authorization info..."
 msgstr ""
+
+#: src/lib/ui/taon-kv-authorization/taon-kv-authorization.component.ts:38
+msgid "You purchased"
+msgstr ""
