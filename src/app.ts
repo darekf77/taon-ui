@@ -24,7 +24,7 @@ import { MatDividerModule } from '@angular/material/divider'; // @browser
 import { MatIconModule } from '@angular/material/icon'; // @browser
 import { MatListModule } from '@angular/material/list'; // @browser
 import { MatTabsModule } from '@angular/material/tabs'; // @browser
-import { TranslateService, TranslationManager } from '@taon-dev/i18n/src';
+
 import {
   provideClientHydration,
   withEventReplay,
