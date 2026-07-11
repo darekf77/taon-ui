@@ -7,7 +7,7 @@ import {
   TranslateService,
   Translation,
 } from '@taon-dev/i18n/src';
-import { map, of, tap, withLatestFrom } from 'rxjs';
+import { map, of, startWith, Subscription, tap, withLatestFrom } from 'rxjs';
 import { Taon } from 'taon/src';
 import { UtilsI18n } from 'tnp-core/src';
 //#endregion
@@ -32,20 +32,34 @@ export class TaonLangSelectorComponent implements Translatable {
     // }),
   );
 
+  currentLang: UtilsI18n.CommonLocaleCode = 'en-US';
   readonly currentGlobalLanguage$ =
     this.translateService.manager.currentGlobalLanguage$.pipe(
       withLatestFrom(this.availableLangs$),
       map(([currentGlobalLanguage, availableLangs]) => {
         return availableLangs.find(c => c.code === currentGlobalLanguage)?.code;
       }),
-      // tap(currentGlobalLanguage => {
-      //   console.log({ currentGlobalLanguage });
-      // }),
+      tap(currentGlobalLanguage => {
+        this.currentLang = currentGlobalLanguage;
+      }),
     );
 
   readonly isDisabled$ = this.availableLangs$.pipe(map(c => c.length <= 1));
 
   constructor() {}
+
+  sub = new Subscription();
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.sub.add(this.currentGlobalLanguage$.subscribe());
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.sub.unsubscribe();
+  }
 
   async changeLanguage(event: Event): Promise<void> {
     const select = event.target as HTMLSelectElement;

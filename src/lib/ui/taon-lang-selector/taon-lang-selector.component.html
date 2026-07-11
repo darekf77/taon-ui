@@ -7,21 +7,19 @@
     }}
   </span>
 
-  @if (currentGlobalLanguage$ | async; as currentLang) {
-    <!-- currentLang = {{ currentLang | json }} -->
+  <!-- currentLang = {{ currentLang | json }} -->
 
-    <select
-      class="taon-lang-selector__select"
-      [value]="currentLang"
-      [disabled]="isDisabled$ | async"
-      (change)="changeLanguage($event)">
-      @for (lang of availableLangs$ | async; track lang.code) {
-        <option
-          [value]="lang.code"
-          [selected]="lang.code === currentLang">
-          {{ lang.label }}
-        </option>
-      }
-    </select>
-  }
+  <select
+    class="taon-lang-selector__select"
+    [value]="currentLang"
+    [disabled]="isDisabled$ | async"
+    (change)="changeLanguage($event)">
+    @for (lang of availableLangs$ | async; track lang.code) {
+      <option
+        [value]="lang.code"
+        [selected]="lang.code === currentLang">
+        {{ lang.label }}
+      </option>
+    }
+  </select>
 </label>
