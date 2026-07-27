@@ -1,0 +1,17 @@
+msgid ""
+msgstr ""
+"Language: de-DE\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/lib/ui/taon-kv-authorization/taon-kv-authorization.component.html:5
+msgid "You did not purchase any products"
+msgstr "Sie haben keine Produkte gekauft."
+
+#: src/lib/ui/taon-kv-authorization/taon-kv-authorization.component.html:12
+msgid "You purchased"
+msgstr "Du hast es gekauft."
+
+#: src/lib/ui/taon-kv-authorization/taon-kv-authorization.component.html:13
+msgid "products"
+msgstr "Produkte"

@@ -4,12 +4,16 @@ import { CoreModels } from 'tnp-core/src';
 // join interface type here
 import { EnUsTraslationOverrideSrcAppTranslationAppTranslationAppContainerHtml } from './translation-app.container.html.en-US.i18n.data';
 import { PlPlTraslationOverrideSrcAppTranslationAppTranslationAppContainerHtml } from './translation-app.container.html.pl-PL.i18n.data';
+import { DeDeTraslationOverrideSrcAppTranslationAppTranslationAppContainerHtml } from './translation-app.container.html.de-DE.i18n.data';
 import { EnUsTraslationOverrideSrcAppTranslationAppTranslationAppContainerTs } from './translation-app.container.ts.en-US.i18n.data';
-import { PlPlTraslationOverrideSrcAppTranslationAppTranslationAppContainerTs } from './translation-app.container.ts.pl-PL.i18n.data';;
+import { PlPlTraslationOverrideSrcAppTranslationAppTranslationAppContainerTs } from './translation-app.container.ts.pl-PL.i18n.data';
+import { DeDeTraslationOverrideSrcAppTranslationAppTranslationAppContainerTs } from './translation-app.container.ts.de-DE.i18n.data';;
 export type TranslationAppOverride = CoreModels.DeepPartial<EnUsTraslationOverrideSrcAppTranslationAppTranslationAppContainerHtml 
 | PlPlTraslationOverrideSrcAppTranslationAppTranslationAppContainerHtml 
+| DeDeTraslationOverrideSrcAppTranslationAppTranslationAppContainerHtml 
 | EnUsTraslationOverrideSrcAppTranslationAppTranslationAppContainerTs 
-| PlPlTraslationOverrideSrcAppTranslationAppTranslationAppContainerTs>;
+| PlPlTraslationOverrideSrcAppTranslationAppTranslationAppContainerTs 
+| DeDeTraslationOverrideSrcAppTranslationAppTranslationAppContainerTs>;
 
  // THIS FILE IS GENERATED - DO NOT MODIFY
         
