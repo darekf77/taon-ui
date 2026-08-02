@@ -10,9 +10,9 @@ import {
   OnDestroy,
   AfterViewInit,
 } from '@angular/core';
-import axios from 'axios';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { Taon } from 'taon/src';
+import { axios } from 'tnp-core/src';
 import { _ } from 'tnp-core/src';
 //#endregion
 
