@@ -2,68 +2,66 @@
   class="yt-container"
   [ngClass]="state"
   [ngStyle]="containerStyle">
-  <!-- PREVIEW IMAGE -->
-  <img
-    *ngIf="state === 'preview-picture' || state === 'preview-picture-locked'"
-    class="yt-media"
-    [src]="previewImage()"
-    [alt]="displayTitle"
-    (click)="onPreviewClick()" />
+  <!-- THUMBNAIL -->
+  <div
+    *ngIf="!videoActivated()"
+    class="yt-preview"
+    (click)="onPreviewClick()">
+    <!-- @if (isInViewport()) { -->
+    <img
+      class="yt-media"
+      [src]="previewImage()"
+      [alt]="displayTitle || 'YouTube video'"
+      decoding="async"
+      draggable="false"
+      (error)="onThumbnailError($event)" />
+    <!-- } -->
 
-  <!-- VIDEO -->
+    <!-- PLAY -->
+    <div
+      *ngIf="state !== 'preview-picture-locked'"
+      class="yt-play-button">
+      <mat-icon>play_arrow</mat-icon>
+    </div>
+
+    <!-- LOCK -->
+    <div
+      *ngIf="state === 'preview-picture-locked'"
+      class="yt-overlay yt-lock"
+      (click)="onLockClick($event)">
+      <mat-icon>lock</mat-icon>
+    </div>
+  </div>
+
+  <!-- ACTUAL YOUTUBE PLAYER -->
   <iframe
     #ytFrame
-    *ngIf="state === 'video-preview-open' || state === 'video-preview-private'"
+    *ngIf="videoActivated()"
     class="yt-media"
     [src]="embedUrl()"
     frameborder="0"
+    allow="autoplay; encrypted-media; picture-in-picture; web-share"
     allowfullscreen>
   </iframe>
 
   <!-- PRIVATE OVERLAY -->
   <div
+    *ngIf="
+      videoActivated() &&
+      state === 'video-preview-private' &&
+      allowedToBeDisplayedVideoOveraly()
+    "
+    class="yt-overlay-video"
     (contextmenu)="onRightClick($event)"
     (dblclick)="clicked($event)"
-    *ngIf="
-      state === 'video-preview-private' && allowedToBeDisplayedVideoOveraly()
-    "
-    (click)="clicked($event)"
-    class="yt-overlay-video">
-    <h1 class="text-center" >Thanks for buying <br>this video</h1>
-  </div>
-
-  <!-- LOCK OVERLAY -->
-  <div
-    *ngIf="state === 'preview-picture-locked'"
-    class="yt-overlay yt-lock"
-    (click)="onLockClick($event)">
-    <mat-icon>lock</mat-icon>
+    (click)="clicked($event)">
+    <h1 class="text-center">
+      Thanks for buying<br />
+      this video
+    </h1>
   </div>
 </div>
 
-<!-- CONTROLS BELOW VIDEO -->
-<!-- <div
-  *ngIf="state === 'video-preview-private'"
-  class="yt-controls">
-  <button
-    mat-icon-button
-    (click)="play()">
-    <mat-icon>play_arrow</mat-icon>
-  </button>
-
-  <button
-    mat-icon-button
-    (click)="pause()">
-    <mat-icon>pause</mat-icon>
-  </button>
-
-  <button
-    mat-icon-button
-    (click)="restart()">
-    <mat-icon>replay</mat-icon>
-  </button>
-</div> -->
-<div class="w-full mb-1"></div>
 <div
   class="yt-title"
   *ngIf="displayTitle">

@@ -1,4 +1,30 @@
 export namespace TaonYouTubeUtils {
+  // declare global {
+  //   interface Window {
+  //     YT: any;
+  //     onYouTubeIframeAPIReady: () => void;
+  //   }
+  // }
+
+  export function loadYoutubeApi(): Promise<void> {
+    return new Promise(resolve => {
+      // @ts-ignore
+      if (window.YT && window.YT.Player) {
+        resolve();
+        return;
+      }
+
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.body.appendChild(tag);
+
+      // @ts-ignore
+      window.onYouTubeIframeAPIReady = () => {
+        resolve();
+      };
+    });
+  }
+
   export async function getVidesIdsOfPlaylist(
     ytplaylistId: string,
   ): Promise<string[]> {
