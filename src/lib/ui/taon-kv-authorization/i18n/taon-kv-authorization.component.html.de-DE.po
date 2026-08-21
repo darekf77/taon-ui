@@ -13,5 +13,5 @@ msgid "You purchased"
 msgstr "Du hast es gekauft."
 
 #: src/lib/ui/taon-kv-authorization/taon-kv-authorization.component.html:13
-msgid "products"
-msgstr "Produkte"
+msgid "product(s)"
+msgstr "Produkt (s)"

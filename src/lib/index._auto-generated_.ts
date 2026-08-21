@@ -51,6 +51,7 @@ export * from './ui/taon-table/taon-table.module'; // @browser
 export * from './ui/taon-theme/taon-theme.component'; // @browser
 export * from './ui/taon-theme/taon-theme.service'; // @browser
 export * from './ui/taon-youtube-video/taon-youtube-video.component'; // @browser
+export * from './ui/taon-youtube-video/taon-youtube.models'; 
 export * from './ui/taon-youtube-video/taon-youtube.utils'; 
 export * from './ui/taon-auth/i18n/taon-auth.translation'; 
 export * from './ui/taon-kv-authorization/i18n/taon-kv-authorization.translation'; 
