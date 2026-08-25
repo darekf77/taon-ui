@@ -1,5 +1,6 @@
 <div
   class="slide-track"
+  [class.animate]="shouldAnimate()"
   [style.transform]="transform()">
   <ng-content></ng-content>
 </div>
