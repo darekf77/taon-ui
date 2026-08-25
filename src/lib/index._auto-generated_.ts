@@ -45,6 +45,9 @@ export * from './ui/taon-settings/taon-settings.models';
 export * from './ui/taon-simple-layout/taon-simple-layout.component'; // @browser
 export * from './ui/taon-simple-layout/taon-simple-layout.model'; 
 export * from './ui/taon-simple-layout/taon-simple-layout.routes'; // @browser
+export * from './ui/taon-slide-content/taon-slide-content-child.component'; // @browser
+export * from './ui/taon-slide-content/taon-slide-content.component'; // @browser
+export * from './ui/taon-slide-content/taon-slide-content.models'; 
 export * from './ui/taon-stripe-buy-button/taon-stripe-buy-button.component'; // @browser
 export * from './ui/taon-table/taon-table.component'; // @browser
 export * from './ui/taon-table/taon-table.module'; // @browser
