@@ -1,7 +1,7 @@
 @if (!hideHeader) {
   <header
-    class="shadow-1 inline-flex w-full justify-content-end align-items-center flex-row">
-    <div class="flex-grow-1 align-items-center justify-content-center flex-row">
+  class="relative z-10 inline-flex w-full flex-row items-center justify-end bg-white shadow-md">
+    <div class="flex flex-1 flex-row items-center justify-right">
       @if (navItems()?.length > 0) {
         <nav
           mat-tab-nav-bar
@@ -21,7 +21,8 @@
                 <mat-icon
                   aria-hidden="false"
                   aria-label="Example home icon"
-                  fontIcon="home"></mat-icon>
+                  fontIcon="home">
+                </mat-icon>
               } @else {
                 {{ item.label }}
               }
@@ -29,16 +30,16 @@
           }
         </nav>
       }
+
       <ng-content select="[header]"></ng-content>
     </div>
 
-    <div
-      class="flex-grow-0 flex align-items-center justify-content-center flex-row">
-      <!-- <taon-theme class="right-0" /> -->
+    <div class="flex shrink-0 flex-row items-center justify-center">
       <ng-content select="[buttons]"></ng-content>
+
       @if (!hideThemeSettings) {
         <button
-          class="flex mr-2"
+          class="mr-2"
           (click)="openDialog(200, 200)"
           mat-icon-button>
           <mat-icon>settings</mat-icon>
@@ -58,31 +59,45 @@
   <div class="fallback-message">
     Please add your component inside
     <br />
-    <pre>
-    <code class="surface-100 block">
-      &lt;taon-simple-layout class=&quot;p-4&quot;&gt;
-        &lt;header
-          header
-          class=&quot;flex-item&quot;&gt;
-          &lt;img
-            class=&quot;border-round&quot;
-            src=&quot;src/assets/images/pluszka-logo.png&quot;
-            height=&quot;50px&quot; /&gt;
-        &lt;/header&gt;
-        &lt;br /&gt;
-        &lt;h3 class=&quot;text-blue-200&quot;&gt;Welcome to hamster store.&lt;/h3&gt;
-        &lt;h3 class=&quot;text-blue-300&quot;&gt;Buy cheap hamster videos for free!&lt;/h3&gt;
-        &lt;h3 class=&quot;text-blue-300&quot;&gt;Subscribe more hamsters video daily!&lt;/h3&gt;
 
-        &lt;ng-container buttons&gt;
-          &lt;button
-            mat-button
-            class=&quot;flex align-items-center&quot;&gt;
-            Hello friend!
-          &lt;/button&gt;
-        &lt;/ng-container&gt;
-      &lt;/taon-simple-layout&gt;
-    </code>
+    <pre>
+      <code class="block bg-gray-100">
+        &lt;taon-simple-layout class=&quot;p-4&quot;&gt;
+          &lt;header
+            header
+            class=&quot;flex&quot;&gt;
+
+            &lt;img
+              class=&quot;rounded&quot;
+              src=&quot;src/assets/images/pluszka-logo.png&quot;
+              height=&quot;50px&quot; /&gt;
+
+          &lt;/header&gt;
+
+          &lt;br /&gt;
+
+          &lt;h3 class=&quot;text-blue-200&quot;&gt;
+            Welcome to hamster store.
+          &lt;/h3&gt;
+
+          &lt;h3 class=&quot;text-blue-300&quot;&gt;
+            Buy cheap hamster videos for free!
+          &lt;/h3&gt;
+
+          &lt;h3 class=&quot;text-blue-300&quot;&gt;
+            Subscribe more hamsters video daily!
+          &lt;/h3&gt;
+
+          &lt;ng-container buttons&gt;
+            &lt;button
+              mat-button
+              class=&quot;flex items-center&quot;&gt;
+              Hello friend!
+            &lt;/button&gt;
+          &lt;/ng-container&gt;
+
+        &lt;/taon-simple-layout&gt;
+      </code>
     </pre>
   </div>
 </mat-tab-nav-panel>
