@@ -53,6 +53,9 @@ const defaultColumns = [
 ] as MtxGridColumn[];
 //#endregion
 
+/**
+ * @deprecated use TaonDatatable from @taon-dev/ui
+ */
 @Component({
   //#region component options
   selector: 'taon-table',
