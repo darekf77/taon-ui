@@ -1,15 +1,14 @@
 @if (!hideHeader) {
-  <header
-    class="relative z-10 flex w-full flex-row items-center shadow-md">
+  <header class="relative z-10 flex w-full flex-row items-center shadow-md">
     <!-- LEFT: projected header/logo -->
     <div class="flex shrink-0 items-center">
       <ng-content select="[header]"></ng-content>
     </div>
 
-    <!-- NAVIGATION: immediately after header/logo -->
+    <!-- DESKTOP NAVIGATION -->
     @if (navItems()?.length > 0) {
       <nav
-        class="shrink-0"
+        class="desktop-navigation shrink-0"
         mat-tab-nav-bar
         [tabPanel]="tabPanel">
         @for (item of navItems(); track item.path) {
@@ -36,7 +35,7 @@
     <!-- spacer -->
     <div class="flex-1"></div>
 
-    <!-- RIGHT -->
+    <!-- DESKTOP BUTTONS -->
     <div class="flex shrink-0 flex-row items-center">
       <ng-content select="[buttons]"></ng-content>
 
@@ -47,6 +46,48 @@
           mat-icon-button>
           <mat-icon>settings</mat-icon>
         </button>
+      }
+    </div>
+
+    <!-- MOBILE MENU BUTTON -->
+    <div class="mobile-menu relative">
+      <button
+        mat-icon-button
+        type="button"
+        (click)="mobileMenuOpen.set(!mobileMenuOpen())">
+        <mat-icon>
+          {{ mobileMenuOpen() ? 'close' : 'menu' }}
+        </mat-icon>
+      </button>
+
+      @if (mobileMenuOpen()) {
+        <div
+          class="absolute right-2 top-full z-[1000] mt-1 min-w-52 overflow-hidden rounded-md border border-gray-200 bg-white shadow-lg">
+          @for (item of navItems() ?? []; track item.path) {
+            <button
+              mat-button
+              class="!flex !w-full !justify-start !rounded-none"
+              (click)="navigateToMobile(item)">
+              @if (item.path === '/') {
+                <mat-icon class="mr-2">home</mat-icon>
+              }
+
+              {{ item.label }}
+            </button>
+          }
+
+          @if (!hideThemeSettings) {
+            <div class="border-t border-gray-200">
+              <button
+                mat-button
+                class="!flex !w-full !justify-start !rounded-none"
+                (click)="openSettingsFromMobileMenu()">
+                <mat-icon class="mr-2">settings</mat-icon>
+                Settings
+              </button>
+            </div>
+          }
+        </div>
       }
     </div>
   </header>

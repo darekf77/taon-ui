@@ -34,3 +34,30 @@
 //     color: var(--text-color) !important;
 //   }
 // }
+
+//#region responsive header
+
+.desktop-navigation {
+  display: flex;
+}
+
+.desktop-buttons {
+  display: flex;
+}
+
+.mobile-menu {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .desktop-navigation,
+  .desktop-buttons {
+    display: none !important;
+  }
+
+  .mobile-menu {
+    display: block !important;
+  }
+}
+
+//#endregion

@@ -6,6 +6,7 @@ import {
   inject,
   Input,
   input,
+  signal,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -54,6 +55,18 @@ export class TaonSimpleLayoutComponent {
   @Input() hideHeader: boolean;
 
   navItems = input<TaonSimpleLayoutNavItem[]>();
+
+  protected readonly mobileMenuOpen = signal(false);
+
+  navigateToMobile(item: TaonSimpleLayoutNavItem): void {
+    this.mobileMenuOpen.set(false);
+    this.navigateTo(item);
+  }
+
+  protected openSettingsFromMobileMenu(): void {
+    this.mobileMenuOpen.set(false);
+    this.openDialog(200, 200);
+  }
 
   navigateTo(item: TaonSimpleLayoutNavItem): void {
     const primarySegments = item.path.split('/').filter(Boolean);
