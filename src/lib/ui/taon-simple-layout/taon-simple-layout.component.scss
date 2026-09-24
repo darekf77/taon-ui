@@ -8,6 +8,14 @@
   }
 }
 
+:host ::ng-deep {
+  .mat-mdc-tab-link-container {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+}
+
 /* If the wrapper has content, hide the fallback */
 .projected-wrapper:not(:empty) + .fallback-message {
   display: none;

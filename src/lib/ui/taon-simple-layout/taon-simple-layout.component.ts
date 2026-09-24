@@ -55,8 +55,16 @@ export class TaonSimpleLayoutComponent {
 
   navItems = input<TaonSimpleLayoutNavItem[]>();
 
-  navigateTo(item: { path: string; label: string }): void {
-    this.router.navigateByUrl(item.path);
+  navigateTo(item: TaonSimpleLayoutNavItem): void {
+    const primarySegments = item.path.split('/').filter(Boolean);
+
+    this.router.navigate([
+      {
+        outlets: {
+          primary: primarySegments,
+        },
+      },
+    ]);
   }
 
   openDialog(

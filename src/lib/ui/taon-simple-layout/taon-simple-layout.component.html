@@ -1,40 +1,43 @@
 @if (!hideHeader) {
   <header
-  class="relative z-10 inline-flex w-full flex-row items-center justify-end bg-white shadow-md">
-    <div class="flex flex-1 flex-row items-center justify-right">
-      @if (navItems()?.length > 0) {
-        <nav
-          mat-tab-nav-bar
-          [tabPanel]="tabPanel">
-          @for (item of navItems(); track item.path) {
-            <a
-              mat-tab-link
-              href="javascript:void(0)"
-              [style.text-decoration]="
-                (activePath === item.path && !forceShowBaseRootApp) ||
-                ('/' === item.path && forceShowBaseRootApp)
-                  ? 'underline'
-                  : 'none'
-              "
-              (click)="navigateTo(item)">
-              @if (item.path === '/') {
-                <mat-icon
-                  aria-hidden="false"
-                  aria-label="Example home icon"
-                  fontIcon="home">
-                </mat-icon>
-              } @else {
-                {{ item.label }}
-              }
-            </a>
-          }
-        </nav>
-      }
-
+    class="relative z-10 flex w-full flex-row items-center shadow-md">
+    <!-- LEFT: projected header/logo -->
+    <div class="flex shrink-0 items-center">
       <ng-content select="[header]"></ng-content>
     </div>
 
-    <div class="flex shrink-0 flex-row items-center justify-center">
+    <!-- NAVIGATION: immediately after header/logo -->
+    @if (navItems()?.length > 0) {
+      <nav
+        class="shrink-0"
+        mat-tab-nav-bar
+        [tabPanel]="tabPanel">
+        @for (item of navItems(); track item.path) {
+          <a
+            mat-tab-link
+            href="javascript:void(0)"
+            [style.text-decoration]="
+              (activePath === item.path && !forceShowBaseRootApp) ||
+              ('/' === item.path && forceShowBaseRootApp)
+                ? 'underline'
+                : 'none'
+            "
+            (click)="navigateTo(item)">
+            @if (item.path === '/') {
+              <mat-icon fontIcon="home"></mat-icon>
+            } @else {
+              {{ item.label }}
+            }
+          </a>
+        }
+      </nav>
+    }
+
+    <!-- spacer -->
+    <div class="flex-1"></div>
+
+    <!-- RIGHT -->
+    <div class="flex shrink-0 flex-row items-center">
       <ng-content select="[buttons]"></ng-content>
 
       @if (!hideThemeSettings) {
