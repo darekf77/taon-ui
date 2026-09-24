@@ -49,8 +49,6 @@ export * from './ui/taon-slide-content/taon-slide-content-child.component'; // @
 export * from './ui/taon-slide-content/taon-slide-content.component'; // @browser
 export * from './ui/taon-slide-content/taon-slide-content.models'; 
 export * from './ui/taon-stripe-buy-button/taon-stripe-buy-button.component'; // @browser
-export * from './ui/taon-table/taon-table.component'; // @browser
-export * from './ui/taon-table/taon-table.module'; // @browser
 export * from './ui/taon-theme/taon-theme.component'; // @browser
 export * from './ui/taon-theme/taon-theme.service'; // @browser
 export * from './ui/taon-youtube-video/taon-youtube-video.component'; // @browser

@@ -16,7 +16,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 
-import { TaonThemeComponent } from '../taon-theme/taon-theme.component';
+import { TaonSettingsComponent } from '../taon-settings/taon-settings.component';
 import { TaonThemeService } from '../taon-theme/taon-theme.service';
 
 import { TaonSimpleLayoutNavItem } from './taon-simple-layout.model';
@@ -39,7 +39,7 @@ import { TaonSimpleLayoutNavItem } from './taon-simple-layout.model';
     RouterModule,
     MatDialogModule,
     JsonPipe,
-    TaonThemeComponent,
+    TaonSettingsComponent,
   ],
 })
 export class TaonSimpleLayoutComponent {
@@ -63,7 +63,7 @@ export class TaonSimpleLayoutComponent {
     enterAnimationDuration: string | number,
     exitAnimationDuration: string | number,
   ): void {
-    this.dialog.open(TaonThemeComponent, {
+    this.dialog.open(TaonSettingsComponent, {
       width: '400px',
       enterAnimationDuration,
       exitAnimationDuration,
