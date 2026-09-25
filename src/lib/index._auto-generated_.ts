@@ -7,7 +7,6 @@ export * from './build-info._auto-generated_';
 export * from './my-organization-proj'; 
 export * from './start-cli'; 
 export * from './taon.models'; 
-export * from './ui/taon-full-material.module'; // @browser
 export * from './layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component'; // @browser
 export * from './ui/anonymize-text/anonymize-text.directive'; // @browser
 export * from './ui/anonymize-text/anonymize-text.models'; 
@@ -15,8 +14,6 @@ export * from './ui/directives/safe.pipe'; // @browser
 export * from './ui/directives/taon-inject-html.directive'; // @browser
 export * from './ui/directives/taon-long-press.directive'; // @browser
 export * from './ui/directives/view-mode'; 
-export * from './ui/taon-admin-mode-configuration/taon-admin-mode-configuration.component'; // @browser
-export * from './ui/taon-admin-mode-configuration/taon-admin.models'; 
 export * from './ui/taon-auth/auth-button.component'; // @browser
 export * from './ui/taon-auth/auth-dialog.component'; // @browser
 export * from './ui/taon-auth/auth.guard'; // @browser
@@ -32,10 +29,6 @@ export * from './ui/taon-kv-authorization/taon-kv-authorization.component'; // @
 export * from './ui/taon-kv-authorization/taon-kv-authorization.models'; 
 export * from './ui/taon-lang-selector/taon-lang-selector.component'; // @browser
 export * from './ui/taon-not-found/taon-not-found.component'; // @browser
-export * from './ui/taon-notifications/taon-notifications.component'; // @browser
-export * from './ui/taon-notifications/taon-notifications.models'; 
-export * from './ui/taon-notifications/taon-notifications.module'; // @browser
-export * from './ui/taon-notifications/taon-notifications.service'; // @browser
 export * from './ui/taon-progress-bar/taon-progress-bar.component'; // @browser
 export * from './ui/taon-progress-bar/taon-progress-bar.module'; // @browser
 export * from './ui/taon-rumble/taon-rumble.component'; // @browser
