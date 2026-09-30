@@ -12,7 +12,6 @@ import {
 } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { Taon } from 'taon/src';
-import { axios } from 'tnp-core/src';
 import { _ } from 'tnp-core/src';
 //#endregion
 
@@ -27,6 +26,9 @@ import { _ } from 'tnp-core/src';
 const calculatePercentage = (loaded, total) => Math.floor(loaded * 1.0) / total;
 declare const ENV: any;
 
+/**
+ * @deprecated
+ */
 @Component({
   selector: 'taon-progress-bar',
   templateUrl: './taon-progress-bar.component.html',
@@ -72,10 +74,10 @@ export class TaonProgressBarComponent
 
   ngAfterViewInit(): void {
     // this.labProgress.set(20)
-    this.loadProgressBar(void 0, axios);
+    // this.loadProgressBar(void 0);
   }
 
-  loadProgressBar(config, instance = axios) {
+  loadProgressBar(config) {
     // let requestsCounter = 0;
     // const setupStartProgress = () => {
     //   instance.interceptors.request.use(config => {
