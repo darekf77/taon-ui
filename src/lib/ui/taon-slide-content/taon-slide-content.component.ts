@@ -22,15 +22,16 @@ export class TaonSlideContentComponent implements AfterContentInit {
   @ContentChildren(TaonSlideContentContentChildComponent)
   private slides!: QueryList<TaonSlideContentContentChildComponent>;
 
-  /**
-   * Defines which state transitions should be animated.
-   *
-   * Example:
-   * LOGIN -> ENTER_PASSWORD = animated
-   * ENTER_PASSWORD -> LOGIN = instant
-   */
   @Input()
   whenAllowedAnimationMap?: Map<unknown, unknown[]>;
+
+  /**
+   * undefined -> automatically use static slides on iOS
+   * true      -> always use static slides
+   * false     -> always use animated slides
+   */
+  @Input()
+  useStaticSlides?: boolean;
 
   private readonly activeIndex = signal(0);
 
@@ -40,12 +41,12 @@ export class TaonSlideContentComponent implements AfterContentInit {
 
   readonly transform = () => `translateX(-${this.activeIndex() * 100}%)`;
 
-  ngAfterContentInit(): void {
-    const firstSlide = this.slides.first;
+  public staticSlides = false;
 
-    if (firstSlide) {
-      this.currentState.set(firstSlide.assignToState);
-    }
+  ngAfterContentInit(): void {
+    this.staticSlides = this.useStaticSlides ?? this.isIOS();
+
+    this.updateStaticSlides();
   }
 
   public goTo(state: unknown): void {
@@ -54,19 +55,31 @@ export class TaonSlideContentComponent implements AfterContentInit {
     const index = slides.findIndex(slide => slide.assignToState === state);
 
     if (index === -1) {
-      console.warn(
-        '[TaonSlideContentSlideComponent] Unknown slide state:',
-        state,
-      );
+      console.warn('[TaonSlideContentComponent] Unknown slide state:', state);
       return;
     }
 
     const previousState = this.currentState();
 
-    this.shouldAnimate.set(this.isAnimationAllowed(previousState, state));
+    this.shouldAnimate.set(
+      !this.staticSlides &&
+        previousState !== undefined &&
+        this.isAnimationAllowed(previousState, state),
+    );
 
     this.currentState.set(state);
     this.activeIndex.set(index);
+
+    this.updateStaticSlides();
+  }
+
+  private updateStaticSlides(): void {
+    const activeIndex = this.activeIndex();
+
+    this.slides.forEach((slide, index) => {
+      slide.staticMode.set(this.staticSlides);
+      slide.staticVisible.set(index === activeIndex);
+    });
   }
 
   private isAnimationAllowed(fromState: unknown, toState: unknown): boolean {
@@ -76,6 +89,17 @@ export class TaonSlideContentComponent implements AfterContentInit {
 
     return (
       this.whenAllowedAnimationMap.get(fromState)?.includes(toState) ?? false
+    );
+  }
+
+  private isIOS(): boolean {
+    if (typeof navigator === 'undefined') {
+      return false;
+    }
+
+    return (
+      /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
     );
   }
 }

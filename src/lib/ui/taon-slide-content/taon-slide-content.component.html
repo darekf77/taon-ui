@@ -1,6 +1,7 @@
 <div
   class="slide-track"
-  [class.animate]="shouldAnimate()"
-  [style.transform]="transform()">
+  [class.static]="staticSlides"
+  [class.animate]="!staticSlides && shouldAnimate()"
+  [style.transform]="staticSlides ? 'none' : transform()">
   <ng-content></ng-content>
 </div>

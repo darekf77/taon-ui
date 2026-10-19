@@ -1,20 +1,32 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostBinding,
+  Input,
+  signal,
+} from '@angular/core';
 
 @Component({
   selector: 'taon-slide-content-child',
   standalone: true,
-  template: ` <ng-content></ng-content> `,
-  styles: `
-    :host {
-      display: block;
-      flex: 0 0 100%;
-      width: 100%;
-      min-width: 0;
-    }
-  `,
+  templateUrl: './taon-slide-content-child.component.html',
+  styleUrl: './taon-slide-content-child.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaonSlideContentContentChildComponent {
   @Input({ required: true })
   assignToState!: unknown;
+
+  readonly staticMode = signal(false);
+
+  readonly staticVisible = signal(true);
+
+  @HostBinding('style.display')
+  get display(): string {
+    if (this.staticMode()) {
+      return this.staticVisible() ? 'block' : 'none';
+    }
+
+    return 'block';
+  }
 }
