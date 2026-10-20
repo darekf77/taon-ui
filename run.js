@@ -53,7 +53,6 @@ const PROJECT_NPM_NAME = require('./dist/lib/build-info._auto-generated_.js').PR
 const entrypointarg = (process.argv.find( arg => arg.startsWith('additionalEntrypointId=')));
 const TAON_LOCAL_DEV = (process.argv.find( arg => arg === 'TAON_LOCAL_DEV'));
 
-
 if(TAON_LOCAL_DEV) {
   const GlobalStorage = require('tnp-core').GlobalStorage;
   GlobalStorage.set('TAON_LOCAL_DEV',true)
