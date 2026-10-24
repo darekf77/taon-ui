@@ -46,3 +46,9 @@ export * from './ui/taon-theme/taon-theme.service'; // @browser
 export * from './ui/taon-youtube-video/taon-youtube-video.component'; // @browser
 export * from './ui/taon-youtube-video/taon-youtube.models'; 
 export * from './ui/taon-youtube-video/taon-youtube.utils'; 
+export * from './ui/taon-auth/i18n/taon-auth.translation'; 
+export * from './ui/taon-kv-authorization/i18n/taon-kv-authorization.translation'; 
+export * from './ui/taon-lang-selector/i18n/taon-lang-selector.translation'; 
+export * from './ui/taon-settings/i18n/taon-settings.translation'; 
+export * from './ui/taon-stripe-buy-button/i18n/taon-stripe-buy-button.translation'; 
+export * from './ui/taon-theme/i18n/taon-theme.translation'; 
