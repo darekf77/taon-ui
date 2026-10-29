@@ -1,0 +1,69 @@
+msgid ""
+msgstr ""
+"Language: pl-PL\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/lib/layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component.html:21
+msgid "O szkole"
+msgstr "Szkoła"
+
+#: src/lib/layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component.html:29
+msgid "Kursy"
+msgstr "Kursy"
+
+#: src/lib/layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component.html:37
+msgid "Opinie"
+msgstr "Opinie"
+
+#: src/lib/layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component.html:45
+msgid "Lektorzy"
+msgstr "Lektorzy"
+
+#: src/lib/layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component.html:53
+msgid "Kontakt"
+msgstr "Kontakt"
+
+#: src/lib/layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component.html:66
+msgid "Test plasujący"
+msgstr "Test plazowności"
+
+#: src/lib/layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component.html:70
+msgid "Gramatyka"
+msgstr "Gramatyka"
+
+#: src/lib/layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component.html:78
+msgid "Słownictwo"
+msgstr "Słownictwo"
+
+#: src/lib/layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component.html:86
+msgid "Czytanie"
+msgstr "Czytanie"
+
+#: src/lib/layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component.html:94
+msgid "Wideo"
+msgstr "Wideo"
+
+#: src/lib/layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component.html:102
+msgid "Ciekawostki"
+msgstr "Ciekawostki"
+
+#: src/lib/layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component.html:110
+msgid "Wyloguj"
+msgstr "Wyloguj"
+
+#: src/lib/layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component.html:118
+msgid "Profil"
+msgstr "Profil"
+
+#: src/lib/layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component.html:126
+msgid "Admin"
+msgstr "Admin"
+
+#: src/lib/layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component.html:141
+msgid "Rejestracja"
+msgstr "Rejestracja"
+
+#: src/lib/layouts/taon-bootstrap-navbar/taon-bootstrap-navbar.component.html:143
+msgid "Logowanie"
+msgstr "Logowanie"

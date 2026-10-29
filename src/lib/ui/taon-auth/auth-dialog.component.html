@@ -1,7 +1,7 @@
 <div class="absolute top-2 right-2">
   <button
     mat-icon-button
-    aria-label="Close dialog"
+    [attr.aria-label]="closeDialogLabel()"
     (click)="close()">
     <mat-icon>close</mat-icon>
   </button>
@@ -23,7 +23,9 @@
       <mat-form-field
         appearance="outline"
         class="w-full email-field">
-        <mat-label *ngIf="!diableLoginByEmail">Email</mat-label>
+        <mat-label
+          *ngIf="!diableLoginByEmail"
+          translate>Email</mat-label>
 
         <input
           matInput
@@ -54,7 +56,7 @@
             form.get('email')?.hasError('required') &&
             form.get('email')?.touched
           ">
-          {{ t.gettext('Email is') }} <strong translate>required</strong>
+          {{ t.gettext('Email is required') }}
         </mat-error>
       </mat-form-field>
     </form>

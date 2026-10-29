@@ -4,7 +4,7 @@
       class="navbar-brand"
       routerLink="/home"
       routerLinkActive="active">
-      Home</a
+      translate>Home</a
     >
     <button
       class="navbar-toggler"
@@ -22,7 +22,7 @@
             class="nav-link"
             routerLink="/about"
             routerLinkActive="active"
-            >O szkole</a
+            translate>O szkole</a
           >
         </li>
         <li class="nav-item">
@@ -30,7 +30,7 @@
             class="nav-link"
             routerLink="/courses"
             routerLinkActive="active"
-            >Kursy</a
+            translate>Kursy</a
           >
         </li>
         <li class="nav-item">
@@ -38,7 +38,7 @@
             class="nav-link"
             routerLink="/opinions"
             routerLinkActive="active"
-            >Opinie</a
+            translate>Opinie</a
           >
         </li>
         <li class="nav-item">
@@ -46,7 +46,7 @@
             class="nav-link"
             routerLink="/instructors"
             routerLinkActive="active"
-            >Lektorzy</a
+            translate>Lektorzy</a
           >
         </li>
         <li class="nav-item">
@@ -54,7 +54,7 @@
             class="nav-link"
             routerLink="/contact"
             routerLinkActive="active"
-            >Kontakt</a
+            translate>Kontakt</a
           >
         </li>
         <ng-container *ngIf="isLoggedIn">
@@ -63,7 +63,7 @@
               class="nav-link"
               routerLink="/test"
               routerLinkActive="active"
-              ><b>Test plasujący</b></a
+              ><b translate>Test plasujący</b></a
             >
           </li>
           <li class="nav-item">
@@ -71,7 +71,7 @@
               class="nav-link"
               routerLink="/grammar"
               routerLinkActive="active"
-              >Gramatyka</a
+              translate>Gramatyka</a
             >
           </li>
           <li class="nav-item">
@@ -79,7 +79,7 @@
               class="nav-link"
               routerLink="/vocabulary"
               routerLinkActive="active"
-              >Słownictwo</a
+              translate>Słownictwo</a
             >
           </li>
           <li class="nav-item">
@@ -87,7 +87,7 @@
               class="nav-link"
               routerLink="/reading"
               routerLinkActive="active"
-              >Czytanie</a
+              translate>Czytanie</a
             >
           </li>
           <li class="nav-item">
@@ -95,7 +95,7 @@
               class="nav-link"
               routerLink="/movies"
               routerLinkActive="active"
-              >Wideo</a
+              translate>Wideo</a
             >
           </li>
           <li class="nav-item">
@@ -103,7 +103,7 @@
               class="nav-link"
               routerLink="/curiosities"
               routerLinkActive="active"
-              >Ciekawostki</a
+              translate>Ciekawostki</a
             >
           </li>
           <li class="nav-item">
@@ -111,7 +111,7 @@
               class="nav-link"
               routerLink="/logout"
               routerLinkActive="active"
-              >Wyloguj</a
+              translate>Wyloguj</a
             >
           </li>
           <li class="nav-item">
@@ -119,7 +119,7 @@
               class="nav-link"
               routerLink="/profile"
               routerLinkActive="active"
-              >Profil</a
+              translate>Profil</a
             >
           </li>
           <li class="nav-item">
@@ -127,7 +127,7 @@
               class="nav-link"
               routerLink="/admin"
               routerLinkActive="active"
-              >Admin</a
+              translate>Admin</a
             >
           </li>
         </ng-container>
@@ -137,8 +137,10 @@
               class="nav-link"
               href="javascript:void(0)"
               (click)="modalLoginRegister()">
-              <span class="glyphicon glyphicon-hand-right"></span> Rejestracja /
-              <span class="glyphicon glyphicon-user"></span> Logowanie
+              <span class="glyphicon glyphicon-hand-right"></span>
+              <span translate>Rejestracja</span> /
+              <span class="glyphicon glyphicon-user"></span>
+              <span translate>Logowanie</span>
             </a>
           </li>
         </ng-container>

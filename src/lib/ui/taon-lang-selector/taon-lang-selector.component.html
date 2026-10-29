@@ -1,9 +1,9 @@
 <label class="taon-lang-selector">
   <span class="taon-lang-selector__label">
     {{
-      t.gettext('Select Language') +
-        ' ' +
-        ((isDisabled$ | async) ? t.gettext('(disabled)') : '')
+      (isDisabled$ | async)
+        ? t.gettext('Select Language (disabled)')
+        : t.gettext('Select Language')
     }}
   </span>
 

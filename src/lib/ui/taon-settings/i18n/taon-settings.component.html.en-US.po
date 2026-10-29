@@ -6,21 +6,21 @@ msgstr ""
 
 #: src/lib/ui/taon-settings/taon-settings.component.html:10
 msgid "Language Settings"
-msgstr ""
+msgstr "Language Settings"
 
 #: src/lib/ui/taon-settings/taon-settings.component.html:17
 msgid "Theme settings"
-msgstr ""
+msgstr "Theme settings"
 
 #: src/lib/ui/taon-settings/taon-settings.component.html:17
 #: src/lib/ui/taon-settings/taon-settings.component.html:18
 msgid "Settings can't ba changed"
-msgstr ""
+msgstr "Settings can't ba changed"
 
 #: src/lib/ui/taon-settings/taon-settings.component.html:26
 msgid "Sync colors with system"
-msgstr ""
+msgstr "Sync colors with system"
 
 #: src/lib/ui/taon-settings/taon-settings.component.html:34
 msgid "Dark mode"
-msgstr ""
+msgstr "Dark mode"

@@ -3,7 +3,7 @@
     <button
       mat-button
       (click)="openLogin()">
-      Login
+      <span translate>Login</span>
     </button>
   </ng-container>
 
@@ -15,14 +15,14 @@
       class="auth-btn"
       (click)="goDashboard()">
       <mat-icon>dashboard</mat-icon>
-      Dashboard
+      <span translate>Dashboard</span>
     </button>
 
     <button
       mat-button
       class="ml-2"
       (click)="logout()">
-      Logout ({{ (session.data$ | async)?.displayName }})
+      {{ logoutLabel$ | async }}
     </button>
   </ng-template>
 </div>

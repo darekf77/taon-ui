@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { TranslateDirective } from '@taon-dev/i18n/src';
 import { debounce } from 'lodash';
 import { Level, Log } from 'ng2-logger/src';
 import { Subject } from 'rxjs';
@@ -42,7 +43,7 @@ import { filter, takeUntil, distinctUntilChanged } from 'rxjs/operators';
       class="iframe-loading-placeholder"
       [style.background]="loaderBackgroundColor">
       <div class="spinner"></div>
-      <p>Loading documentation...</p>
+      <p translate>Loading documentation...</p>
     </div>
   `,
   styles: [
@@ -81,7 +82,7 @@ import { filter, takeUntil, distinctUntilChanged } from 'rxjs/operators';
     `,
   ],
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, TranslateDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaonIframeSyncComponent implements AfterViewInit, OnDestroy {

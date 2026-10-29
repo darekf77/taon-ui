@@ -20,10 +20,14 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Translatable, Translation } from '@taon-dev/i18n/src';
 import { PasswordModule } from 'primeng/password';
 import { interval, take, tap } from 'rxjs';
+import { Taon } from 'taon/src';
 import { TaonStor } from 'taon-storage/src';
 //#endregion
+
+const t = Translation.for(Taon.__FILE_RELATIVE_PATH, Taon.LANG_IMPORT_MAP);
 
 export interface TaonSessionPasscodeModel {
   passcode: string;
@@ -42,7 +46,11 @@ export type TaonSessionPasscodeForm = {
   standalone: true,
   imports: [PasswordModule, CommonModule, ReactiveFormsModule, FormsModule],
 })
-export class TaonSessionPasscodeComponent implements OnInit, AfterViewInit {
+export class TaonSessionPasscodeComponent
+  implements OnInit, AfterViewInit, Translatable
+{
+  t = t.for(this);
+
   destroyRef = inject(DestroyRef);
 
   @Input({
@@ -77,10 +85,9 @@ export class TaonSessionPasscodeComponent implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     if (!this.message) {
-      this.message = `
-      This website is only for testing purpose. Please type passcode bellow to see content.
-
-      `;
+      this.message = this.t.gettext(
+        'This website is only for testing purpose. Please type passcode bellow to see content.',
+      );
     }
     this.safeMessage = this.domSanitizer.bypassSecurityTrustHtml(this.message);
     await this.lastPasscode.ready();

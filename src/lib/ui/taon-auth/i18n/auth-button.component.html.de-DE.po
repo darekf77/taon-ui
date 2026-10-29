@@ -1,0 +1,13 @@
+msgid ""
+msgstr ""
+"Language: de-DE\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/lib/ui/taon-auth/auth-button.component.html:6
+msgid "Login"
+msgstr "Einloggen"
+
+#: src/lib/ui/taon-auth/auth-button.component.html:18
+msgid "Dashboard"
+msgstr "Das Dashboard"

@@ -1,7 +1,7 @@
 <div class="absolute top-2 right-2">
   <button
     mat-icon-button
-    aria-label="Close dialog"
+    [attr.aria-label]="closeDialogLabel()"
     (click)="close()">
     <mat-icon>close</mat-icon>
   </button>

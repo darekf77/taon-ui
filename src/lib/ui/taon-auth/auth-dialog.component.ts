@@ -75,6 +75,8 @@ export class AuthDialogComponent
 {
   t = t.for(this);
 
+  closeDialogLabel = this.t.signal.gettext('Close dialog');
+
   cdr = inject(ChangeDetectorRef);
 
   emailRegex = /^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;

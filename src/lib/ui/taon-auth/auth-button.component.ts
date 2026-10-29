@@ -4,20 +4,37 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import {
+  Translatable,
+  TranslateDirective,
+  Translation,
+} from '@taon-dev/i18n/src';
+import { switchMap } from 'rxjs';
+import { Taon } from 'taon/src';
 import { ButtonModule } from 'primeng/button';
 import { _ } from 'tnp-core/src';
 
 import { AuthDialogComponent } from './auth-dialog.component';
 import { SessionService } from './session.service';
 
+const t = Translation.for(Taon.__FILE_RELATIVE_PATH, Taon.LANG_IMPORT_MAP);
+
 @Component({
   selector: 'taon-auth-button',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, ButtonModule, MatIconModule],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    ButtonModule,
+    MatIconModule,
+    TranslateDirective,
+  ],
   templateUrl: './auth-button.component.html',
   styleUrl: './auth-button.component.scss',
 })
-export class AuthButtonComponent implements OnInit {
+export class AuthButtonComponent implements OnInit, Translatable {
+  t = t.for(this);
+
   @Input({ required: true }) linkToDashboard!: string;
 
   @Input() googleClientId?: string;
@@ -27,6 +44,14 @@ export class AuthButtonComponent implements OnInit {
   @Input() displayDashboardButton: boolean;
 
   readonly session = inject(SessionService);
+
+  readonly logoutLabel$ = this.session.data$.pipe(
+    switchMap(data =>
+      this.t.$.gettext('Logout ([[ displayName ]])', {
+        displayName: data?.displayName ?? '',
+      }),
+    ),
+  );
 
   private readonly dialog = inject(MatDialog);
 

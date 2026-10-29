@@ -4,11 +4,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: src/app/translation-app/translation-app.container.html:2
+msgid "TRANSLATE DIRECTIVE"
+msgstr "WYJEDNIK TRANSLADOwy"
+
 #: src/app/translation-app/translation-app.container.html:4
 #: src/app/translation-app/translation-app.container.html:7
 msgid "translation-app works!"
-msgstr "Translatcja dla apki działa"
+msgstr "Przetłumaczenie działa!"
+
+#: src/app/translation-app/translation-app.container.html:6
+msgid "TRANSLATE PIPIE"
+msgstr "Tłumaczenie PIPIE"
+
+#: src/app/translation-app/translation-app.container.html:8
+msgid "TRANSLATE SIGNAL"
+msgstr "/PROWJEDZENIE SIGNAL"
+
+#: src/app/translation-app/translation-app.container.html:12
+msgid "TRANSLATE RXJS"
+msgstr "Tłumaczenie RXJS"
+
+#: src/app/translation-app/translation-app.container.html:16
+msgid "TRANSLATE GETEXT RERENDER"
+msgstr "/Traducja /Getekstu RENDER"
 
 #: src/app/translation-app/translation-app.container.html:18
 msgid "getetxt rerender!"
-msgstr "gettext ponownie wyrenderowany!"
+msgstr "- Wykręć tekst!"

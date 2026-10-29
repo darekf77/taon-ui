@@ -9,9 +9,6 @@ msgid "You did not purchase any products"
 msgstr "Sie haben keine Produkte gekauft."
 
 #: src/lib/ui/taon-kv-authorization/taon-kv-authorization.component.html:12
-msgid "You purchased"
-msgstr "Du hast es gekauft."
-
 #: src/lib/ui/taon-kv-authorization/taon-kv-authorization.component.html:13
-msgid "product(s)"
-msgstr "Produkt (s)"
+msgid "You purchased [[ count ]] product(s)"
+msgstr "Sie haben [[ count ]] gekauft"

@@ -6,36 +6,37 @@ msgstr ""
 
 #: src/lib/ui/taon-auth/auth-dialog.component.html:10
 msgid "Login or Register"
-msgstr "Zaloguj lub Zarejestruj się"
+msgstr "Login lub rejestracja"
 
-#: src/lib/ui/taon-auth/auth-dialog.component.html:44
+#: src/lib/ui/taon-auth/auth-dialog.component.html:26
+msgid "Email"
+msgstr "E-mail"
+
+#: src/lib/ui/taon-auth/auth-dialog.component.html:35
+#: src/lib/ui/taon-auth/auth-dialog.component.html:36
+msgid "Login by email (disabled)"
+msgstr "Wpis e-mail (wyłączony)"
+
+#: src/lib/ui/taon-auth/auth-dialog.component.html:46
 msgid "Please enter a valid email address"
-msgstr "Proszę wprowadź poprawny adres email"
+msgstr "Proszę wpisać ważny adres e-mail"
 
-#: src/lib/ui/taon-auth/auth-dialog.component.html:57
-msgid "Email is"
-msgstr "Adres email jest"
+#: src/lib/ui/taon-auth/auth-dialog.component.html:59
+msgid "Email is required"
+msgstr "Potrzebne jest e-mail"
 
-#: src/lib/ui/taon-auth/auth-dialog.component.html:57
-msgid "required"
-msgstr "wymagany"
-
-#: src/lib/ui/taon-auth/auth-dialog.component.html:63
+#: src/lib/ui/taon-auth/auth-dialog.component.html:65
 msgid "or"
 msgstr "lub"
 
-#: src/lib/ui/taon-auth/auth-dialog.component.html:70
+#: src/lib/ui/taon-auth/auth-dialog.component.html:72
 msgid "loading google button.."
-msgstr "ładowanie przycisku google"
+msgstr "Ładowanie przycisku Google.."
 
-#: src/lib/ui/taon-auth/auth-dialog.component.html:93
+#: src/lib/ui/taon-auth/auth-dialog.component.html:95
 msgid "Continue with Microsoft"
-msgstr "Zaloguj się przez konto Microsoft"
+msgstr "Kontynuuj z Microsoftem"
 
-#: src/lib/ui/taon-auth/auth-dialog.component.html:104
+#: src/lib/ui/taon-auth/auth-dialog.component.html:106
 msgid "Cancel"
-msgstr "Anuluj"
-
-#: src/lib/ui/taon-auth/auth-dialog.component.html:34
-msgid "Login by email (disabled)"
-msgstr "Logowanie mailem (wyłączone)"
+msgstr "Odwołanie"

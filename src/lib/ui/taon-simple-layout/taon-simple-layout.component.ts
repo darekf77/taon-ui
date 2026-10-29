@@ -16,12 +16,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { TranslateDirective, Translation } from '@taon-dev/i18n/src';
+import { Taon } from 'taon/src';
 
 import { TaonSettingsComponent } from '../taon-settings/taon-settings.component';
 import { TaonThemeService } from '../taon-theme/taon-theme.service';
 
 import { TaonSimpleLayoutNavItem } from './taon-simple-layout.model';
 //#endregion
+
+
+const t = Translation.for(Taon.__FILE_RELATIVE_PATH, Taon.LANG_IMPORT_MAP, {
+  // debug: true,
+});
 
 @Component({
   selector: 'taon-simple-layout',
@@ -41,9 +48,12 @@ import { TaonSimpleLayoutNavItem } from './taon-simple-layout.model';
     MatDialogModule,
     JsonPipe,
     TaonSettingsComponent,
+    TranslateDirective,
   ],
 })
 export class TaonSimpleLayoutComponent {
+  t = t.for(this);
+
   protected router = inject(Router);
 
   protected dialog = inject(MatDialog);

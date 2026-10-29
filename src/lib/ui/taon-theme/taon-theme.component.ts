@@ -35,6 +35,8 @@ const t = Translation.for(Taon.__FILE_RELATIVE_PATH, Taon.LANG_IMPORT_MAP);
 export class TaonThemeComponent implements Translatable {
   t = t.for(this);
 
+  closeDialogLabel = this.t.signal.gettext('Close dialog');
+
   TaonThemeMode = TaonThemeMode;
 
   private readonly dialogRef = inject(MatDialogRef<TaonThemeComponent>);

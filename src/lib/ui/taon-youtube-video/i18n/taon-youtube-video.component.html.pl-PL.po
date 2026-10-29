@@ -1,0 +1,13 @@
+msgid ""
+msgstr ""
+"Language: pl-PL\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/lib/ui/taon-youtube-video/taon-youtube-video.component.html:14
+msgid "YouTube video"
+msgstr "Wideo na YouTube"
+
+#: src/lib/ui/taon-youtube-video/taon-youtube-video.component.html:59
+msgid "Thanks for buyingthis video"
+msgstr "Dzięki za zakup tego filmu."

@@ -1,0 +1,9 @@
+msgid ""
+msgstr ""
+"Language: de-DE\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/lib/ui/taon-github-fork-me-ribbon/taon-github-fork-me-ribbon.component.ts:26
+msgid "Fork me on GitHub"
+msgstr "Fork mich auf GitHub"

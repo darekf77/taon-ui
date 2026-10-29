@@ -3,3 +3,7 @@ msgstr ""
 "Language: pl-PL\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: src/lib/ui/taon-theme/taon-theme.component.ts:38
+msgid "Close dialog"
+msgstr "/Szybki dialog"

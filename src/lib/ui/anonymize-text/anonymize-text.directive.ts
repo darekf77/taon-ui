@@ -1,10 +1,31 @@
-import { Directive, ElementRef, HostListener, inject, Input, OnInit } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  inject,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { Translatable, Translation } from '@taon-dev/i18n/src';
+import { Taon } from 'taon/src';
+
+const t = Translation.for(Taon.__FILE_RELATIVE_PATH, Taon.LANG_IMPORT_MAP);
 
 @Directive({
   selector: '[anonymizeText]',
   standalone: true,
 })
-export class AnonymizeTextDirective implements OnInit {
+export class AnonymizeTextDirective implements OnInit, Translatable {
+  t = t.for(this);
+
+  tooltip = this.t.signal.gettext('Click to reveal');
+
+  @HostBinding('attr.title')
+  get title(): string {
+    return this.tooltip();
+  }
+
   private el = inject(ElementRef<HTMLElement>);
 
   private encodedValue = '';
@@ -19,7 +40,6 @@ export class AnonymizeTextDirective implements OnInit {
 
     this.el.nativeElement.textContent = this.maskText(original);
     this.el.nativeElement.style.cursor = 'pointer';
-    this.el.nativeElement.title = 'Click to reveal';
   }
 
   @HostListener('click')

@@ -9,8 +9,11 @@
     </div>
 
     <div *ngIf="authorizedCount() > 0">
-      <span translate>You purchased </span> {{ authorizedCount() }}
-      <span translate>product(s)</span>
+      {{
+        t.gettext('You purchased [[ count ]] product(s)', {
+          count: authorizedCount(),
+        })
+      }}
     </div>
   </div>
 </div>

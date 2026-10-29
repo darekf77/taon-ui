@@ -18,7 +18,7 @@ const t = Translation.for(Taon.__FILE_RELATIVE_PATH, Taon.LANG_IMPORT_MAP,{
 
 @Component({
   selector: 'taon-stripe-buy-button',
-  imports: [CommonModule, MatButtonModule],
+  imports: [CommonModule, MatButtonModule, TranslateDirective],
   templateUrl: './taon-stripe-buy-button.component.html',
 })
 export class TaonStripeBuyButtonComponent implements OnInit, Translatable {

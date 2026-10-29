@@ -5,11 +5,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/lib/ui/taon-lang-selector/taon-lang-selector.component.html:3
-#: src/lib/ui/taon-lang-selector/taon-lang-selector.component.html:4
-msgid "Select Language"
-msgstr "Wybierz język"
+#: src/lib/ui/taon-lang-selector/taon-lang-selector.component.html:5
+msgid "Select Language (disabled)"
+msgstr "Wählen Sie Sprache (nicht verfügbar)"
 
 #: src/lib/ui/taon-lang-selector/taon-lang-selector.component.html:3
 #: src/lib/ui/taon-lang-selector/taon-lang-selector.component.html:6
-msgid "(disabled)"
-msgstr "(nie można zmienić)"
+msgid "Select Language"
+msgstr "Wählen Sie die Sprache aus"

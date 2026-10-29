@@ -1,0 +1,37 @@
+msgid ""
+msgstr ""
+"Language: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/app.ts:150
+msgid "Basic app info"
+msgstr "Basic app info"
+
+#: src/app.ts:151
+msgid "Name:"
+msgstr "Name:"
+
+#: src/app.ts:152
+msgid "Angular version:"
+msgstr "Angular version:"
+
+#: src/app.ts:153
+msgid "Taon backend:"
+msgstr "Taon backend:"
+
+#: src/app.ts:159
+msgid "Example users from backend API:"
+msgstr "Example users from backend API:"
+
+#: src/app.ts:177
+msgid "Add new example user with random name"
+msgstr "Add new example user with random name"
+
+#: src/app.ts:184
+msgid "Example hello world from backend API:"
+msgstr "Example hello world from backend API:"
+
+#: src/app.ts:185
+msgid "hello world from backend:"
+msgstr "hello world from backend:"

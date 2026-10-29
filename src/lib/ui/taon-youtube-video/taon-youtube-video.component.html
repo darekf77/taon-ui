@@ -11,7 +11,7 @@
     <img
       class="yt-media"
       [src]="previewImage()"
-      [alt]="displayTitle || 'YouTube video'"
+      [alt]="displayTitle || t.gettext('YouTube video')"
       decoding="async"
       draggable="false"
       (error)="onThumbnailError($event)" />
@@ -56,8 +56,7 @@
     (dblclick)="clicked($event)"
     (click)="clicked($event)">
     <h1 class="text-center">
-      Thanks for buying<br />
-      this video
+      <span translate>Thanks for buying<br />this video</span>
     </h1>
   </div>
 </div>

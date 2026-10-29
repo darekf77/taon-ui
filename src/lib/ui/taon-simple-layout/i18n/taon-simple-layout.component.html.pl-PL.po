@@ -1,0 +1,9 @@
+msgid ""
+msgstr ""
+"Language: pl-PL\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/lib/ui/taon-simple-layout/taon-simple-layout.component.html:104
+msgid "Please add your component inside"
+msgstr "Proszę dodać komponent do środka"

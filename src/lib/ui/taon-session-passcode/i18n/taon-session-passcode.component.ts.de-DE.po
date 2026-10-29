@@ -1,0 +1,9 @@
+msgid ""
+msgstr ""
+"Language: de-DE\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/lib/ui/taon-session-passcode/taon-session-passcode.component.ts:88
+msgid "This website is only for testing purpose. Please type passcode bellow to see content."
+msgstr "Diese Website dient nur zum Testen. Bitte geben Sie den Passcode im Schlagwort ein, um den Inhalt zu sehen."

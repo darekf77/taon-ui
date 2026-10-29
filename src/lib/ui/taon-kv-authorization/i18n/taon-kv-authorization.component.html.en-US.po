@@ -6,12 +6,9 @@ msgstr ""
 
 #: src/lib/ui/taon-kv-authorization/taon-kv-authorization.component.html:5
 msgid "You did not purchase any products"
-msgstr ""
+msgstr "You did not purchase any products"
 
 #: src/lib/ui/taon-kv-authorization/taon-kv-authorization.component.html:12
-msgid "You purchased"
-msgstr ""
-
 #: src/lib/ui/taon-kv-authorization/taon-kv-authorization.component.html:13
-msgid "product(s)"
-msgstr ""
+msgid "You purchased [[ count ]] product(s)"
+msgstr "You purchased [[ count ]] product(s)"

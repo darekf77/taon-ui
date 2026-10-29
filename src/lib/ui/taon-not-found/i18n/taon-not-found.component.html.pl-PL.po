@@ -1,0 +1,21 @@
+msgid ""
+msgstr ""
+"Language: pl-PL\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/lib/ui/taon-not-found/taon-not-found.component.html:7
+msgid "Page not found"
+msgstr "Strona nie znaleziona"
+
+#: src/lib/ui/taon-not-found/taon-not-found.component.html:12
+msgid "The page you are looking for does not exist or has been moved."
+msgstr "Strona, której szukasz, nie istnieje lub została przeniesiona."
+
+#: src/lib/ui/taon-not-found/taon-not-found.component.html:18
+msgid "Go to Home"
+msgstr "Wracaj do domu"
+
+#: src/lib/ui/taon-not-found/taon-not-found.component.html:35
+msgid "Powered by"
+msgstr "Wykorzystany przez"

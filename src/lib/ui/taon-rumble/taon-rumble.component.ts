@@ -7,6 +7,7 @@ import {
   computed,
   inject,
 } from '@angular/core';
+import { TranslateDirective } from '@taon-dev/i18n/src';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 export type TaonRumbleState =
@@ -18,7 +19,7 @@ export type TaonRumbleState =
 @Component({
   selector: 'taon-rumble',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, TranslateDirective],
   templateUrl: './taon-rumble.component.html',
   styleUrls: ['./taon-rumble.component.scss'],
 })

@@ -43,6 +43,7 @@ import {
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideServerRendering, withRoutes } from '@angular/ssr';
 import { RenderMode, ServerRoute } from '@angular/ssr';
+import { TranslateDirective, TranslatePipe } from '@taon-dev/i18n/src'; // @browser
 import Aura from '@primeng/themes/aura'; // @browser
 import { providePrimeNG } from 'primeng/config'; // @browser
 import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
@@ -95,6 +96,8 @@ console.log('Your frontend host ' + firstHostConfig?.frontendHost);
     JsonPipe,
     MatDialogModule,
     TaonSettingsComponent,
+    TranslateDirective,
+    TranslatePipe,
   ],
   template: `
     @if (itemsLoaded()) {
@@ -117,10 +120,10 @@ console.log('Your frontend host ' + firstHostConfig?.frontendHost);
               @if (item.path === '/') {
                 <mat-icon
                   aria-hidden="false"
-                  aria-label="Example home icon"
+                  [attr.aria-label]="'Home' | translate"
                   fontIcon="home"></mat-icon>
               } @else {
-                {{ item.label }}
+                {{ item.label === 'Home' ? ('Home' | translate) : item.label }}
               }
             </a>
           }
@@ -144,16 +147,16 @@ console.log('Your frontend host ' + firstHostConfig?.frontendHost);
       @if (navItems.length === 0 || forceShowBaseRootApp) {
         <mat-card class="m-2">
           <mat-card-content>
-            <h3>Basic app info</h3>
-            Name: taasdaasdon-ui<br />
-            Angular version: {{ angularVersion }}<br />
-            Taon backend: {{ taonMode }}<br />
+            <h3 translate>Basic app info</h3>
+            <span translate>Name:</span> taasdaasdon-ui<br />
+            <span translate>Angular version:</span> {{ angularVersion }}<br />
+            <span translate>Taon backend:</span> {{ taonMode }}<br />
           </mat-card-content>
         </mat-card>
 
         <mat-card class="m-2">
           <mat-card-content>
-            <h3>Example users from backend API:</h3>
+            <h3 translate>Example users from backend API:</h3>
             <ul>
               @for (user of users(); track user.id) {
                 <li>
@@ -171,15 +174,16 @@ console.log('Your frontend host ' + firstHostConfig?.frontendHost);
               class="ml-1"
               matButton="outlined"
               (click)="addUser()">
-              Add new example user with random name
+              <span translate>Add new example user with random name</span>
             </button>
           </mat-card-content>
         </mat-card>
 
         <mat-card class="m-2">
           <mat-card-content>
-            <h3>Example hello world from backend API:</h3>
-            hello world from backend: <strong>{{ hello$ | async }}</strong>
+            <h3 translate>Example hello world from backend API:</h3>
+            <span translate>hello world from backend:</span>
+            <strong>{{ hello$ | async }}</strong>
           </mat-card-content>
         </mat-card>
       }

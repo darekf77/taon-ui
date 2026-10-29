@@ -21,22 +21,38 @@ import {
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import {
+  Translatable,
+  TranslateDirective,
+  Translation,
+} from '@taon-dev/i18n/src';
+import { Taon } from 'taon/src';
 
 import { TaonYoutubeState } from './taon-youtube.models';
 import { TaonYouTubeUtils } from './taon-youtube.utils';
 //#endregion
 
+const t = Translation.for(Taon.__FILE_RELATIVE_PATH, Taon.LANG_IMPORT_MAP);
+
 @Component({
   selector: 'taon-youtube-video',
   standalone: true,
-  imports: [NgIf, NgStyle, MatIconModule, CommonModule],
+  imports: [
+    NgIf,
+    NgStyle,
+    MatIconModule,
+    CommonModule,
+    TranslateDirective,
+  ],
   templateUrl: './taon-youtube-video.component.html',
   styleUrls: ['./taon-youtube-video.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaonYoutubeVideoComponent
-  implements OnChanges, AfterViewInit, OnInit, OnDestroy
+  implements OnChanges, AfterViewInit, OnInit, OnDestroy, Translatable
 {
+  t = t.for(this);
+
   //#region fields & getters
   @Input({ required: true }) videoId!: string;
 
