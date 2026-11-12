@@ -1,6 +1,6 @@
 {
   "name": "taon-ui",
-  "version": "21.0.87",
+  "version": "21.0.88",
   "scripts": {
     "taon init": "taon init",
     "taon start": "taon start",
