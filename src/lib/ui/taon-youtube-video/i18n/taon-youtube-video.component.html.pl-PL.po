@@ -9,5 +9,5 @@ msgid "YouTube video"
 msgstr "Wideo na YouTube"
 
 #: src/lib/ui/taon-youtube-video/taon-youtube-video.component.html:59
-msgid "Thanks for buyingthis video"
-msgstr "Dzięki za zakup tego filmu."
+msgid "Thanks for buying<br />this video"
+msgstr "Dzięki za zakup<br />tego filmu."
