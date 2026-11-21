@@ -1,0 +1,10 @@
+<a
+  class="github-stars"
+  [href]="'https://github.com/' + repo()"
+  target="_blank"
+  rel="noopener noreferrer">
+  <mat-icon>star</mat-icon>
+  @if (stars() !== null) {
+    <span>{{ stars() }}</span>
+  }
+</a>
